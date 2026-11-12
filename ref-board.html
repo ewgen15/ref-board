@@ -1,0 +1,1026 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ref Board</title>
+<style>
+:root{
+  --bg:#f4f5f7; --panel:#ffffff; --panel-2:#f8f9fb; --line:#e2e5eb; --text:#1d2330; --muted:#6b7385;
+  --accent:#3b6fe0; --accent-soft:rgba(59,111,224,.13);
+  --take:#1f9d55; --take-soft:#e4f5eb;
+  --avoid:#d64545; --avoid-soft:#fbe8e8;
+  --radius:8px;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html,body{height:100%;margin:0}
+body{font:13px/1.4 var(--font);background:var(--bg);color:var(--text);color-scheme:light}
+button,select,input,textarea{font:inherit;color:inherit}
+button{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:5px 10px;cursor:pointer;min-height:30px;white-space:nowrap}
+button:hover{border-color:#c3c9d4}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+button.ghost{border-color:transparent;background:transparent;padding:4px 6px}
+button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+input[type=text],select,textarea{border:1px solid var(--line);border-radius:6px;padding:5px 8px;background:#fff;width:100%;min-height:30px}
+textarea{resize:vertical;min-height:40px}
+input[type=checkbox]{width:16px;height:16px;margin:0}
+
+.app{display:grid;grid-template-columns:260px minmax(0,1fr) 340px;height:100vh;min-width:900px}
+.left,.right{background:var(--panel);display:flex;flex-direction:column;min-height:0}
+.left{border-right:1px solid var(--line)}
+.right{border-left:1px solid var(--line)}
+.head{padding:10px 12px;border-bottom:1px solid var(--line);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.head h1{font-size:14px;margin:0;margin-right:auto}
+.folder{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-basis:100%}
+.list{flex:1;overflow:auto;min-height:0;padding:6px}
+.list.over{outline:2px dashed var(--accent);outline-offset:-6px}
+.item{display:flex;gap:8px;padding:6px;border-radius:6px;cursor:pointer;align-items:center;border:1px solid transparent}
+.item:hover{background:var(--panel-2)}
+.item.cur{background:var(--accent-soft);border-color:rgba(59,111,224,.35)}
+.item.missing{opacity:.55;cursor:default}
+.thumb{width:56px;height:42px;flex:none;border-radius:4px;background:#eceef2;object-fit:cover;border:1px solid var(--line)}
+.meta{min-width:0;flex:1}
+.name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
+.sub{color:var(--muted);font-size:12px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.st{font-size:13px;width:12px;text-align:center}
+.badge-new{background:#ffe8a8;color:#6d4500;border-radius:4px;padding:0 5px;font-size:11px}
+.foot{padding:10px 12px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.legend{color:var(--muted);font-size:12px}
+.row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.muted{color:var(--muted)}
+.sp{flex:1}
+.empty{color:var(--muted);text-align:center;padding:24px 14px;line-height:1.5}
+
+.center{background:#e9ecf1;display:flex;flex-direction:column;min-width:0;min-height:0}
+.toolbar{padding:8px 12px;border-bottom:1px solid var(--line);background:var(--panel);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#fff}
+.seg button{border:0;border-radius:0;min-height:28px;padding:3px 9px;font-size:12px}
+.seg button + button{border-left:1px solid var(--line)}
+.vp{flex:1;overflow:auto;position:relative;padding:20px;min-height:0}
+.stage{position:relative;margin:0 auto;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.18)}
+.stage img{display:block;width:100%;height:100%;user-select:none;-webkit-user-drag:none;pointer-events:none}
+.ov{position:absolute;inset:0;cursor:crosshair}
+.stage.pan .ov{cursor:grab}
+.hl{position:absolute;border:2px solid var(--accent);background:rgba(59,111,224,.12);box-sizing:border-box;cursor:move}
+.hl.take{border-color:var(--take);background:rgba(31,157,85,.12)}
+.hl.avoid{border-color:var(--avoid);background:rgba(214,69,69,.12)}
+.hl.sel{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--accent);z-index:2}
+.hl.draft{border-style:dashed;cursor:crosshair}
+.hl .n{position:absolute;left:-9px;top:-9px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:var(--accent);color:#fff;font-size:11px;line-height:18px;text-align:center;font-weight:600;pointer-events:none}
+.hl.take .n{background:var(--take)}
+.hl.avoid .n{background:var(--avoid)}
+.h{position:absolute;width:12px;height:12px;background:#fff;border:2px solid var(--accent);border-radius:2px;box-sizing:border-box}
+.h.nw{left:-7px;top:-7px;cursor:nwse-resize}
+.h.se{right:-7px;bottom:-7px;cursor:nwse-resize}
+.h.ne{right:-7px;top:-7px;cursor:nesw-resize}
+.h.sw{left:-7px;bottom:-7px;cursor:nesw-resize}
+
+.tabs{display:flex;border-bottom:1px solid var(--line)}
+.tabs button{flex:1;border:0;border-bottom:2px solid transparent;border-radius:0;background:none;min-height:38px}
+.tabs button.active{border-bottom-color:var(--accent);color:var(--accent);font-weight:600}
+.body{flex:1;overflow:auto;min-height:0;padding:10px 12px}
+.card{border:1px solid var(--line);border-radius:var(--radius);padding:8px;margin-bottom:8px;background:#fff}
+.card.cur{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.card textarea,.card input[type=text]{margin-top:6px}
+.card .row select{flex:1;min-width:0}
+.num{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;flex:none;cursor:pointer;font-weight:600}
+.card[data-hid] .num{background:var(--accent)}
+.seg button[aria-pressed="true"].v-take{background:var(--take-soft);color:var(--take);border-color:transparent}
+.seg button[aria-pressed="true"].v-avoid{background:var(--avoid-soft);color:var(--avoid);border-color:transparent}
+.seg button[aria-pressed="true"].v-neutral{background:var(--panel-2);color:var(--text);border-color:transparent}
+.scores button{width:28px;min-height:28px;padding:0;font-size:12px}
+.crit-label{font-weight:600}
+.lbl{color:var(--muted);font-size:12px;margin-top:6px;display:block}
+
+dialog{border:1px solid var(--line);border-radius:var(--radius);padding:14px;width:min(420px,90vw);background:var(--panel);color:var(--text);box-shadow:0 8px 28px rgba(0,0,0,.2)}
+dialog::backdrop{background:rgba(29,35,48,.35)}
+dialog h2{font-size:14px;margin:0 0 4px}
+.flist{display:flex;flex-direction:column;gap:6px;margin-top:10px;max-height:50vh;overflow:auto}
+.flist button{text-align:left;white-space:normal;word-break:break-all}
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#1d2330;color:#fff;padding:8px 14px;border-radius:6px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:80vw;z-index:10}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="left">
+    <div class="head"><h1>Ref Board</h1></div>
+    <div class="head" id="folderBar"></div>
+    <div class="list" id="list"></div>
+    <div class="foot">
+      <div class="legend">● оцінено · ◐ в процесі · ○ нове, не оброблено</div>
+      <div class="row">
+        <button id="btnExport" title="Записує ref-board_vNNN_дата_час.json у вибрану папку">Експорт JSON</button>
+        <button id="btnImport">Імпорт JSON</button>
+        <button id="btnImportFolder">Імпорт з папки</button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="center">
+    <div class="toolbar">
+      <div class="seg">
+        <button data-mode="draw">Виділити</button>
+        <button data-mode="pan">Перегляд</button>
+      </div>
+      <div class="seg">
+        <button data-zoom="out" aria-label="Зменшити">−</button>
+        <button data-zoom="fit">Вмістити</button>
+        <button data-zoom="100">100%</button>
+        <button data-zoom="in" aria-label="Збільшити">+</button>
+      </div>
+      <span id="zoomLabel" class="muted"></span>
+      <span class="sp"></span>
+      <span class="muted">Ctrl+колесо: масштаб · Delete: видалити виділення</span>
+    </div>
+    <div class="vp" id="vp">
+      <div class="stage" id="stage" hidden>
+        <img id="img" alt="">
+        <div class="ov" id="ov"></div>
+      </div>
+      <div class="empty" id="emptyCenter"></div>
+    </div>
+  </main>
+
+  <aside class="right">
+    <div class="tabs" id="tabs"></div>
+    <div class="body" id="panel"></div>
+  </aside>
+</div>
+
+<input type="file" id="addFiles" accept="image/png,image/jpeg,image/webp" multiple hidden>
+<input type="file" id="importFile" accept="application/json,.json" hidden>
+<dialog id="pickDlg">
+  <h2>Імпорт з папки</h2>
+  <div class="muted">Файли ref-board_v*.json, від новіших</div>
+  <div class="flist" id="pickList"></div>
+  <div class="row" style="justify-content:flex-end;margin-top:10px"><button id="pickClose">Скасувати</button></div>
+</dialog>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(() => {
+'use strict';
+
+const LS_KEY = 'ref-board:v1';
+const IDB_NAME = 'ref-board', IDB_STORE = 'kv', IDB_KEY = 'dirHandle';
+const IMG_RE = /\.(png|jpe?g|webp)$/i;
+
+// ---------- імена експорту (чисті функції, тестуються окремо) ----------
+const EXPORT_RE = /^ref-board_v(\d+)_.*\.json$/;
+function nextVersion(names) {
+  let max = 0;
+  for (const n of names) { const m = EXPORT_RE.exec(n); if (m) max = Math.max(max, Number(m[1])); }
+  return max + 1;
+}
+function stampOf(d) {
+  const p = x => String(x).padStart(2, '0');
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}`;
+}
+function exportName(version, d) {
+  return `ref-board_v${String(version).padStart(3, '0')}_${stampOf(d)}.json`;
+}
+// ---------- кінець імен експорту ----------
+
+const CRITERIA = [
+  ['color', 'Кольори'], ['typography', 'Типографіка'], ['layout', 'Сітка і відступи'],
+  ['components', 'Компоненти'], ['mood', 'Настрій']
+];
+const VERDICTS = { take: 'беру', neutral: 'нейтрально', avoid: 'уникаю' };
+const CATS = { color: 'колір', typography: 'типографіка', layout: 'сітка і відступи', component: 'компонент', mood: 'настрій' };
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const r2 = v => Math.round(v * 100) / 100;
+const uid = () => 'h' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const fileKey = f => `${f.name}|${f.size}|${f.lastModified}`;
+
+// ---------- state ----------
+const S = {
+  supported: !!window.showDirectoryPicker,
+  handle: null, permOk: false, writeOk: false,
+  files: new Map(),          // key -> {key, name, file, url}
+  cur: null, tab: 'tags', mode: 'draw', sel: null,
+  draft: null, drag: null,
+  scale: 1, fit: true, natW: 0, natH: 0
+};
+
+function loadStore() {
+  const empty = { refs: {}, scanIds: null, newIds: [], folderName: null };
+  let raw = null;
+  try { raw = localStorage.getItem(LS_KEY); } catch (e) { return empty; }
+  if (!raw) return empty;
+  try {
+    const s = JSON.parse(raw);
+    if (s && s.version === 1) return { refs: s.refs || {}, scanIds: s.scanIds || null, newIds: s.newIds || [], folderName: s.folderName || null };
+  } catch (e) { /* fall through */ }
+  try { localStorage.setItem(LS_KEY + ':broken', raw); } catch (e) { /* ignore */ }
+  return empty;
+}
+const store = loadStore();
+
+function saveStore() {
+  try {
+    localStorage.setItem(LS_KEY, JSON.stringify({
+      version: 1, refs: store.refs, scanIds: store.scanIds, newIds: store.newIds, folderName: store.folderName
+    }));
+  } catch (e) { toast('Не вдалося зберегти дані в браузері: ' + e.message); }
+}
+
+function toast(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toast.t);
+  toast.t = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ---------- references ----------
+function newRef(key, fileName) {
+  return {
+    id: key,
+    name: fileName.replace(/\.[^.]+$/, ''),
+    file: { name: fileName, w: null, h: null },
+    source: '', tags: [], status: 'draft',
+    comment: '', highlights: [], palette: [],
+    font: { interesting: false, note: '' },
+    ratings: Object.fromEntries(CRITERIA.map(([k]) => [k, { score: null, verdict: 'neutral', note: '' }])),
+    takeaways: { generatedAt: null, tokens: {}, rules: [], avoid: [] }
+  };
+}
+function normalizeRef(raw, key) {
+  const base = newRef(key, (raw.file && raw.file.name) || raw.name || key);
+  const out = { ...base, ...raw, id: key };
+  out.file = { ...base.file, ...(raw.file || {}) };
+  out.font = { ...base.font, ...(raw.font || {}) };
+  out.ratings = { ...base.ratings };
+  for (const [k, v] of Object.entries(raw.ratings || {})) out.ratings[k] = { ...(base.ratings[k] || { score: null, verdict: 'neutral', note: '' }), ...v };
+  out.highlights = Array.isArray(raw.highlights) ? raw.highlights : [];
+  return out;
+}
+function ensureRef(key) {
+  if (!store.refs[key]) {
+    const e = S.files.get(key);
+    store.refs[key] = newRef(key, e ? e.name : key);
+  }
+  return store.refs[key];
+}
+function refName(key) {
+  const e = S.files.get(key);
+  if (e) return e.name;
+  const r = store.refs[key];
+  return (r && r.file && r.file.name) || key;
+}
+function isTouched(r) {
+  return r.highlights.length > 0 || r.comment.trim() !== '' || r.font.interesting || r.font.note.trim() !== '' ||
+    Object.values(r.ratings).some(x => x.score != null || x.note.trim() !== '' || x.verdict !== 'neutral');
+}
+function statusOf(key) {
+  const r = store.refs[key];
+  if (!r) return '○';
+  if (r.status === 'done') return '●';
+  return isTouched(r) ? '◐' : '○';
+}
+function findHl(r, hid) { return r.highlights.find(h => h.id === hid); }
+function ref() { return (S.cur && store.refs[S.cur]) || null; }
+
+// ---------- files ----------
+function setFiles(list, replace) {
+  if (replace) {
+    for (const e of S.files.values()) URL.revokeObjectURL(e.url);
+    S.files = new Map();
+  }
+  for (const f of list) {
+    const key = fileKey(f);
+    if (S.files.has(key)) continue;
+    S.files.set(key, { key, name: f.name, file: f, url: URL.createObjectURL(f) });
+  }
+}
+
+async function scanFolder() {
+  const h = S.handle;
+  const list = [];
+  try {
+    for await (const entry of h.values()) {
+      if (entry.kind === 'file' && IMG_RE.test(entry.name)) list.push(await entry.getFile());
+    }
+  } catch (err) {
+    S.permOk = false;
+    toast('Не вдалося прочитати папку: ' + err.message);
+    renderAll();
+    return;
+  }
+  const keys = [...new Set(list.map(fileKey))];
+  const sameFolder = store.folderName === h.name;
+  setFiles(list, true);
+  if (sameFolder && store.scanIds) {
+    const prev = new Set(store.scanIds);
+    for (const k of keys) if (!prev.has(k) && !store.newIds.includes(k)) store.newIds.push(k);
+  }
+  const kset = new Set(keys);
+  store.newIds = store.newIds.filter(k => kset.has(k));
+  store.scanIds = keys;
+  store.folderName = h.name;
+  saveStore();
+  renderAll();
+  toast(`Папка прочитана: ${keys.length} файлів`);
+}
+
+function addFilesList(list) {
+  const imgs = [...list].filter(f => /^image\/(png|jpeg|webp)$/.test(f.type) || IMG_RE.test(f.name));
+  if (!imgs.length) { toast('Немає підтримуваних картинок (png, jpg, webp)'); return; }
+  setFiles(imgs, false);
+  renderAll();
+  toast(`Додано файлів: ${imgs.length}`);
+}
+
+// ---------- IndexedDB (only the folder handle) ----------
+function idbOpen() {
+  return new Promise((res, rej) => {
+    const r = indexedDB.open(IDB_NAME, 1);
+    r.onupgradeneeded = () => r.result.createObjectStore(IDB_STORE);
+    r.onsuccess = () => res(r.result);
+    r.onerror = () => rej(r.error);
+  });
+}
+async function idbGet(k) {
+  const db = await idbOpen();
+  return new Promise((res, rej) => {
+    const q = db.transaction(IDB_STORE).objectStore(IDB_STORE).get(k);
+    q.onsuccess = () => res(q.result);
+    q.onerror = () => rej(q.error);
+  });
+}
+async function idbSet(k, v) {
+  const db = await idbOpen();
+  return new Promise((res, rej) => {
+    const t = db.transaction(IDB_STORE, 'readwrite');
+    t.objectStore(IDB_STORE).put(v, k);
+    t.oncomplete = () => res();
+    t.onerror = () => rej(t.error);
+  });
+}
+
+// ---------- folder actions ----------
+async function pickFolder() {
+  let h;
+  try {
+    h = await window.showDirectoryPicker({ mode: 'readwrite', id: 'ref-board' });
+  } catch (e) {
+    if (e.name !== 'AbortError') toast('Не вдалося відкрити папку: ' + e.message);
+    return;
+  }
+  S.handle = h;
+  S.permOk = true;
+  S.writeOk = (await queryPerm(h, 'readwrite')) === 'granted';
+  try { await idbSet(IDB_KEY, h); } catch (e) { toast('Не вдалося запам\'ятати папку: ' + e.message); }
+  await scanFolder();
+  if (!S.writeOk) toast('Папку відкрито лише для читання. Натисніть «Дозволити запис», щоб експорт писав у папку.');
+}
+
+// Перевірка дозволу без запиту (не потребує жесту користувача).
+async function queryPerm(h, mode) {
+  try { return await h.queryPermission({ mode }); } catch (e) { return 'denied'; }
+}
+// Запит дозволу readwrite; викликати тільки з жесту користувача (клік).
+async function askPerm(h) {
+  try { return await h.requestPermission({ mode: 'readwrite' }); } catch (e) { return 'denied'; }
+}
+async function requestWrite() {
+  if (!S.handle) return false;
+  S.writeOk = (await askPerm(S.handle)) === 'granted';
+  renderFolderBar();
+  return S.writeOk;
+}
+
+async function restoreAccess() {
+  const h = S.handle;
+  S.writeOk = (await askPerm(h)) === 'granted';
+  S.permOk = S.writeOk || (await queryPerm(h, 'read')) === 'granted';
+  if (!S.permOk) { toast('Доступ до папки не надано'); renderAll(); return; }
+  await scanFolder();
+  if (!S.writeOk) toast('Доступ лише для читання. Натисніть «Дозволити запис», щоб експорт писав у папку.');
+}
+
+// ---------- import / export ----------
+function download(blob, name) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 0);
+}
+
+// Список ref-board_vNNN_*.json у папці, від новіших.
+async function listExports(h) {
+  const out = [];
+  for await (const entry of h.values()) {
+    if (entry.kind !== 'file') continue;
+    const m = EXPORT_RE.exec(entry.name);
+    if (m) out.push({ name: entry.name, version: Number(m[1]) });
+  }
+  return out.sort((a, b) => b.version - a.version || (a.name < b.name ? 1 : a.name > b.name ? -1 : 0));
+}
+
+// Створює новий файл з першим вільним іменем, починаючи з version (не перезаписує наявні).
+async function createExportFile(h, version, d) {
+  for (let v = version; v < version + 1000; v++) {
+    const name = exportName(v, d);
+    let exists = true;
+    try { await h.getFileHandle(name); }
+    catch (e) { if (e.name !== 'NotFoundError') throw e; exists = false; }
+    if (!exists) return { version: v, name, fh: await h.getFileHandle(name, { create: true }) };
+  }
+  throw new Error('не вдалося підібрати вільне імʼя файлу');
+}
+
+function buildExport(exportVersion, d) {
+  return { version: 1, exportVersion, exportedAt: d.toISOString(), references: Object.values(store.refs) };
+}
+
+function fallbackExport(d, reason) {
+  const data = buildExport(null, d);
+  download(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }), 'ref-board.json');
+  toast(`${reason}Файл збережено в Downloads як ref-board.json (записів: ${data.references.length})`);
+}
+
+async function exportJson() {
+  const d = new Date();
+  // askPerm першим викликом, поки ще є жест користувача
+  if (S.supported && S.handle && !S.writeOk) await requestWrite();
+  if (!S.supported || !S.handle) { fallbackExport(d, 'Папку не обрано. '); return; }
+  if (!S.writeOk) { fallbackExport(d, 'Немає дозволу на запис у папку. Натисніть «Дозволити запис». '); return; }
+  let created = null;
+  try {
+    const entries = await listExports(S.handle);
+    created = await createExportFile(S.handle, nextVersion(entries.map(x => x.name)), d);
+    const data = buildExport(created.version, d);
+    const w = await created.fh.createWritable();
+    await w.write(JSON.stringify(data, null, 2));
+    await w.close();
+    toast(`Записано у папку: ${created.name} (записів: ${data.references.length})`);
+  } catch (e) {
+    if (created) { try { await S.handle.removeEntry(created.name); } catch (_) { /* ignore */ } }
+    if (e.name === 'NotAllowedError') { S.writeOk = false; renderFolderBar(); }
+    fallbackExport(d, `Не вдалося записати в папку (${e.message}). `);
+  }
+}
+
+async function openFolderImport() {
+  if (!S.supported || !S.handle) { toast('Спочатку оберіть папку з референсами'); return; }
+  if (!S.permOk) { toast('Натисніть «Відновити доступ», щоб прочитати папку'); return; }
+  let items;
+  try { items = await listExports(S.handle); }
+  catch (e) { toast('Не вдалося прочитати папку: ' + e.message); return; }
+  $('pickList').innerHTML = items.length
+    ? items.map(it => `<button data-pf="${esc(it.name)}">${esc(it.name)}</button>`).join('')
+    : '<div class="empty">У папці немає файлів ref-board_v*.json</div>';
+  $('pickDlg').showModal();
+}
+
+async function importFromFolder(name) {
+  try {
+    const fh = await S.handle.getFileHandle(name);
+    await importJson(await fh.getFile());
+  } catch (e) { toast('Не вдалося прочитати файл: ' + e.message); }
+}
+
+async function importJson(file) {
+  let data;
+  try { data = JSON.parse(await file.text()); }
+  catch (e) { toast('Файл не є коректним JSON'); return; }
+  if (!data || data.version !== 1 || !Array.isArray(data.references)) {
+    toast('Непідтримуваний формат (очікується version 1)');
+    return;
+  }
+  const items = data.references.filter(r => r && typeof r.id === 'string');
+  const overlap = items.filter(r => store.refs[r.id]).length;
+  if (overlap && !confirm(`Записи з тим самим ідентифікатором (${overlap}) буде замінено. Продовжити?`)) return;
+  for (const raw of items) store.refs[raw.id] = normalizeRef(raw, raw.id);
+  saveStore();
+  renderAll();
+  toast(`Імпортовано записів: ${items.length}`);
+}
+
+// ---------- open / select ----------
+function openRef(key) {
+  if (!S.files.has(key) && !store.refs[key]) return;
+  S.cur = key; S.sel = null; S.draft = null;
+  const i = store.newIds.indexOf(key);
+  if (i >= 0) { store.newIds.splice(i, 1); saveStore(); }
+  if (S.files.has(key)) ensureRef(key);
+  renderAll();
+}
+
+function selectHl(hid) {
+  S.sel = hid;
+  if (hid) S.tab = 'tags';
+  renderTabs();
+  renderPanel();
+  renderOverlay();
+  if (hid) {
+    const el = $('panel').querySelector(`[data-hid="${hid}"]`);
+    if (el) el.scrollIntoView({ block: 'nearest' });
+  }
+}
+
+function deleteHl(hid) {
+  const r = ref();
+  if (!r) return;
+  r.highlights = r.highlights.filter(h => h.id !== hid);
+  if (S.sel === hid) S.sel = null;
+  saveStore();
+  renderAll();
+}
+
+// ---------- zoom / layout ----------
+function fitScale() {
+  const vp = $('vp');
+  const aw = vp.clientWidth - 40, ah = vp.clientHeight - 40;
+  return Math.max(0.05, Math.min(aw / S.natW, ah / S.natH, 1));
+}
+function layoutStage() {
+  const stage = $('stage');
+  if (!S.natW) { $('zoomLabel').textContent = ''; return; }
+  stage.style.width = Math.round(S.natW * S.scale) + 'px';
+  stage.style.height = Math.round(S.natH * S.scale) + 'px';
+  $('zoomLabel').textContent = Math.round(S.scale * 100) + '%';
+}
+function setZoom(ns, cx, cy) {
+  if (!S.natW) return;
+  const vp = $('vp'), stage = $('stage');
+  ns = clamp(ns, 0.05, 8);
+  if (cx == null) { cx = vp.clientWidth / 2; cy = vp.clientHeight / 2; }
+  const fx = (vp.scrollLeft + cx - stage.offsetLeft) / (stage.offsetWidth || 1);
+  const fy = (vp.scrollTop + cy - stage.offsetTop) / (stage.offsetHeight || 1);
+  S.fit = false;
+  S.scale = ns;
+  layoutStage();
+  vp.scrollLeft = stage.offsetLeft + fx * stage.offsetWidth - cx;
+  vp.scrollTop = stage.offsetTop + fy * stage.offsetHeight - cy;
+}
+
+// ---------- pointer: draw / move / resize / pan ----------
+function pt(e) {
+  const r = $('ov').getBoundingClientRect();
+  return { x: clamp((e.clientX - r.left) / r.width * 100, 0, 100), y: clamp((e.clientY - r.top) / r.height * 100, 0, 100) };
+}
+
+function onDown(e) {
+  if (e.button !== 0 || !S.natW) return;
+  const hlEl = e.target.closest('.hl:not(.draft)');
+  if (S.mode === 'pan') { startPan(e, hlEl ? hlEl.dataset.hid : null); return; }
+  const r = ref();
+  if (!r) return;
+  e.preventDefault();
+  if (hlEl) {
+    const hid = hlEl.dataset.hid;
+    const h = findHl(r, hid);
+    if (!h) return;
+    const handle = e.target.dataset.h || null;
+    S.drag = { type: handle ? 'resize' : 'move', hid, handle, start: pt(e), orig: { ...h.rect } };
+    if (S.sel !== hid) selectHl(hid);
+  } else {
+    const p = pt(e);
+    S.drag = { type: 'draw', start: p };
+    S.draft = { x: p.x, y: p.y, w: 0, h: 0 };
+    if (S.sel) selectHl(null); else renderOverlay();
+  }
+  window.addEventListener('pointermove', onMove);
+  window.addEventListener('pointerup', onUp, { once: true });
+}
+
+function onMove(e) {
+  const d = S.drag, r = ref();
+  if (!d || !r) return;
+  const p = pt(e);
+  if (d.type === 'draw') {
+    const x1 = Math.min(d.start.x, p.x), x2 = Math.max(d.start.x, p.x);
+    const y1 = Math.min(d.start.y, p.y), y2 = Math.max(d.start.y, p.y);
+    S.draft = { x: x1, y: y1, w: x2 - x1, h: y2 - y1 };
+  } else {
+    const h = findHl(r, d.hid);
+    if (!h) return;
+    if (d.type === 'move') {
+      const dx = p.x - d.start.x, dy = p.y - d.start.y;
+      h.rect.x = r2(clamp(d.orig.x + dx, 0, 100 - d.orig.w));
+      h.rect.y = r2(clamp(d.orig.y + dy, 0, 100 - d.orig.h));
+    } else {
+      let L = d.orig.x, R = d.orig.x + d.orig.w, T = d.orig.y, B = d.orig.y + d.orig.h;
+      if (d.handle.includes('w')) L = p.x; else R = p.x;
+      if (d.handle.includes('n')) T = p.y; else B = p.y;
+      const x1 = clamp(Math.min(L, R), 0, 99.5), x2 = clamp(Math.max(L, R), x1 + 0.5, 100);
+      const y1 = clamp(Math.min(T, B), 0, 99.5), y2 = clamp(Math.max(T, B), y1 + 0.5, 100);
+      h.rect = { x: r2(x1), y: r2(y1), w: r2(x2 - x1), h: r2(y2 - y1) };
+    }
+  }
+  renderOverlay();
+}
+
+function onUp() {
+  window.removeEventListener('pointermove', onMove);
+  const d = S.drag;
+  S.drag = null;
+  if (!d) return;
+  const r = ref();
+  if (d.type === 'draw') {
+    const dr = S.draft;
+    S.draft = null;
+    if (r && dr && dr.w >= 0.5 && dr.h >= 0.5) {
+      const h = {
+        id: uid(),
+        rect: { x: r2(dr.x), y: r2(dr.y), w: r2(dr.w), h: r2(dr.h) },
+        title: 'Виділення ' + (r.highlights.length + 1),
+        note: '', category: 'component', verdict: 'neutral'
+      };
+      r.highlights.push(h);
+      S.sel = h.id;
+      S.tab = 'tags';
+      saveStore();
+      renderAll();
+      const el = $('panel').querySelector(`[data-hid="${h.id}"] .f-title`);
+      if (el) { el.focus(); el.select(); }
+      return;
+    }
+    renderOverlay();
+  } else {
+    saveStore();
+    renderPanel();
+  }
+}
+
+function startPan(e, hid) {
+  const vp = $('vp');
+  const sx = e.clientX, sy = e.clientY, l0 = vp.scrollLeft, t0 = vp.scrollTop;
+  let moved = false;
+  const mv = ev => {
+    const dx = ev.clientX - sx, dy = ev.clientY - sy;
+    if (Math.abs(dx) + Math.abs(dy) > 3) moved = true;
+    vp.scrollLeft = l0 - dx;
+    vp.scrollTop = t0 - dy;
+  };
+  const up = () => {
+    window.removeEventListener('pointermove', mv);
+    if (!moved && hid) selectHl(hid);
+  };
+  window.addEventListener('pointermove', mv);
+  window.addEventListener('pointerup', up, { once: true });
+  e.preventDefault();
+}
+
+// ---------- rendering ----------
+function emptyText() {
+  if (!S.supported) return 'Вибір папки недоступний: потрібні Chrome або Edge. Додайте картинки кнопкою «Додати файли» або перетягніть їх сюди. Після перезавантаження файли треба додати знову, тези збережуться.';
+  if (!S.handle) return 'Оберіть папку з референсами кнопкою «Обрати папку».';
+  if (!S.permOk) return 'Натисніть «Відновити доступ», щоб прочитати папку.';
+  return 'У папці немає файлів png, jpg чи webp.';
+}
+
+function renderAll() {
+  renderFolderBar();
+  renderList();
+  renderCenter();
+  renderTabs();
+  renderPanel();
+}
+
+function renderFolderBar() {
+  let h = '';
+  if (!S.supported) h += '<span class="muted">Вибір папки недоступний (потрібні Chrome або Edge)</span>';
+  else if (!S.handle) h += '<button class="primary" data-act="pick">Обрати папку</button>';
+  else if (!S.permOk) h += '<button class="primary" data-act="restore">Відновити доступ</button>';
+  else {
+    h += '<button data-act="rescan">Оновити</button><button data-act="pick">Змінити папку</button>';
+    if (!S.writeOk) h += '<button class="primary" data-act="write">Дозволити запис</button>';
+  }
+  if (S.handle) h += `<span class="muted folder" title="${esc(S.handle.name)}">Папка: ${esc(S.handle.name)}</span>`;
+  h += '<button data-act="addfiles">Додати файли</button>';
+  $('folderBar').innerHTML = h;
+}
+
+function renderList() {
+  const keys = new Set([...S.files.keys(), ...Object.keys(store.refs)]);
+  const items = [...keys].map(k => ({ k, name: refName(k), missing: !S.files.has(k) }))
+    .sort((a, b) => a.name.localeCompare(b.name, 'uk'));
+  const list = $('list');
+  if (!items.length) { list.innerHTML = `<div class="empty">${esc(emptyText())}</div>`; return; }
+  list.innerHTML = items.map(it => {
+    const e = S.files.get(it.k);
+    const r = store.refs[it.k];
+    const isNew = store.newIds.includes(it.k);
+    const thumb = e ? `<img class="thumb" src="${esc(e.url)}" alt="" loading="lazy">` : '<div class="thumb"></div>';
+    return `<div class="item${it.k === S.cur ? ' cur' : ''}${it.missing ? ' missing' : ''}" data-key="${esc(it.k)}">
+      ${thumb}
+      <div class="meta">
+        <div class="name" title="${esc(it.name)}">${esc(it.name)}</div>
+        <div class="sub"><span class="st">${statusOf(it.k)}</span>${isNew ? '<span class="badge-new">нове</span>' : ''}${it.missing ? '<span>немає файлу</span>' : ''}${r && r.highlights.length ? `<span>тез: ${r.highlights.length}</span>` : ''}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderCenter() {
+  const key = S.cur, e = key && S.files.get(key);
+  const stage = $('stage'), img = $('img'), empty = $('emptyCenter');
+  document.querySelectorAll('[data-mode]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === S.mode)));
+  stage.classList.toggle('pan', S.mode === 'pan');
+  if (!key) {
+    stage.hidden = true; empty.hidden = false;
+    empty.textContent = (S.files.size || Object.keys(store.refs).length) ? 'Оберіть референс зліва.' : emptyText();
+    $('zoomLabel').textContent = '';
+    return;
+  }
+  if (!e) {
+    stage.hidden = true; empty.hidden = false;
+    empty.textContent = 'Цього файлу немає в поточній папці. Тези й оцінку можна переглянути праворуч.';
+    $('zoomLabel').textContent = '';
+    return;
+  }
+  empty.hidden = true; stage.hidden = false;
+  if (img.dataset.url !== e.url) {
+    img.dataset.url = e.url;
+    S.natW = 0; S.natH = 0;
+    stage.style.width = '0px'; stage.style.height = '0px';
+    img.src = e.url;
+  }
+  layoutStage();
+  renderOverlay();
+}
+
+function hlHtml(h, i, sel) {
+  const handles = sel ? ['nw', 'ne', 'sw', 'se'].map(p => `<div class="h ${p}" data-h="${p}"></div>`).join('') : '';
+  const cls = ['hl', h.verdict === 'take' ? 'take' : h.verdict === 'avoid' ? 'avoid' : '', sel ? 'sel' : ''].join(' ');
+  return `<div class="${cls}" data-hid="${esc(h.id)}" style="left:${h.rect.x}%;top:${h.rect.y}%;width:${h.rect.w}%;height:${h.rect.h}%"><span class="n">${i + 1}</span>${handles}</div>`;
+}
+
+function renderOverlay() {
+  const ov = $('ov'), r = ref();
+  if (!r || !S.natW) { ov.innerHTML = ''; return; }
+  let html = r.highlights.map((h, i) => hlHtml(h, i, h.id === S.sel)).join('');
+  if (S.draft) html += `<div class="hl draft" style="left:${S.draft.x}%;top:${S.draft.y}%;width:${S.draft.w}%;height:${S.draft.h}%"></div>`;
+  ov.innerHTML = html;
+}
+
+function renderTabs() {
+  $('tabs').innerHTML = [['tags', 'Тези'], ['rating', 'Оцінка'], ['color', 'Колір']]
+    .map(([k, l]) => `<button data-tab="${k}" class="${S.tab === k ? 'active' : ''}">${l}</button>`).join('');
+}
+
+function renderPanel() {
+  const p = $('panel');
+  if (S.tab === 'color') {
+    p.innerHTML = '<div class="empty"><b>Колір: скоро</b><br>Палітра, піпетка й перевірка контрасту зʼявляться на наступному етапі.</div>';
+    return;
+  }
+  const r = ref();
+  if (!r) { p.innerHTML = '<div class="empty">Оберіть референс зліва, щоб бачити його тези й оцінку.</div>'; return; }
+  p.innerHTML = S.tab === 'tags' ? tagsHtml(r) : ratingHtml(r);
+}
+
+function tagsHtml(r) {
+  const head = `<div class="muted" style="margin-bottom:8px">Тези: ${r.highlights.length}. Малюйте в режимі «Виділити» на картинці.</div>`;
+  if (!r.highlights.length) return head + '<div class="empty">Ще немає тез.<br>Натисніть «Виділити» й намалюйте прямокутник на картинці.</div>';
+  return head + r.highlights.map((h, i) => `
+    <div class="card${h.id === S.sel ? ' cur' : ''}" data-hid="${esc(h.id)}">
+      <div class="row" style="flex-wrap:nowrap">
+        <span class="num" data-pick="${esc(h.id)}" title="Показати на картинці">${i + 1}</span>
+        <input type="text" class="f-title" data-hf="title" value="${esc(h.title)}" placeholder="Заголовок">
+        <button class="ghost" data-del="${esc(h.id)}" title="Видалити виділення" aria-label="Видалити виділення">✕</button>
+      </div>
+      <textarea data-hf="note" rows="2" placeholder="Нотатка: що саме і чому">${esc(h.note)}</textarea>
+      <div class="row" style="flex-wrap:nowrap">
+        <select data-hf="category" aria-label="Категорія">${Object.entries(CATS).map(([k, l]) => `<option value="${k}"${h.category === k ? ' selected' : ''}>${l}</option>`).join('')}</select>
+        <select data-hf="verdict" aria-label="Вердикт">${Object.entries(VERDICTS).map(([k, l]) => `<option value="${k}"${h.verdict === k ? ' selected' : ''}>${l}</option>`).join('')}</select>
+      </div>
+    </div>`).join('');
+}
+
+function ratingHtml(r) {
+  const crit = CRITERIA.map(([k, label]) => {
+    const c = r.ratings[k];
+    return `
+    <div class="card">
+      <div class="row" style="justify-content:space-between;flex-wrap:nowrap">
+        <span class="crit-label">${label}</span>
+        <div class="seg">${['take', 'neutral', 'avoid'].map(v =>
+          `<button data-rc="${k}" data-rv="${v}" class="v-${v}" aria-pressed="${c.verdict === v}">${VERDICTS[v]}</button>`).join('')}</div>
+      </div>
+      <div class="row scores" style="margin-top:6px">
+        <span class="muted" style="width:56px">Оцінка</span>
+        ${[1, 2, 3, 4, 5].map(n => `<button data-rc="${k}" data-rs="${n}" aria-pressed="${c.score === n}" aria-label="Оцінка ${n}">${n}</button>`).join('')}
+      </div>
+      <input type="text" data-rnote="${k}" value="${esc(c.note)}" placeholder="Коментар">
+    </div>`;
+  }).join('');
+  const done = r.status === 'done';
+  return crit + `
+    <div class="card">
+      <span class="crit-label">Шрифт</span>
+      <label class="row" style="margin-top:6px"><input type="checkbox" data-font-check ${r.font.interesting ? 'checked' : ''}> Шрифт цікавий</label>
+      <input type="text" data-font-note value="${esc(r.font.note)}" placeholder="Нотатка про шрифт (необов'язково)">
+    </div>
+    <div class="card">
+      <span class="crit-label">Загальний коментар</span>
+      <textarea data-gf="comment" rows="3" placeholder="Що подобається загалом">${esc(r.comment)}</textarea>
+    </div>
+    <button data-act="done" class="${done ? '' : 'primary'}" style="width:100%">${done ? 'Повернути в роботу' : 'Позначити як оцінений'}</button>`;
+}
+
+// ---------- events ----------
+function wireEvents() {
+  $('folderBar').addEventListener('click', e => {
+    const b = e.target.closest('button[data-act]');
+    if (!b) return;
+    const a = b.dataset.act;
+    if (a === 'pick') pickFolder();
+    else if (a === 'restore') restoreAccess();
+    else if (a === 'rescan') scanFolder();
+    else if (a === 'write') requestWrite().then(ok => toast(ok ? 'Запис у папку дозволено' : 'Запис не дозволено: експорт піде в Downloads'));
+    else if (a === 'addfiles') $('addFiles').click();
+  });
+
+  $('addFiles').addEventListener('change', e => { addFilesList(e.target.files); e.target.value = ''; });
+
+  const list = $('list');
+  list.addEventListener('click', e => {
+    const it = e.target.closest('.item');
+    if (it) openRef(it.dataset.key);
+  });
+  list.addEventListener('dragover', e => { e.preventDefault(); list.classList.add('over'); });
+  list.addEventListener('dragleave', () => list.classList.remove('over'));
+  list.addEventListener('drop', e => { e.preventDefault(); list.classList.remove('over'); addFilesList(e.dataTransfer.files); });
+  window.addEventListener('dragover', e => e.preventDefault());
+  window.addEventListener('drop', e => e.preventDefault());
+
+  $('btnExport').addEventListener('click', exportJson);
+  $('btnImport').addEventListener('click', () => $('importFile').click());
+  $('btnImportFolder').addEventListener('click', openFolderImport);
+  $('pickList').addEventListener('click', e => {
+    const b = e.target.closest('[data-pf]');
+    if (!b) return;
+    $('pickDlg').close();
+    importFromFolder(b.dataset.pf);
+  });
+  $('pickClose').addEventListener('click', () => $('pickDlg').close());
+  $('importFile').addEventListener('change', e => {
+    const f = e.target.files[0];
+    if (f) importJson(f);
+    e.target.value = '';
+  });
+
+  document.querySelector('.toolbar').addEventListener('click', e => {
+    const m = e.target.closest('[data-mode]');
+    if (m) { S.mode = m.dataset.mode; renderCenter(); return; }
+    const z = e.target.closest('[data-zoom]');
+    if (!z || !S.natW) return;
+    const k = z.dataset.zoom;
+    if (k === 'in') setZoom(S.scale * 1.25);
+    else if (k === 'out') setZoom(S.scale / 1.25);
+    else if (k === '100') setZoom(1);
+    else {
+      S.fit = true;
+      S.scale = fitScale();
+      layoutStage();
+      $('vp').scrollLeft = 0;
+      $('vp').scrollTop = 0;
+      renderOverlay();
+    }
+  });
+
+  $('vp').addEventListener('wheel', e => {
+    if (!e.ctrlKey && !e.metaKey) return;
+    if (!S.natW) return;
+    e.preventDefault();
+    const rc = $('vp').getBoundingClientRect();
+    setZoom(S.scale * Math.exp(-e.deltaY * 0.0015), e.clientX - rc.left, e.clientY - rc.top);
+  }, { passive: false });
+
+  $('ov').addEventListener('pointerdown', onDown);
+
+  const img = $('img');
+  img.addEventListener('load', () => {
+    const key = S.cur, e = key && S.files.get(key);
+    if (!e || e.url !== img.dataset.url) return;
+    S.natW = img.naturalWidth;
+    S.natH = img.naturalHeight;
+    const r = ensureRef(key);
+    if (r.file.w !== S.natW || r.file.h !== S.natH) {
+      r.file.w = S.natW; r.file.h = S.natH;
+      saveStore();
+    }
+    S.fit = true;
+    S.scale = fitScale();
+    layoutStage();
+    renderOverlay();
+  });
+  img.addEventListener('error', () => toast('Не вдалося відкрити картинку'));
+
+  window.addEventListener('resize', () => {
+    if (S.natW && S.fit) { S.scale = fitScale(); layoutStage(); renderOverlay(); }
+  });
+
+  $('tabs').addEventListener('click', e => {
+    const b = e.target.closest('[data-tab]');
+    if (!b) return;
+    S.tab = b.dataset.tab;
+    renderTabs();
+    renderPanel();
+  });
+
+  const panel = $('panel');
+  panel.addEventListener('focusin', e => {
+    const c = e.target.closest('[data-hid]');
+    if (c && c.dataset.hid !== S.sel) {
+      S.sel = c.dataset.hid;
+      panel.querySelectorAll('[data-hid]').forEach(x => x.classList.toggle('cur', x === c));
+      renderOverlay();
+    }
+  });
+  panel.addEventListener('input', e => {
+    const t = e.target, r = ref();
+    if (!r) return;
+    if (t.dataset.hf) {
+      const h = findHl(r, t.closest('[data-hid]').dataset.hid);
+      if (!h) return;
+      h[t.dataset.hf] = t.value;
+    } else if (t.dataset.gf) r.comment = t.value;
+    else if (t.dataset.fontNote !== undefined) r.font.note = t.value;
+    else if (t.dataset.rnote) r.ratings[t.dataset.rnote].note = t.value;
+    else return;
+    saveStore();
+  });
+  panel.addEventListener('change', e => {
+    const t = e.target, r = ref();
+    if (!r) return;
+    if (t.dataset.hf) {
+      const h = findHl(r, t.closest('[data-hid]').dataset.hid);
+      if (!h) return;
+      h[t.dataset.hf] = t.value;
+      saveStore();
+      renderOverlay();
+    } else if (t.dataset.fontCheck !== undefined) {
+      r.font.interesting = t.checked;
+      saveStore();
+    } else if (t.dataset.gf || t.dataset.fontNote !== undefined || t.dataset.rnote) {
+      saveStore();
+    } else return;
+    renderList();
+  });
+  panel.addEventListener('click', e => {
+    const r = ref();
+    if (!r) return;
+    const pick = e.target.closest('[data-pick]');
+    if (pick) { selectHl(pick.dataset.pick); return; }
+    const del = e.target.closest('[data-del]');
+    if (del) { deleteHl(del.dataset.del); return; }
+    const rb = e.target.closest('button[data-rc]');
+    if (rb) {
+      const c = r.ratings[rb.dataset.rc];
+      if (rb.dataset.rv) c.verdict = rb.dataset.rv;
+      if (rb.dataset.rs) {
+        const n = Number(rb.dataset.rs);
+        c.score = c.score === n ? null : n;
+      }
+      saveStore();
+      renderPanel();
+      renderList();
+      return;
+    }
+    if (e.target.closest('[data-act="done"]')) {
+      r.status = r.status === 'done' ? 'draft' : 'done';
+      saveStore();
+      renderPanel();
+      renderList();
+    }
+  });
+
+  document.addEventListener('keydown', e => {
+    if (/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+    if ((e.key === 'Delete' || e.key === 'Backspace') && S.sel) { e.preventDefault(); deleteHl(S.sel); }
+    else if (e.key === 'Escape' && S.sel) selectHl(null);
+  });
+}
+
+// ---------- init ----------
+async function init() {
+  wireEvents();
+  if (S.supported) {
+    try { S.handle = (await idbGet(IDB_KEY)) || null; } catch (e) { S.handle = null; }
+    if (S.handle) {
+      S.writeOk = (await queryPerm(S.handle, 'readwrite')) === 'granted';
+      S.permOk = S.writeOk || (await queryPerm(S.handle, 'read')) === 'granted';
+      if (S.permOk) await scanFolder();
+    }
+  }
+  renderAll();
+}
+init();
+})();
+</script>
+</body>
+</html>

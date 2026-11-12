@@ -1,0 +1,18 @@
+# Системні файли macOS і редакторів
+.DS_Store
+.idea/
+.vscode/
+
+# Логи і тимчасові дані
+*.log
+tmp/
+*.bin
+
+# Node.js і Python
+node_modules/
+__pycache__/
+*.pyc
+
+# особисті дані оцінювання (експорти з інструмента)
+Ref Board.json
+ref-board_v*.json
