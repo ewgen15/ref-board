@@ -1,0 +1,568 @@
+{
+  "ref_01": [
+    {
+      "hex": "#2b2c26",
+      "share": 0.2856,
+      "role": "background"
+    },
+    {
+      "hex": "#232708",
+      "share": 0.2708,
+      "role": "surface"
+    },
+    {
+      "hex": "#dbef3c",
+      "share": 0.0997,
+      "role": "accent"
+    },
+    {
+      "hex": "#e9e9de",
+      "share": 0.0991,
+      "role": "textSecondary"
+    },
+    {
+      "hex": "#646a25",
+      "share": 0.0891,
+      "role": "other"
+    },
+    {
+      "hex": "#d7e467",
+      "share": 0.0649,
+      "role": "other"
+    },
+    {
+      "hex": "#f8fcd5",
+      "share": 0.0611,
+      "role": "textPrimary"
+    },
+    {
+      "hex": "#8d6ed9",
+      "share": 0.0297,
+      "role": "other"
+    }
+  ],
+  "ref_02": [
+    {
+      "hex": "#1c3229",
+      "share": 0.3757,
+      "role": "background"
+    },
+    {
+      "hex": "#0b1d18",
+      "share": 0.1676,
+      "role": "surface"
+    },
+    {
+      "hex": "#106661",
+      "share": 0.1214,
+      "role": "textSecondary"
+    },
+    {
+      "hex": "#3f5444",
+      "share": 0.117,
+      "role": "other"
+    },
+    {
+      "hex": "#56782d",
+      "share": 0.0994,
+      "role": "other"
+    },
+    {
+      "hex": "#d4eb2f",
+      "share": 0.0533,
+      "role": "accent"
+    },
+    {
+      "hex": "#d4c83d",
+      "share": 0.0367,
+      "role": "other"
+    },
+    {
+      "hex": "#bec0be",
+      "share": 0.0289,
+      "role": "textPrimary"
+    }
+  ],
+  "ref_03": [
+    {
+      "hex": "#f2f3f5",
+      "share": 0.6651,
+      "role": "background",
+      "removed": true
+    },
+    {
+      "hex": "#d1d9ec",
+      "share": 0.4399,
+      "role": "surface"
+    },
+    {
+      "hex": "#969498",
+      "share": 0.1461,
+      "role": "textSecondary"
+    },
+    {
+      "hex": "#f0e5d0",
+      "share": 0.1167,
+      "role": "other"
+    },
+    {
+      "hex": "#ce9e64",
+      "share": 0.0922,
+      "role": "other"
+    },
+    {
+      "hex": "#afb5eb",
+      "share": 0.0644,
+      "role": "other"
+    },
+    {
+      "hex": "#2a2b27",
+      "share": 0.0511,
+      "role": "textPrimary"
+    },
+    {
+      "hex": "#7e87fc",
+      "share": 0.0507,
+      "role": "other"
+    },
+    {
+      "hex": "#666afc",
+      "share": 0.0389,
+      "role": "accent"
+    }
+  ],
+  "ref_04": [
+    {
+      "hex": "#f4efe3",
+      "share": 0.2928,
+      "role": "background"
+    },
+    {
+      "hex": "#d0d1cd",
+      "share": 0.2389,
+      "role": "surface"
+    },
+    {
+      "hex": "#cfc6b2",
+      "share": 0.1751,
+      "role": "other"
+    },
+    {
+      "hex": "#827c6f",
+      "share": 0.1255,
+      "role": "textSecondary"
+    },
+    {
+      "hex": "#302926",
+      "share": 0.0684,
+      "role": "textPrimary"
+    },
+    {
+      "hex": "#d28212",
+      "share": 0.0573,
+      "role": "accent"
+    },
+    {
+      "hex": "#dab775",
+      "share": 0.042,
+      "role": "other"
+    }
+  ],
+  "ref_05": [
+    {
+      "hex": "#e8e6df",
+      "share": 0.8831,
+      "role": "background",
+      "removed": true
+    },
+    {
+      "hex": "#989591",
+      "share": 0.078,
+      "role": "surface",
+      "removed": true
+    },
+    {
+      "hex": "#c6c1bb",
+      "share": 0.5569,
+      "role": "other"
+    },
+    {
+      "hex": "#181614",
+      "share": 0.1392,
+      "role": "textPrimary"
+    },
+    {
+      "hex": "#76706a",
+      "share": 0.0926,
+      "role": "other"
+    },
+    {
+      "hex": "#383734",
+      "share": 0.077,
+      "role": "textSecondary"
+    },
+    {
+      "hex": "#fdfdfc",
+      "share": 0.0608,
+      "role": "other"
+    },
+    {
+      "hex": "#823d27",
+      "share": 0.0254,
+      "role": "other"
+    },
+    {
+      "hex": "#d69179",
+      "share": 0.0247,
+      "role": "other"
+    },
+    {
+      "hex": "#c6512b",
+      "share": 0.0233,
+      "role": "accent"
+    }
+  ],
+  "ref_06": [
+    {
+      "hex": "#e8e6df",
+      "share": 0.9203,
+      "role": "background",
+      "removed": true
+    },
+    {
+      "hex": "#fefefd",
+      "share": 0.3181,
+      "role": "surface"
+    },
+    {
+      "hex": "#c9c7c2",
+      "share": 0.2256,
+      "role": "other"
+    },
+    {
+      "hex": "#aeada9",
+      "share": 0.1648,
+      "role": "other"
+    },
+    {
+      "hex": "#e9c4b2",
+      "share": 0.1018,
+      "role": "other"
+    },
+    {
+      "hex": "#1b1917",
+      "share": 0.0811,
+      "role": "textPrimary"
+    },
+    {
+      "hex": "#85837f",
+      "share": 0.0676,
+      "role": "other"
+    },
+    {
+      "hex": "#444240",
+      "share": 0.0211,
+      "role": "textSecondary"
+    },
+    {
+      "hex": "#c85a37",
+      "share": 0.0199,
+      "role": "accent"
+    }
+  ],
+  "ref_07": [
+    {
+      "hex": "#f8f9f9",
+      "share": 0.4265,
+      "role": "background"
+    },
+    {
+      "hex": "#d44e09",
+      "share": 0.1993,
+      "role": "other"
+    },
+    {
+      "hex": "#3c1004",
+      "share": 0.0941,
+      "role": "textPrimary"
+    },
+    {
+      "hex": "#236a8a",
+      "share": 0.0897,
+      "role": "textSecondary"
+    },
+    {
+      "hex": "#c6b7b4",
+      "share": 0.0613,
+      "role": "surface"
+    },
+    {
+      "hex": "#0fa01a",
+      "share": 0.0455,
+      "role": "other"
+    },
+    {
+      "hex": "#f74257",
+      "share": 0.0419,
+      "role": "other"
+    },
+    {
+      "hex": "#9754fb",
+      "share": 0.0415,
+      "role": "accent"
+    }
+  ],
+  "ref_08": [
+    {
+      "hex": "#f5f3ef",
+      "share": 0.4387,
+      "role": "background"
+    },
+    {
+      "hex": "#80b1c8",
+      "share": 0.2149,
+      "role": "textSecondary"
+    },
+    {
+      "hex": "#becad2",
+      "share": 0.1545,
+      "role": "surface"
+    },
+    {
+      "hex": "#105d86",
+      "share": 0.1378,
+      "role": "textPrimary"
+    },
+    {
+      "hex": "#b068f6",
+      "share": 0.0203,
+      "role": "accent"
+    },
+    {
+      "hex": "#4dc770",
+      "share": 0.0169,
+      "role": "other"
+    },
+    {
+      "hex": "#ef8050",
+      "share": 0.0169,
+      "role": "other"
+    }
+  ],
+  "ref_09": [
+    {
+      "hex": "#e5eaed",
+      "share": 0.8863,
+      "role": "background",
+      "removed": true
+    },
+    {
+      "hex": "#fbe9df",
+      "share": 0.2514,
+      "role": "surface"
+    },
+    {
+      "hex": "#c6c3c4",
+      "share": 0.2469,
+      "role": "other"
+    },
+    {
+      "hex": "#8f8e8c",
+      "share": 0.1845,
+      "role": "textSecondary"
+    },
+    {
+      "hex": "#f2cdae",
+      "share": 0.1376,
+      "role": "other"
+    },
+    {
+      "hex": "#525867",
+      "share": 0.0708,
+      "role": "textPrimary"
+    },
+    {
+      "hex": "#697aa9",
+      "share": 0.0459,
+      "role": "other"
+    },
+    {
+      "hex": "#fa8d20",
+      "share": 0.038,
+      "role": "accent"
+    },
+    {
+      "hex": "#efb561",
+      "share": 0.0249,
+      "role": "other"
+    }
+  ],
+  "ref_10": [
+    {
+      "hex": "#fdfdfd",
+      "share": 0.4129,
+      "role": "background"
+    },
+    {
+      "hex": "#b9f142",
+      "share": 0.2312,
+      "role": "accent"
+    },
+    {
+      "hex": "#e6e8dc",
+      "share": 0.1681,
+      "role": "surface"
+    },
+    {
+      "hex": "#0a0b0a",
+      "share": 0.0492,
+      "role": "textPrimary"
+    },
+    {
+      "hex": "#535852",
+      "share": 0.0408,
+      "role": "textSecondary"
+    },
+    {
+      "hex": "#a3a7a7",
+      "share": 0.0387,
+      "role": "other"
+    },
+    {
+      "hex": "#aecb85",
+      "share": 0.0363,
+      "role": "other"
+    },
+    {
+      "hex": "#a7d646",
+      "share": 0.0227,
+      "role": "other"
+    }
+  ],
+  "ref_11": [
+    {
+      "hex": "#1a2225",
+      "share": 0.3401,
+      "role": "background"
+    },
+    {
+      "hex": "#f7f9f7",
+      "share": 0.2546,
+      "role": "textPrimary"
+    },
+    {
+      "hex": "#b5ec40",
+      "share": 0.1327,
+      "role": "accent"
+    },
+    {
+      "hex": "#3f4445",
+      "share": 0.1108,
+      "role": "surface"
+    },
+    {
+      "hex": "#89877f",
+      "share": 0.0532,
+      "role": "other"
+    },
+    {
+      "hex": "#a2cf44",
+      "share": 0.0519,
+      "role": "other"
+    },
+    {
+      "hex": "#080908",
+      "share": 0.0367,
+      "role": "other"
+    },
+    {
+      "hex": "#a8c07c",
+      "share": 0.0199,
+      "role": "textSecondary"
+    }
+  ],
+  "ref_12": [
+    {
+      "hex": "#192225",
+      "share": 0.4484,
+      "role": "background"
+    },
+    {
+      "hex": "#b9ef47",
+      "share": 0.2298,
+      "role": "accent"
+    },
+    {
+      "hex": "#2c3335",
+      "share": 0.0735,
+      "role": "surface"
+    },
+    {
+      "hex": "#444c4f",
+      "share": 0.0696,
+      "role": "other"
+    },
+    {
+      "hex": "#dfe1e2",
+      "share": 0.0583,
+      "role": "textPrimary"
+    },
+    {
+      "hex": "#050605",
+      "share": 0.0552,
+      "role": "other"
+    },
+    {
+      "hex": "#868e7c",
+      "share": 0.0457,
+      "role": "textSecondary"
+    },
+    {
+      "hex": "#9ec355",
+      "share": 0.0195,
+      "role": "other"
+    }
+  ],
+  "ref_13": [
+    {
+      "hex": "#f4f3ed",
+      "share": 0.4361,
+      "role": "background"
+    },
+    {
+      "hex": "#153325",
+      "share": 0.178,
+      "role": "textPrimary"
+    },
+    {
+      "hex": "#dcdde3",
+      "share": 0.1033,
+      "role": "surface"
+    },
+    {
+      "hex": "#aaad9c",
+      "share": 0.0895,
+      "role": "other"
+    },
+    {
+      "hex": "#b6b55e",
+      "share": 0.0748,
+      "role": "accent"
+    },
+    {
+      "hex": "#5f723d",
+      "share": 0.0644,
+      "role": "textSecondary"
+    },
+    {
+      "hex": "#96c0e9",
+      "share": 0.0396,
+      "role": "other"
+    },
+    {
+      "hex": "#6b80cb",
+      "share": 0.0142,
+      "role": "other"
+    }
+  ]
+}

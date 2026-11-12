@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ref Board: концепт</title>
+<style>
+:root{
+  --bg:#f4f5f7; --panel:#ffffff; --panel-2:#f8f9fb; --line:#e2e5eb; --text:#1d2330; --muted:#6b7385;
+  --accent:#3b6fe0; --accent-soft:rgba(59,111,224,.13);
+  --take:#1f9d55; --take-soft:#e4f5eb;
+  --avoid:#d64545; --avoid-soft:#fbe8e8;
+  --radius:8px;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font:13px/1.4 var(--font);background:var(--bg);color:var(--text);color-scheme:light;min-width:1100px}
+button,select,input,textarea{font:inherit;color:inherit}
+button{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:5px 10px;cursor:pointer;min-height:30px;white-space:nowrap}
+button:hover{border-color:#c3c9d4}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+button.ghost{border-color:transparent;background:transparent;padding:4px 6px}
+button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+input[type=text],select,textarea{border:1px solid var(--line);border-radius:6px;padding:5px 8px;background:#fff;width:100%;min-height:30px}
+textarea{resize:none}
+
+/* каркас */
+.app{display:grid;grid-template-columns:260px minmax(0,1fr);height:100vh}
+.left,.right{background:var(--panel);display:flex;flex-direction:column;min-height:0}
+.left{border-right:1px solid var(--line)}
+.head{padding:10px 12px;border-bottom:1px solid var(--line);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.head h1{font-size:14px;margin:0;margin-right:auto}
+.folder{color:var(--muted);font-size:12px;flex-basis:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.list{flex:1;overflow:auto;min-height:0;padding:6px}
+.item{display:flex;gap:8px;padding:6px;border-radius:6px;cursor:pointer;align-items:center;border:1px solid transparent}
+.item:hover{background:var(--panel-2)}
+.item.cur{background:var(--accent-soft);border-color:rgba(59,111,224,.35)}
+.thumb{width:56px;height:42px;flex:none;border-radius:4px;background:#eceef2;object-fit:cover;border:1px solid var(--line)}
+.meta{min-width:0;flex:1}
+.name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
+.sub{color:var(--muted);font-size:12px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.st{font-size:13px;width:12px;text-align:center}
+.badge-new{background:#ffe8a8;color:#6d4500;border-radius:4px;padding:0 5px;font-size:11px}
+.foot{padding:10px 12px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.legend{color:var(--muted);font-size:12px}
+.row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.muted{color:var(--muted)}
+
+.right{background:#e9ecf1;padding:12px;gap:12px;overflow:auto}
+.vh{position:absolute;opacity:0;width:1px;height:1px;margin:0;pointer-events:none}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#fff}
+.seg > label,.seg > button{border:0;border-left:1px solid var(--line);border-radius:0;background:#fff;padding:5px 10px;font-size:12px;min-height:30px;cursor:pointer;color:var(--text);white-space:nowrap;display:inline-flex;align-items:center}
+.seg > :first-child{border-left:0}
+.seg > label:hover,.seg > button:hover{background:var(--panel-2)}
+
+/* стейдж з картинкою */
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;flex:none}
+.toolbar{padding:8px 12px;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.toolbar .file{font-weight:500;margin-right:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.zoomlbl{color:var(--muted);font-size:12px;min-width:36px;text-align:right}
+.vp{height:480px;background:#eceef2;display:flex;align-items:center;justify-content:center;position:relative}
+.canvas{position:relative;height:440px;flex:none}
+.canvas img{display:block;height:100%;width:auto;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.18);user-select:none}
+.hl{position:absolute;border:2px solid var(--accent);background:rgba(59,111,224,.12);box-sizing:border-box}
+.hl.take{border-color:var(--take);background:rgba(31,157,85,.12)}
+.hl.avoid{border-color:var(--avoid);background:rgba(214,69,69,.12)}
+.hl.sel{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--accent);z-index:2}
+.hl .n{position:absolute;left:-9px;top:-9px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:var(--accent);color:#fff;font-size:11px;line-height:18px;text-align:center;font-weight:600}
+.hl.take .n{background:var(--take)}
+.hl.avoid .n{background:var(--avoid)}
+.meta-strip{display:flex;gap:14px;align-items:center;padding:6px 12px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden}
+.meta-strip b{color:var(--text);font-weight:500}
+.meta-strip .tg{margin-left:auto;display:flex;gap:6px}
+
+/* чіпси */
+.chip{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:#fff;border-radius:6px;padding:4px 9px;font-size:13px;cursor:pointer;user-select:none;white-space:nowrap;min-height:28px}
+.chip:hover{border-color:#c3c9d4}
+.chip.sm{padding:2px 8px;font-size:12px;min-height:24px}
+input:checked + .chip.cat{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+input:checked + .chip.take{background:var(--take-soft);border-color:var(--take);color:var(--take);font-weight:500}
+input:checked + .chip.neutral{background:var(--panel-2);border-color:var(--muted);color:var(--text);font-weight:500}
+input:checked + .chip.avoid{background:var(--avoid-soft);border-color:var(--avoid);color:var(--avoid);font-weight:500}
+input:checked + .chip.hint{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+input:focus-visible + .chip{outline:2px solid var(--accent);outline-offset:1px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.pill{font-size:12px;border-radius:6px;padding:2px 8px;background:var(--panel-2);border:1px solid var(--line);white-space:nowrap}
+.pill.take{color:var(--take);background:var(--take-soft);border-color:transparent}
+.pill.avoid{color:var(--avoid);background:var(--avoid-soft);border-color:transparent}
+.pill.neutral{color:var(--text)}
+
+/* редагування під картинкою */
+.editor{display:flex;flex-direction:column;gap:10px;flex:none}
+.editor > .seg{align-self:flex-start}
+.panels{position:relative}
+.panel{display:none;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:12px}
+#t-theses:checked ~ .seg > label[for="t-theses"],
+#t-rating:checked ~ .seg > label[for="t-rating"],
+#t-color:checked ~ .seg > label[for="t-color"]{background:var(--accent-soft);color:var(--accent);border-color:var(--accent);font-weight:600}
+#t-theses:checked ~ .panels .p-theses,
+#t-rating:checked ~ .panels .p-rating,
+#t-color:checked ~ .panels .p-color{display:block}
+
+.lbl{color:var(--muted);font-size:12px;margin:0 0 4px;display:block}
+.card{border:1px solid var(--line);border-radius:var(--radius);padding:8px;background:#fff}
+.card.cur{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.tg-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:12px}
+.num{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;display:inline-flex;align-items:center;justify-content:center;flex:none;font-weight:600}
+.num.take{background:var(--take)}
+.num.avoid{background:var(--avoid)}
+.throw{display:flex;gap:8px;align-items:flex-start}
+.throw .t{font-weight:500}
+.throw .pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px}
+.form{display:flex;flex-direction:column;gap:10px}
+.form .fld{display:flex;flex-direction:column;gap:4px}
+.form .ta{height:50px}
+
+/* загальна оцінка: картки */
+.grid6{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:start}
+.rcard{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.rcard:has(.tg:checked){border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.tg{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
+.rc-hit{position:absolute;inset:0;z-index:1;cursor:pointer}
+.rc-hit:hover{background:rgba(59,111,224,.03)}
+.rc-face{position:relative;padding:10px;pointer-events:none}
+.rc-face .chip{pointer-events:auto;position:relative;z-index:2}
+.illus{height:56px;border-radius:6px;background:var(--panel-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.illus svg{display:block}
+.rc-top{display:flex;justify-content:space-between;align-items:center;margin-top:8px;gap:8px}
+.rc-name{font-weight:600;font-size:13px}
+.rc-status{font-size:12px;color:var(--muted);white-space:nowrap}
+.rc-status .s-on{display:none}
+.tg:checked ~ .rc-face .rc-status .s-off{display:none}
+.tg:checked ~ .rc-face .rc-status .s-on{display:inline}
+.tg:checked ~ .rc-face .rc-status{color:var(--accent);font-weight:500}
+.rc-face .sub-chip{margin-top:8px}
+.rc-extra{display:none;position:relative;z-index:2;flex-direction:column;gap:6px;padding:0 10px 10px}
+.tg:checked ~ .rc-extra{display:flex}
+.vrow{display:flex;gap:6px}
+.vrow .chip{flex:1;justify-content:center;padding:3px 6px;font-size:12px}
+.hints{display:flex;flex-wrap:wrap;gap:6px}
+.rc-note{height:30px;padding:4px 8px;font-size:12px;background:var(--panel-2);line-height:1.3}
+.rc-note::placeholder{color:var(--muted)}
+
+/* колір */
+.pal{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:8px}
+.tile{display:flex;flex-direction:column;gap:5px;min-width:0}
+.sw{height:70px;border-radius:6px;border:1px solid var(--line)}
+.hex{font:12px/1.3 ui-monospace,Menlo,monospace}
+.role{font-size:11px;border:1px solid var(--line);border-radius:6px;padding:1px 6px;background:#fff;white-space:nowrap;align-self:flex-start}
+.role.on{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+.share{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
+.share i{flex:1;height:4px;border-radius:2px;background:var(--line);overflow:hidden;display:block}
+.share i b{display:block;height:100%;background:var(--accent)}
+.pal-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;align-items:center}
+.pal-actions .spacer{flex:1}
+.cgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:6px}
+.pair{display:flex;align-items:center;gap:10px;padding:7px 10px;border:1px solid var(--line);border-radius:var(--radius);background:#fff}
+.aa{width:40px;height:34px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px;flex:none;border:1px solid var(--line)}
+.pair .txt{line-height:1.3;min-width:0}
+.pair .txt small{display:block;color:var(--muted);font-size:11px;font-family:ui-monospace,Menlo,monospace}
+.badge{margin-left:auto;font-size:11px;font-weight:600;padding:2px 8px;border-radius:6px;white-space:nowrap}
+.b-aaa{background:var(--take-soft);color:var(--take)}
+.b-aa{background:var(--take-soft);color:var(--take)}
+.b-large{background:var(--panel-2);color:var(--text);border:1px solid var(--line)}
+.b-fail{background:var(--avoid-soft);color:var(--avoid)}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ЛІВО: список референсів -->
+  <aside class="left">
+    <div class="head"><h1>Ref Board</h1></div>
+    <div class="head">
+      <span class="folder">Папка: приклади (7 файлів)</span>
+      <button class="primary">Оновити</button>
+      <button>Змінити папку</button>
+      <button>Додати файли</button>
+    </div>
+    <div class="list">
+      <div class="item cur">
+        <img class="thumb" src="assets/board-a.jpg" alt="">
+        <div class="meta"><div class="name">Приклад UI 1</div>
+          <div class="sub"><span class="st">●</span>оцінено · тез: 3</div></div>
+      </div>
+      <div class="item">
+        <img class="thumb" src="assets/a-screen-1.jpg" alt="">
+        <div class="meta"><div class="name">Приклад UI 2</div>
+          <div class="sub"><span class="st">◐</span>в процесі · тез: 1</div></div>
+      </div>
+      <div class="item">
+        <img class="thumb" src="assets/a-screen-2.jpg" alt="">
+        <div class="meta"><div class="name">Приклад UI 3</div>
+          <div class="sub"><span class="st">○</span><span class="badge-new">нове</span></div></div>
+      </div>
+      <div class="item">
+        <img class="thumb" src="assets/a-screen-3.jpg" alt="">
+        <div class="meta"><div class="name">Приклад UI 4</div>
+          <div class="sub"><span class="st">○</span>не оброблено</div></div>
+      </div>
+      <div class="item">
+        <img class="thumb" src="assets/board-b.jpg" alt="">
+        <div class="meta"><div class="name">Приклад UI 5</div>
+          <div class="sub"><span class="st">○</span><span class="badge-new">нове</span></div></div>
+      </div>
+      <div class="item">
+        <img class="thumb" src="assets/b-screen-1.jpg" alt="">
+        <div class="meta"><div class="name">Приклад UI 6</div>
+          <div class="sub"><span class="st">◐</span>в процесі · тез: 2</div></div>
+      </div>
+      <div class="item">
+        <img class="thumb" src="assets/b-screen-2.jpg" alt="">
+        <div class="meta"><div class="name">Приклад UI 7</div>
+          <div class="sub"><span class="st">○</span>не оброблено</div></div>
+      </div>
+    </div>
+    <div class="foot">
+      <div class="legend">● оцінено · ◐ в процесі · ○ нове, не оброблено</div>
+      <div class="row">
+        <button>Експорт JSON</button>
+        <button>Імпорт JSON</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ПРАВО: картинка на всю ширину, редагування під нею -->
+  <main class="right">
+
+    <section class="stage">
+      <input type="radio" name="tool" id="tool-draw" class="vh" checked>
+      <input type="radio" name="tool" id="tool-pick" class="vh">
+      <input type="radio" name="tool" id="tool-pan" class="vh">
+
+      <div class="toolbar">
+        <div class="seg">
+          <label for="tool-draw">Виділити</label>
+          <label for="tool-pick">Піпетка</label>
+          <label for="tool-pan">Перегляд</label>
+        </div>
+        <div class="seg">
+          <button aria-label="Зменшити">−</button>
+          <button>Вмістити</button>
+          <button>100%</button>
+          <button aria-label="Збільшити">+</button>
+        </div>
+        <span class="zoomlbl">44%</span>
+        <span class="file">ui-example-1.jpg <span class="muted">· 1400 × 798</span></span>
+      </div>
+
+      <div class="vp">
+        <div class="canvas">
+          <img src="assets/board-a.jpg" alt="Приклад UI 1">
+          <div class="hl take" style="left:9.5%;top:50.4%;width:21.8%;height:6%"><span class="n">1</span></div>
+          <div class="hl take sel" style="left:9.7%;top:27.6%;width:13.8%;height:7.9%"><span class="n">2</span></div>
+          <div class="hl avoid" style="left:9.6%;top:80.4%;width:21.7%;height:6.8%"><span class="n">3</span></div>
+        </div>
+      </div>
+
+      <div class="meta-strip">
+        <span>Тези: <b>3</b></span>
+        <span>Оцінка: <b>2 з 5</b></span>
+        <span>Шрифт: <b>цікавий</b></span>
+        <span>Джерело: <b>не вказано</b></span>
+        <span class="tg">
+          <span class="pill">mobile</span><span class="pill">light</span><span class="pill">dashboard</span>
+        </span>
+      </div>
+    </section>
+
+    <section class="editor">
+      <input type="radio" name="etab" id="t-theses" class="vh">
+      <input type="radio" name="etab" id="t-rating" class="vh" checked>
+      <input type="radio" name="etab" id="t-color" class="vh">
+
+      <div class="seg">
+        <label for="t-theses">Тези по областях</label>
+        <label for="t-rating">Загальна оцінка</label>
+        <label for="t-color">Колір</label>
+      </div>
+
+      <div class="panels">
+
+        <!-- ТЕЗИ -->
+        <div class="panel p-theses">
+          <div class="tg-wrap">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <span class="lbl">Тези цього референсу (3)</span>
+              <div class="card cur throw">
+                <span class="num">1</span>
+                <div><div class="t">Картка пристрою з перемикачем</div>
+                  <div class="pills"><span class="pill">🧩 Компонент</span><span class="pill take">👍 Беру</span></div></div>
+              </div>
+              <div class="card cur throw" style="border-color:var(--accent)">
+                <span class="num">2</span>
+                <div><div class="t">Велике число як герой екрана</div>
+                  <div class="pills"><span class="pill">🔤 Шрифт</span><span class="pill take">👍 Беру</span></div></div>
+              </div>
+              <div class="card throw">
+                <span class="num avoid">3</span>
+                <div><div class="t">Перемикач режимів у вигляді сегмента</div>
+                  <div class="pills"><span class="pill">🧩 Компонент</span><span class="pill avoid">👎 Уникаю</span></div></div>
+              </div>
+            </div>
+
+            <div class="card form">
+              <div class="throw" style="align-items:center"><span class="num">2</span><b>Теза до виділення №2</b></div>
+              <div class="fld"><span class="lbl">Заголовок</span>
+                <input type="text" value="Велике число як герой екрана"></div>
+              <div class="fld"><span class="lbl">Нотатка</span>
+                <textarea class="ta" rows="2">Ієрархія: число ~96 px тонкої ваги, одиниця менша, підпис сірий 13 px.</textarea></div>
+              <div class="fld"><span class="lbl">Чому це працює (одне речення)</span>
+                <input type="text" value="Без цього числа екран читається як список"></div>
+              <div class="fld"><span class="lbl">Категорія</span>
+                <div class="chips">
+                  <input type="radio" name="cat2" id="cat2-col" class="vh"><label class="chip cat" for="cat2-col">🎨 Колір</label>
+                  <input type="radio" name="cat2" id="cat2-font" class="vh" checked><label class="chip cat" for="cat2-font">🔤 Шрифт</label>
+                  <input type="radio" name="cat2" id="cat2-comp" class="vh"><label class="chip cat" for="cat2-comp">🧩 Компонент</label>
+                  <input type="radio" name="cat2" id="cat2-grid" class="vh"><label class="chip cat" for="cat2-grid">📐 Сітка</label>
+                  <input type="radio" name="cat2" id="cat2-mood" class="vh"><label class="chip cat" for="cat2-mood">✨ Настрій</label>
+                </div></div>
+              <div class="fld"><span class="lbl">Вердикт</span>
+                <div class="chips">
+                  <input type="radio" name="vd2" id="vd2-take" class="vh" checked><label class="chip take" for="vd2-take">👍 Беру</label>
+                  <input type="radio" name="vd2" id="vd2-neu" class="vh"><label class="chip neutral" for="vd2-neu">😐 Нейтрально</label>
+                  <input type="radio" name="vd2" id="vd2-avoid" class="vh"><label class="chip avoid" for="vd2-avoid">👎 Уникаю</label>
+                </div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ЗАГАЛЬНА ОЦІНКА -->
+        <div class="panel p-rating">
+          <div class="grid6">
+
+            <!-- Колір: обрано, 👍 -->
+            <div class="rcard">
+              <input type="checkbox" id="c-color" class="tg" checked>
+              <label class="rc-hit" for="c-color" aria-label="Колір"></label>
+              <div class="rc-face">
+                <div class="illus">
+                  <svg width="200" height="40" viewBox="0 0 200 40" aria-hidden="true">
+                    <circle cx="20" cy="20" r="14" fill="#f4f5f7" stroke="#c3c9d4"/>
+                    <circle cx="58" cy="20" r="14" fill="#1d2330"/>
+                    <circle cx="96" cy="20" r="14" fill="#6b7385"/>
+                    <circle cx="134" cy="20" r="14" fill="#c3c9d4"/>
+                    <circle cx="172" cy="20" r="14" fill="#3b6fe0"/>
+                  </svg>
+                </div>
+                <div class="rc-top">
+                  <span class="rc-name">Колір</span>
+                  <span class="rc-status"><span class="s-off">не обрано</span><span class="s-on">👍 Беру</span></span>
+                </div>
+              </div>
+              <div class="rc-extra">
+                <div class="vrow">
+                  <input type="radio" name="v-color" id="vc-take" class="vh" checked><label class="chip take" for="vc-take">👍 Беру</label>
+                  <input type="radio" name="v-color" id="vc-neu" class="vh"><label class="chip neutral" for="vc-neu">😐</label>
+                  <input type="radio" name="v-color" id="vc-avoid" class="vh"><label class="chip avoid" for="vc-avoid">👎 Уникаю</label>
+                </div>
+                <div class="hints">
+                  <input type="checkbox" id="h-c1" class="vh" checked><label class="chip sm hint" for="h-c1">контраст</label>
+                  <input type="checkbox" id="h-c2" class="vh"><label class="chip sm" for="h-c2">акцент</label>
+                  <input type="checkbox" id="h-c3" class="vh"><label class="chip sm" for="h-c3">баланс</label>
+                </div>
+                <textarea class="rc-note" rows="1" placeholder="Чому?">Тестовий коментар: синій лише для активного</textarea>
+              </div>
+            </div>
+
+            <!-- Шрифт: не обрано, тумблер «цікавий» -->
+            <div class="rcard">
+              <input type="checkbox" id="c-font" class="tg">
+              <label class="rc-hit" for="c-font" aria-label="Шрифт"></label>
+              <div class="rc-face">
+                <div class="illus">
+                  <span style="font-size:30px;font-weight:500;letter-spacing:-.02em;line-height:1;color:#1d2330">Aa</span>
+                </div>
+                <div class="rc-top">
+                  <span class="rc-name">Шрифт</span>
+                  <span class="rc-status"><span class="s-off">не обрано</span><span class="s-on">обрано</span></span>
+                </div>
+                <div class="sub-chip">
+                  <input type="checkbox" id="font-int" class="vh" checked><label class="chip sm hint" for="font-int">Шрифт цікавий</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Компоненти: обрано, 👎 -->
+            <div class="rcard">
+              <input type="checkbox" id="c-comp" class="tg" checked>
+              <label class="rc-hit" for="c-comp" aria-label="Компоненти"></label>
+              <div class="rc-face">
+                <div class="illus">
+                  <svg width="200" height="40" viewBox="0 0 200 40" aria-hidden="true">
+                    <rect x="4" y="8" width="72" height="24" rx="6" fill="#fff" stroke="#c3c9d4"/>
+                    <rect x="16" y="15" width="32" height="6" rx="3" fill="#6b7385"/>
+                    <rect x="84" y="10" width="20" height="20" rx="10" fill="#1d2330"/>
+                    <rect x="112" y="8" width="84" height="24" rx="6" fill="#fff" stroke="#c3c9d4"/>
+                    <rect x="122" y="15" width="48" height="5" rx="2.5" fill="#c3c9d4"/>
+                    <rect x="122" y="23" width="28" height="4" rx="2" fill="#e2e5eb"/>
+                  </svg>
+                </div>
+                <div class="rc-top">
+                  <span class="rc-name">Компоненти</span>
+                  <span class="rc-status"><span class="s-off">не обрано</span><span class="s-on">👎 Уникаю</span></span>
+                </div>
+              </div>
+              <div class="rc-extra">
+                <div class="vrow">
+                  <input type="radio" name="v-comp" id="vp-take" class="vh"><label class="chip take" for="vp-take">👍 Беру</label>
+                  <input type="radio" name="v-comp" id="vp-neu" class="vh"><label class="chip neutral" for="vp-neu">😐</label>
+                  <input type="radio" name="v-comp" id="vp-avoid" class="vh" checked><label class="chip avoid" for="vp-avoid">👎 Уникаю</label>
+                </div>
+                <div class="hints">
+                  <input type="checkbox" id="h-p1" class="vh"><label class="chip sm" for="h-p1">вага</label>
+                  <input type="checkbox" id="h-p2" class="vh" checked><label class="chip sm hint" for="h-p2">відступи</label>
+                  <input type="checkbox" id="h-p3" class="vh"><label class="chip sm" for="h-p3">ритм</label>
+                </div>
+                <textarea class="rc-note" rows="1" placeholder="Чому?">Пігулка і картка в одній вазі розмивають ієрархію</textarea>
+              </div>
+            </div>
+
+            <!-- Сітка -->
+            <div class="rcard">
+              <input type="checkbox" id="c-grid" class="tg">
+              <label class="rc-hit" for="c-grid" aria-label="Сітка"></label>
+              <div class="rc-face">
+                <div class="illus">
+                  <svg width="200" height="40" viewBox="0 0 200 40" aria-hidden="true">
+                    <g stroke="#c3c9d4" stroke-width="1">
+                      <line x1="16" y1="0" x2="16" y2="40"/><line x1="50" y1="0" x2="50" y2="40"/>
+                      <line x1="84" y1="0" x2="84" y2="40"/><line x1="118" y1="0" x2="118" y2="40"/>
+                      <line x1="152" y1="0" x2="152" y2="40"/><line x1="186" y1="0" x2="186" y2="40"/>
+                      <line x1="0" y1="10" x2="200" y2="10"/><line x1="0" y1="30" x2="200" y2="30"/>
+                    </g>
+                    <rect x="50" y="10" width="68" height="20" rx="3" fill="#3b6fe0" opacity=".85"/>
+                  </svg>
+                </div>
+                <div class="rc-top">
+                  <span class="rc-name">Сітка</span>
+                  <span class="rc-status"><span class="s-off">не обрано</span><span class="s-on">обрано</span></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Настрій -->
+            <div class="rcard">
+              <input type="checkbox" id="c-mood" class="tg">
+              <label class="rc-hit" for="c-mood" aria-label="Настрій"></label>
+              <div class="rc-face">
+                <div class="illus">
+                  <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+                    <circle cx="20" cy="20" r="13" fill="#e2e5eb" stroke="#6b7385" stroke-width="1.5"/>
+                    <circle cx="16" cy="17" r="1.8" fill="#1d2330"/>
+                    <circle cx="24" cy="17" r="1.8" fill="#1d2330"/>
+                    <path d="M15 23 Q20 28 25 23" stroke="#3b6fe0" stroke-width="2" fill="none" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="rc-top">
+                  <span class="rc-name">Настрій</span>
+                  <span class="rc-status"><span class="s-off">не обрано</span><span class="s-on">обрано</span></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Іконки -->
+            <div class="rcard">
+              <input type="checkbox" id="c-icon" class="tg">
+              <label class="rc-hit" for="c-icon" aria-label="Іконки"></label>
+              <div class="rc-face">
+                <div class="illus">
+                  <svg width="200" height="40" viewBox="0 0 200 40" aria-hidden="true" fill="none" stroke="#6b7385" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M30 26 L44 14 L58 26 V36 H30 Z"/>
+                    <path d="M84 12 l-5 9 h7 l-5 9" stroke="#3b6fe0"/>
+                    <path d="M110 30 a8 8 0 0 1 16 0 M114 18 a14 14 0 0 1 24 0"/>
+                    <circle cx="170" cy="20" r="7"/><path d="M170 8 v3 M170 29 v3 M158 20 h3 M179 20 h3"/>
+                  </svg>
+                </div>
+                <div class="rc-top">
+                  <span class="rc-name">Іконки</span>
+                  <span class="rc-status"><span class="s-off">не обрано</span><span class="s-on">обрано</span></span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- КОЛІР -->
+        <div class="panel p-color">
+          <div class="pal">
+            <div class="tile"><div class="sw" style="background:#E6E3DB"></div><div class="hex">#E6E3DB</div><span class="role on">Фон</span><div class="share"><i><b style="width:44%"></b></i>44%</div></div>
+            <div class="tile"><div class="sw" style="background:#EFEDE9"></div><div class="hex">#EFEDE9</div><span class="role on">Поверхня</span><div class="share"><i><b style="width:21%"></b></i>21%</div></div>
+            <div class="tile"><div class="sw" style="background:#D8D2C4"></div><div class="hex">#D8D2C4</div><span class="role">Інше</span><div class="share"><i><b style="width:11%"></b></i>11%</div></div>
+            <div class="tile"><div class="sw" style="background:#1B1A17"></div><div class="hex">#1B1A17</div><span class="role on">Текст основний</span><div class="share"><i><b style="width:5%"></b></i>5%</div></div>
+            <div class="tile"><div class="sw" style="background:#85827A"></div><div class="hex">#85827A</div><span class="role on">Текст другорядний</span><div class="share"><i><b style="width:3%"></b></i>3%</div></div>
+            <div class="tile"><div class="sw" style="background:#C8461F"></div><div class="hex">#C8461F</div><span class="role on">Акцент</span><div class="share"><i><b style="width:2%"></b></i>2%</div></div>
+            <div class="tile"><div class="sw" style="background:#5C5A53"></div><div class="hex">#5C5A53</div><span class="role">Інше</span><div class="share"><i><b style="width:9%"></b></i>9%</div></div>
+            <div class="tile"><div class="sw" style="background:#FBFAF7"></div><div class="hex">#FBFAF7</div><span class="role">Інше</span><div class="share"><i><b style="width:5%"></b></i>5%</div></div>
+          </div>
+
+          <div class="pal-actions">
+            <button class="primary">Витягнути з усієї картинки</button>
+            <button>Витягнути з виділення №2</button>
+            <button class="ghost">Піпетка: додати колір</button>
+            <span class="spacer"></span>
+            <span class="muted" style="font-size:12px">8 кольорів · k-means, k = 8</span>
+          </div>
+
+          <div style="margin-top:12px"><span class="lbl">Пари текст / фон (WCAG)</span></div>
+          <div class="cgrid">
+            <div class="pair"><div class="aa" style="background:#E6E3DB;color:#1B1A17">Aa</div>
+              <div class="txt">Основний / Фон<small>#1B1A17 · #E6E3DB · 13.6:1</small></div><span class="badge b-aaa">AAA</span></div>
+            <div class="pair"><div class="aa" style="background:#EFEDE9;color:#1B1A17">Aa</div>
+              <div class="txt">Основний / Поверхня<small>#1B1A17 · #EFEDE9 · 14.9:1</small></div><span class="badge b-aaa">AAA</span></div>
+            <div class="pair"><div class="aa" style="background:#E6E3DB;color:#85827A">Aa</div>
+              <div class="txt">Другорядний / Фон<small>#85827A · #E6E3DB · 3.0:1</small></div><span class="badge b-fail">не проходить</span></div>
+            <div class="pair"><div class="aa" style="background:#E6E3DB;color:#C8461F">Aa</div>
+              <div class="txt">Акцент / Фон<small>#C8461F · #E6E3DB · 3.8:1</small></div><span class="badge b-large">AA велике</span></div>
+            <div class="pair"><div class="aa" style="background:#C8461F;color:#FBFAF7">Aa</div>
+              <div class="txt">Білий / Акцент (кнопка)<small>#FBFAF7 · #C8461F · 4.8:1</small></div><span class="badge b-aa">AA</span></div>
+            <div class="pair"><div class="aa" style="background:#EFEDE9;color:#6B675E">Aa</div>
+              <div class="txt">Підпис #6B675E / Поверхня<small>запасний варіант · 4.8:1</small></div><span class="badge b-aa">AA</span></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+</div>
+</body>
+</html>

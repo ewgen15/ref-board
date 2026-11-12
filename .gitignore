@@ -16,3 +16,6 @@ __pycache__/
 # особисті дані оцінювання (експорти з інструмента)
 Ref Board.json
 ref-board_v*.json
+
+# локальна відповідність ref_NN -> імʼя файлу референсу (не публікується)
+color-test/refs.local.json

@@ -20,27 +20,31 @@ body{font:13px/1.4 var(--font);background:var(--bg);color:var(--text);color-sche
 button,select,input,textarea{font:inherit;color:inherit}
 button{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:5px 10px;cursor:pointer;min-height:30px;white-space:nowrap}
 button:hover{border-color:#c3c9d4}
+button:disabled{opacity:.55;cursor:default}
 button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
 button.ghost{border-color:transparent;background:transparent;padding:4px 6px}
+button.mini{min-height:24px;padding:1px 8px;font-size:12px}
 button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
 button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
-input[type=text],select,textarea{border:1px solid var(--line);border-radius:6px;padding:5px 8px;background:#fff;width:100%;min-height:30px}
+input[type=text],textarea{border:1px solid var(--line);border-radius:6px;padding:5px 8px;background:#fff;width:100%;min-height:30px}
 textarea{resize:vertical;min-height:40px}
-input[type=checkbox]{width:16px;height:16px;margin:0}
+.muted{color:var(--muted)}
+.row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.sp{flex:1}
+.empty{color:var(--muted);text-align:center;padding:24px 14px;line-height:1.5}
 
-.app{display:grid;grid-template-columns:260px minmax(0,1fr) 340px;height:100vh;min-width:900px}
-.left,.right{background:var(--panel);display:flex;flex-direction:column;min-height:0}
-.left{border-right:1px solid var(--line)}
-.right{border-left:1px solid var(--line)}
+.app{display:grid;grid-template-columns:280px minmax(0,1fr);height:100vh;min-width:900px}
+.left{background:var(--panel);display:flex;flex-direction:column;min-height:0;border-right:1px solid var(--line)}
 .head{padding:10px 12px;border-bottom:1px solid var(--line);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .head h1{font-size:14px;margin:0;margin-right:auto}
-.folder{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-basis:100%}
+.folder{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-basis:100%;font-size:12px}
 .list{flex:1;overflow:auto;min-height:0;padding:6px}
 .list.over{outline:2px dashed var(--accent);outline-offset:-6px}
 .item{display:flex;gap:8px;padding:6px;border-radius:6px;cursor:pointer;align-items:center;border:1px solid transparent}
 .item:hover{background:var(--panel-2)}
 .item.cur{background:var(--accent-soft);border-color:rgba(59,111,224,.35)}
-.item.missing{opacity:.55;cursor:default}
+.item.missing{cursor:default}
+.item.missing .thumb{opacity:.4}
 .thumb{width:56px;height:42px;flex:none;border-radius:4px;background:#eceef2;object-fit:cover;border:1px solid var(--line)}
 .meta{min-width:0;flex:1}
 .name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
@@ -49,26 +53,29 @@ input[type=checkbox]{width:16px;height:16px;margin:0}
 .badge-new{background:#ffe8a8;color:#6d4500;border-radius:4px;padding:0 5px;font-size:11px}
 .foot{padding:10px 12px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
 .legend{color:var(--muted);font-size:12px}
-.row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-.muted{color:var(--muted)}
-.sp{flex:1}
-.empty{color:var(--muted);text-align:center;padding:24px 14px;line-height:1.5}
 
-.center{background:#e9ecf1;display:flex;flex-direction:column;min-width:0;min-height:0}
-.toolbar{padding:8px 12px;border-bottom:1px solid var(--line);background:var(--panel);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.work>*{flex-shrink:0}
+.work{overflow-y:auto;min-width:0;min-height:0;padding:12px 16px 32px;display:flex;flex-direction:column;gap:12px}
+.panelcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+.toolbar{padding:8px 12px;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#fff}
-.seg button{border:0;border-radius:0;min-height:28px;padding:3px 9px;font-size:12px}
+.seg button{border:0;border-radius:0;min-height:28px;padding:3px 10px;font-size:12px}
 .seg button + button{border-left:1px solid var(--line)}
-.vp{flex:1;overflow:auto;position:relative;padding:20px;min-height:0}
+.ttl-meta{font-weight:600;max-width:40ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pickprev{display:inline-flex;align-items:center;gap:6px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+.pickprev i{display:inline-block;width:16px;height:16px;border-radius:3px;border:1px solid var(--line)}
+.vp{height:clamp(320px,46vh,680px);overflow:auto;position:relative;padding:16px;background:#e9ecf1;border-radius:0 0 var(--radius) var(--radius)}
 .stage{position:relative;margin:0 auto;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.18)}
 .stage img{display:block;width:100%;height:100%;user-select:none;-webkit-user-drag:none;pointer-events:none}
-.ov{position:absolute;inset:0;cursor:crosshair}
+.ov{position:absolute;inset:0;cursor:crosshair;touch-action:none}
 .stage.pan .ov{cursor:grab}
+.stage.pick .ov{cursor:copy}
 .hl{position:absolute;border:2px solid var(--accent);background:rgba(59,111,224,.12);box-sizing:border-box;cursor:move}
 .hl.take{border-color:var(--take);background:rgba(31,157,85,.12)}
 .hl.avoid{border-color:var(--avoid);background:rgba(214,69,69,.12)}
 .hl.sel{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--accent);z-index:2}
 .hl.draft{border-style:dashed;cursor:crosshair}
+.stage.pick .hl{pointer-events:none}
 .hl .n{position:absolute;left:-9px;top:-9px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:var(--accent);color:#fff;font-size:11px;line-height:18px;text-align:center;font-weight:600;pointer-events:none}
 .hl.take .n{background:var(--take)}
 .hl.avoid .n{background:var(--avoid)}
@@ -78,30 +85,96 @@ input[type=checkbox]{width:16px;height:16px;margin:0}
 .h.ne{right:-7px;top:-7px;cursor:nesw-resize}
 .h.sw{left:-7px;bottom:-7px;cursor:nesw-resize}
 
-.tabs{display:flex;border-bottom:1px solid var(--line)}
-.tabs button{flex:1;border:0;border-bottom:2px solid transparent;border-radius:0;background:none;min-height:38px}
-.tabs button.active{border-bottom-color:var(--accent);color:var(--accent);font-weight:600}
-.body{flex:1;overflow:auto;min-height:0;padding:10px 12px}
-.card{border:1px solid var(--line);border-radius:var(--radius);padding:8px;margin-bottom:8px;background:#fff}
-.card.cur{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
-.card textarea,.card input[type=text]{margin-top:6px}
-.card .row select{flex:1;min-width:0}
-.num{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;flex:none;cursor:pointer;font-weight:600}
-.card[data-hid] .num{background:var(--accent)}
-.seg button[aria-pressed="true"].v-take{background:var(--take-soft);color:var(--take);border-color:transparent}
-.seg button[aria-pressed="true"].v-avoid{background:var(--avoid-soft);color:var(--avoid);border-color:transparent}
-.seg button[aria-pressed="true"].v-neutral{background:var(--panel-2);color:var(--text);border-color:transparent}
-.scores button{width:28px;min-height:28px;padding:0;font-size:12px}
-.crit-label{font-weight:600}
-.lbl{color:var(--muted);font-size:12px;margin-top:6px;display:block}
+.metarow{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:6px 12px;color:var(--muted);min-height:38px}
+.metarow b{color:var(--text)}
+.metarow .src{width:220px;min-height:26px;padding:2px 8px}
+.metarow .tagin{width:110px;min-height:26px;padding:2px 8px}
+.tag{display:inline-flex;align-items:center;gap:4px;background:var(--panel-2);border:1px solid var(--line);border-radius:999px;padding:1px 4px 1px 9px;color:var(--text)}
+.tag button{border:0;background:none;min-height:18px;padding:0 4px;color:var(--muted)}
 
-dialog{border:1px solid var(--line);border-radius:var(--radius);padding:14px;width:min(420px,90vw);background:var(--panel);color:var(--text);box-shadow:0 8px 28px rgba(0,0,0,.2)}
+.tabs{display:flex;gap:0;align-self:flex-start;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel)}
+.tabs button{border:0;border-radius:0;min-height:36px;padding:6px 14px}
+.tabs button + button{border-left:1px solid var(--line)}
+.tabs button.active{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.tabbody{padding:14px}
+
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);border-radius:999px;background:#fff;padding:2px 11px;min-height:28px;font-size:12.5px}
+.chip.static{display:inline-flex;align-items:center;min-height:22px;padding:0 8px;font-size:12px;cursor:default;background:var(--panel-2)}
+.chip.reason{background:var(--panel-2)}
+.chip[aria-pressed="true"].v-take{background:var(--take-soft);border-color:var(--take);color:var(--take)}
+.chip[aria-pressed="true"].v-avoid{background:var(--avoid-soft);border-color:var(--avoid);color:var(--avoid)}
+.chip[aria-pressed="true"].v-neutral{background:#eceef2;border-color:#9aa1b1;color:var(--text)}
+.chip.static.v-take{background:var(--take-soft);color:var(--take);border-color:transparent}
+.chip.static.v-avoid{background:var(--avoid-soft);color:var(--avoid);border-color:transparent}
+.lbl{color:var(--muted);font-size:12px;margin:10px 0 4px;display:block}
+.lbl:first-child{margin-top:0}
+
+.theses{display:grid;grid-template-columns:minmax(260px,5fr) minmax(320px,7fr);gap:16px;align-items:start}
+.titem{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:var(--radius);padding:8px 10px;margin-bottom:8px;cursor:pointer;background:#fff}
+.titem:hover{border-color:#c3c9d4}
+.titem.sel{border:2px solid var(--accent);padding:7px 9px}
+.titem .tt{min-width:0;flex:1;display:flex;flex-direction:column;gap:5px}
+.titem .ttl{font-weight:600;overflow:hidden;text-overflow:ellipsis}
+.num{width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;flex:none;font-weight:600}
+.titem.take .num{background:var(--take)} .titem.avoid .num{background:var(--avoid)}
+.tform{border:1px solid var(--line);border-radius:var(--radius);padding:12px;background:#fff}
+.tform h3{margin:0 0 8px;font-size:14px;display:flex;align-items:center;gap:8px}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;align-items:start}
+.rcard{border:1px solid var(--line);border-radius:var(--radius);background:#fff;overflow:hidden}
+.rcard.on{border:2px solid var(--accent)}
+.rc-face{display:block;width:100%;border:0;background:none;text-align:left;padding:10px;min-height:0;border-radius:0;white-space:normal}
+.rc-face:hover{background:var(--panel-2)}
+.illus{background:var(--panel-2);border-radius:6px;height:56px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;border:1px solid var(--line)}
+.rc-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.rc-name{font-weight:700}
+.rc-status{color:var(--muted);font-size:12.5px}
+.rcard.on .rc-status{color:var(--text);font-weight:600}
+.rc-body{padding:0 10px 10px;display:flex;flex-direction:column;gap:8px}
+.vchips .chip{flex:1;text-align:center}
+.toggle{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:2px 12px 2px 3px;min-height:28px;background:#fff}
+.toggle i{width:22px;height:22px;border-radius:50%;background:#c3c9d4;display:inline-block}
+.toggle[aria-pressed="true"] i{background:var(--accent)}
+.generalc{margin-top:12px}
+
+.colors .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.tile{border:1px solid var(--line);border-radius:var(--radius);padding:8px;background:#fff;display:flex;flex-direction:column;gap:6px}
+.swatch{height:64px;border-radius:6px;border:1px solid rgba(0,0,0,.1);position:relative}
+.swatch .del{position:absolute;top:2px;right:2px;background:rgba(255,255,255,.85);border-radius:4px;min-height:20px;padding:0 6px;font-size:12px}
+.hexrow{display:flex;justify-content:space-between;align-items:center;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px}
+.hexrow button{font-family:inherit;border:0;background:none;padding:0;min-height:0;font-size:12.5px;font-weight:600}
+.hexrow button:hover{color:var(--accent)}
+.bar{height:5px;border-radius:3px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent)}
+.tile .chips{gap:4px}
+.tile .chip{min-height:22px;padding:0 8px;font-size:11.5px}
+.srcnote{font-size:11.5px;color:var(--muted)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 6px;align-items:center}
+.pairs{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-top:6px}
+.pair{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:var(--radius);padding:8px}
+.pair .aa{width:44px;height:44px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;flex:none;border:1px solid rgba(0,0,0,.1)}
+.pair .pm{flex:1;min-width:0;font-size:12.5px}
+.pair .pm small{display:block;color:var(--muted);font-family:ui-monospace,Menlo,Consolas,monospace}
+.grade{font-size:11.5px;font-weight:700;border-radius:4px;padding:2px 7px;white-space:nowrap}
+.grade.AAA,.grade.AA{background:var(--take-soft);color:var(--take)}
+.grade.AAL{background:#fff3cd;color:#8a5a00}
+.grade.fail{background:var(--avoid-soft);color:var(--avoid)}
+.busy{display:inline-flex;align-items:center;gap:8px;color:var(--accent);font-weight:600}
+.busy::before{content:"";width:12px;height:12px;border-radius:50%;border:2px solid var(--accent);border-top-color:transparent;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+dialog{border:1px solid var(--line);border-radius:var(--radius);padding:14px;width:min(460px,90vw);background:var(--panel);color:var(--text);box-shadow:0 8px 28px rgba(0,0,0,.2)}
 dialog::backdrop{background:rgba(29,35,48,.35)}
 dialog h2{font-size:14px;margin:0 0 4px}
 .flist{display:flex;flex-direction:column;gap:6px;margin-top:10px;max-height:50vh;overflow:auto}
 .flist button{text-align:left;white-space:normal;word-break:break-all}
-.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#1d2330;color:#fff;padding:8px 14px;border-radius:6px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:80vw;z-index:10}
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#1d2330;color:#fff;padding:8px 14px;border-radius:6px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:80vw;z-index:10;display:flex;gap:12px;align-items:center}
 .toast.show{opacity:1}
+.toast.act{pointer-events:auto}
+.toast button{background:transparent;color:#9fc0ff;border:1px solid rgba(255,255,255,.3);min-height:24px;padding:0 8px}
+#selftest-result{position:fixed;inset:0;background:#fff;z-index:100;overflow:auto;margin:0;padding:16px;font:12px/1.5 ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap}
+@media (max-width:1100px){.theses{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -114,41 +187,47 @@ dialog h2{font-size:14px;margin:0 0 4px}
       <div class="legend">● оцінено · ◐ в процесі · ○ нове, не оброблено</div>
       <div class="row">
         <button id="btnExport" title="Записує ref-board_vNNN_дата_час.json у вибрану папку">Експорт JSON</button>
+        <button id="btnExportCrops" title="JSON і поруч ref-board_vNNN_crops/ з PNG кропами виділень">Експорт для аналізу</button>
+      </div>
+      <div class="row">
         <button id="btnImport">Імпорт JSON</button>
         <button id="btnImportFolder">Імпорт з папки</button>
       </div>
     </div>
   </aside>
 
-  <main class="center">
-    <div class="toolbar">
-      <div class="seg">
-        <button data-mode="draw">Виділити</button>
-        <button data-mode="pan">Перегляд</button>
+  <main class="work" id="work">
+    <section class="panelcard">
+      <div class="toolbar">
+        <div class="seg" id="modeSeg">
+          <button data-mode="draw">Виділити</button>
+          <button data-mode="pick">Піпетка</button>
+          <button data-mode="pan">Перегляд</button>
+        </div>
+        <div class="seg">
+          <button data-zoom="out" aria-label="Зменшити">−</button>
+          <button data-zoom="fit">Вмістити</button>
+          <button data-zoom="100">100 %</button>
+          <button data-zoom="in" aria-label="Збільшити">+</button>
+        </div>
+        <span id="zoomLabel" class="muted"></span>
+        <span id="refTitle" class="ttl-meta"></span>
+        <span id="pickPrev" class="pickprev" hidden><i></i><span></span></span>
+        <span class="sp"></span>
+        <span class="muted">Ctrl+колесо: масштаб · Delete: видалити · Ctrl+Z: скасувати</span>
       </div>
-      <div class="seg">
-        <button data-zoom="out" aria-label="Зменшити">−</button>
-        <button data-zoom="fit">Вмістити</button>
-        <button data-zoom="100">100%</button>
-        <button data-zoom="in" aria-label="Збільшити">+</button>
+      <div class="vp" id="vp">
+        <div class="stage" id="stage" hidden>
+          <img id="img" alt="">
+          <div class="ov" id="ov"></div>
+        </div>
+        <div class="empty" id="emptyCenter"></div>
       </div>
-      <span id="zoomLabel" class="muted"></span>
-      <span class="sp"></span>
-      <span class="muted">Ctrl+колесо: масштаб · Delete: видалити виділення</span>
-    </div>
-    <div class="vp" id="vp">
-      <div class="stage" id="stage" hidden>
-        <img id="img" alt="">
-        <div class="ov" id="ov"></div>
-      </div>
-      <div class="empty" id="emptyCenter"></div>
-    </div>
-  </main>
-
-  <aside class="right">
+    </section>
+    <section class="panelcard metarow" id="metaRow"></section>
     <div class="tabs" id="tabs"></div>
-    <div class="body" id="panel"></div>
-  </aside>
+    <section class="panelcard tabbody" id="panel"></section>
+  </main>
 </div>
 
 <input type="file" id="addFiles" accept="image/png,image/jpeg,image/webp" multiple hidden>
@@ -159,17 +238,63 @@ dialog h2{font-size:14px;margin:0 0 4px}
   <div class="flist" id="pickList"></div>
   <div class="row" style="justify-content:flex-end;margin-top:10px"><button id="pickClose">Скасувати</button></div>
 </dialog>
+<dialog id="relinkDlg">
+  <h2>Привʼязати до файлу</h2>
+  <div class="muted" id="relinkInfo"></div>
+  <div class="flist" id="relinkList"></div>
+  <div class="row" style="justify-content:flex-end;margin-top:10px"><button id="relinkClose">Скасувати</button></div>
+</dialog>
 <div class="toast" id="toast" role="status"></div>
 
+<script src="color-test/extract-colors.js"></script>
 <script>
 (() => {
 'use strict';
 
-const LS_KEY = 'ref-board:v1';
+const QS = new URLSearchParams(location.search);
+const SELFTEST = QS.get('selftest') === '1';
+const DEMO = QS.get('demo') === '1';
+const TEST_MODE = SELFTEST || DEMO;           // тестові режими не чіпають реальні дані
+const LS_KEY = TEST_MODE ? 'ref-board:test' : 'ref-board:v1';   // ключ лишається сумісним зі старими даними
+const DATA_VERSION = 2;
 const IDB_NAME = 'ref-board', IDB_STORE = 'kv', IDB_KEY = 'dirHandle';
 const IMG_RE = /\.(png|jpe?g|webp)$/i;
+const THUMB_W = 144;
 
-// ---------- імена експорту (чисті функції, тестуються окремо) ----------
+// ---------- довідники ----------
+const CATS = [['color', '🎨', 'Колір'], ['font', '🔤', 'Шрифт'], ['component', '🧩', 'Компонент'], ['grid', '📐', 'Сітка'], ['mood', '✨', 'Настрій']];
+const VERDICTS = [['take', '👍', 'Беру'], ['neutral', '😐', 'Нейтрально'], ['avoid', '👎', 'Уникаю']];
+const CARDS = [
+  { k: 'color', label: 'Колір', reasons: ['контраст', 'акцент', 'баланс', 'палітра'] },
+  { k: 'font', label: 'Шрифт', reasons: ['гарнітура', 'вага', 'ієрархія', 'читабельність'] },
+  { k: 'components', label: 'Компоненти', reasons: ['вага', 'відступи', 'ритм', 'стани'] },
+  { k: 'grid', label: 'Сітка', reasons: ['модуль', 'вирівнювання', 'повітря', 'щільність'] },
+  { k: 'mood', label: 'Настрій', reasons: ['тон', 'стиль', 'енергія', 'цілісність'] },
+  { k: 'icons', label: 'Іконки', reasons: ['стиль', 'товщина', 'форма', 'послідовність'] }
+];
+const RATING_KEYS = CARDS.map(c => c.k);
+const ROLES = [['background', 'Фон'], ['surface', 'Поверхня'], ['accent', 'Акцент'], ['textPrimary', 'Текст основний'], ['textSecondary', 'Текст другорядний'], ['other', 'Інше']];
+const COLOR_SOURCES = ['auto', 'selection', 'eyedropper', 'manual'];
+const SRC_LABEL = { auto: 'авто', selection: 'з виділення', eyedropper: 'піпетка', manual: 'вручну' };
+const V1_RATING_MAP = { color: 'color', typography: 'font', layout: 'grid', components: 'components', mood: 'mood' };
+const V1_CAT_MAP = { typography: 'font', layout: 'grid' };
+const CAT_KEYS = CATS.map(c => c[0]);
+const KNOWN_REF_KEYS = ['id', 'name', 'file', 'source', 'tags', 'status', 'comment', 'highlights', 'palette', 'font', 'ratings', 'takeaways'];
+
+// ---------- утиліти ----------
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const r2 = v => Math.round(v * 100) / 100;
+const isNum = v => typeof v === 'number' && isFinite(v);
+const isStr = v => typeof v === 'string';
+const uid = () => 'h' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const fileKey = f => `${f.name}|${f.size}|${f.lastModified}`;
+const clone = o => JSON.parse(JSON.stringify(o));
+const nextFrame = () => new Promise(r => setTimeout(r, 30));   // віддає потік браузеру перед важкою роботою
+const stripExt = n => n.replace(/\.[^.]+$/, '');
+
+// ---------- імена експорту (чисті функції) ----------
 const EXPORT_RE = /^ref-board_v(\d+)_.*\.json$/;
 function nextVersion(names) {
   let max = 0;
@@ -180,35 +305,209 @@ function stampOf(d) {
   const p = x => String(x).padStart(2, '0');
   return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}`;
 }
-function exportName(version, d) {
-  return `ref-board_v${String(version).padStart(3, '0')}_${stampOf(d)}.json`;
+const pad3 = v => String(v).padStart(3, '0');
+const exportName = (version, d) => `ref-board_v${pad3(version)}_${stampOf(d)}.json`;
+const cropsDirName = version => `ref-board_v${pad3(version)}_crops`;
+const safeName = s => String(s).replace(/[\\/:*?"<>|\s]+/g, '_').slice(0, 100);
+const cropFileName = (refId, hlId) => `${safeName(refId)}_${safeName(hlId)}.png`;
+
+// Піксельний прямокутник кропа з відсотків (повне зображення W x H)
+function cropBox(W, H, rect) {
+  const x0 = clamp(Math.floor(W * rect.x / 100), 0, W - 1), y0 = clamp(Math.floor(H * rect.y / 100), 0, H - 1);
+  const x1 = clamp(Math.max(Math.round(W * (rect.x + rect.w) / 100), x0 + 1), x0 + 1, W);
+  const y1 = clamp(Math.max(Math.round(H * (rect.y + rect.h) / 100), y0 + 1), y0 + 1, H);
+  return { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
 }
-// ---------- кінець імен експорту ----------
 
-const CRITERIA = [
-  ['color', 'Кольори'], ['typography', 'Типографіка'], ['layout', 'Сітка і відступи'],
-  ['components', 'Компоненти'], ['mood', 'Настрій']
-];
-const VERDICTS = { take: 'беру', neutral: 'нейтрально', avoid: 'уникаю' };
-const CATS = { color: 'колір', typography: 'типографіка', layout: 'сітка і відступи', component: 'компонент', mood: 'настрій' };
+// ---------- WCAG ----------
+function hexToRgb(h) { return [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)); }
+function relLum(hex) {
+  const [r, g, b] = hexToRgb(hex).map(v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+function contrast(a, b) {
+  const l1 = relLum(a), l2 = relLum(b);
+  return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+}
+function grade(ratio) { return ratio >= 7 ? 'AAA' : ratio >= 4.5 ? 'AA' : ratio >= 3 ? 'AAL' : 'fail'; }
+const GRADE_LABEL = { AAA: 'AAA', AA: 'AA', AAL: 'AA великий текст', fail: 'не проходить' };
+const HEX_RE = /^#[0-9a-f]{6}$/i;
 
-const $ = id => document.getElementById(id);
-const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
-const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
-const r2 = v => Math.round(v * 100) / 100;
-const uid = () => 'h' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-const fileKey = f => `${f.name}|${f.size}|${f.lastModified}`;
+// ---------- модель: створення і нормалізація (ніколи не кидає виняток) ----------
+function newRating() { return { selected: false, verdict: 'neutral', reasons: [], note: '', score: null }; }
+function newRef(key, fileName) {
+  return {
+    id: key,
+    name: stripExt(fileName),
+    file: { name: fileName, w: null, h: null },
+    source: '', tags: [],
+    comment: '', highlights: [], palette: [],
+    font: { interesting: false, note: '' },
+    ratings: Object.fromEntries(RATING_KEYS.map(k => [k, newRating()])),
+    takeaways: { generatedAt: null, tokens: {}, rules: [], avoid: [] }
+  };
+}
 
-// ---------- state ----------
-const S = {
-  supported: !!window.showDirectoryPicker,
-  handle: null, permOk: false, writeOk: false,
-  files: new Map(),          // key -> {key, name, file, url}
-  cur: null, tab: 'tags', mode: 'draw', sel: null,
-  draft: null, drag: null,
-  scale: 1, fit: true, natW: 0, natH: 0
-};
+function validateRect(r) {
+  if (!r || typeof r !== 'object') return null;
+  const { x, y, w, h } = r;
+  if (![x, y, w, h].every(isNum)) return null;
+  if (x < 0 || y < 0 || x > 100 || y > 100 || w <= 0 || h <= 0) return null;
+  if (x + w > 100.05 || y + h > 100.05) return null;
+  const out = { x: r2(x), y: r2(y), w: r2(Math.min(w, 100 - x)), h: r2(Math.min(h, 100 - y)) };
+  return out.w > 0 && out.h > 0 ? out : null;
+}
 
+// -> {hl} або {error}
+function normalizeHighlight(raw, seen) {
+  if (!raw || typeof raw !== 'object') return { error: 'не обʼєкт' };
+  if (!isStr(raw.id) || !raw.id.trim()) return { error: 'немає id' };
+  if (seen.has(raw.id)) return { error: 'дубль id' };
+  const rect = validateRect(raw.rect);
+  if (!rect) return { error: 'некоректний rect' };
+  let cat = V1_CAT_MAP[raw.category] || raw.category;
+  if (!CAT_KEYS.includes(cat)) cat = 'component';
+  const verdict = VERDICTS.some(v => v[0] === raw.verdict) ? raw.verdict : 'neutral';
+  return {
+    hl: {
+      id: raw.id, rect,
+      title: isStr(raw.title) ? raw.title : '',
+      note: isStr(raw.note) ? raw.note : '',
+      why: isStr(raw.why) ? raw.why : '',
+      category: cat, verdict
+    }
+  };
+}
+
+function normalizePaletteItem(p) {
+  if (!p || typeof p !== 'object' || !isStr(p.hex) || !HEX_RE.test(p.hex)) return null;
+  const it = {
+    hex: p.hex.toLowerCase(),
+    share: isNum(p.share) ? clamp(p.share, 0, 1) : null,
+    role: ROLES.some(r => r[0] === p.role) ? p.role : 'other',
+    source: COLOR_SOURCES.includes(p.source) ? p.source : 'auto'
+  };
+  if (p.removed === true) it.removed = true;
+  if (isStr(p.from)) it.from = p.from;
+  return it;
+}
+
+// rep: {droppedHl, notes[]} накопичувач повідомлень
+function normalizeRef(raw, key, rep) {
+  rep = rep || { droppedHl: 0, notes: [] };
+  if (!raw || typeof raw !== 'object') raw = {};
+  const rf = raw.file && typeof raw.file === 'object' ? raw.file : {};
+  const fileName = (isStr(rf.name) && rf.name) || (isStr(raw.name) && raw.name) || String(key).split('|')[0];
+  const out = newRef(key, fileName);
+  if (isStr(raw.name)) out.name = raw.name;
+  out.file.w = isNum(rf.w) && rf.w > 0 ? rf.w : null;
+  out.file.h = isNum(rf.h) && rf.h > 0 ? rf.h : null;
+  if (isStr(raw.source)) out.source = raw.source;
+  if (Array.isArray(raw.tags)) out.tags = raw.tags.filter(t => isStr(t) && t.trim()).map(t => t.trim());
+  if (isStr(raw.comment)) out.comment = raw.comment;
+  if (raw.font && typeof raw.font === 'object') {
+    out.font.interesting = raw.font.interesting === true;
+    if (isStr(raw.font.note)) out.font.note = raw.font.note;
+  }
+  // оцінки: v1 (typography, layout) -> нові картки; score лишається в даних
+  const rr = raw.ratings && typeof raw.ratings === 'object' ? raw.ratings : {};
+  const seenRatingKey = {};
+  for (const [k0, v] of Object.entries(rr)) {
+    const k = V1_RATING_MAP[k0] || k0;
+    if (!RATING_KEYS.includes(k) || !v || typeof v !== 'object') continue;
+    if (seenRatingKey[k] && k0 !== k) continue;        // нове імʼя має пріоритет над старим
+    seenRatingKey[k] = true;
+    const t = newRating();
+    t.verdict = VERDICTS.some(x => x[0] === v.verdict) ? v.verdict : 'neutral';
+    t.note = isStr(v.note) ? v.note : '';
+    t.reasons = Array.isArray(v.reasons) ? v.reasons.filter(isStr) : [];
+    t.score = isNum(v.score) ? v.score : null;
+    t.selected = typeof v.selected === 'boolean' ? v.selected
+      : (t.score != null || t.note.trim() !== '' || t.verdict !== 'neutral' || t.reasons.length > 0);
+    out.ratings[k] = t;
+  }
+  const seen = new Set();
+  if (Array.isArray(raw.highlights)) {
+    for (const h of raw.highlights) {
+      const res = normalizeHighlight(h, seen);
+      if (res.hl) { out.highlights.push(res.hl); seen.add(res.hl.id); }
+      else { rep.droppedHl++; rep.notes.push(`${out.name}: виділення відкинуто (${res.error})`); }
+    }
+  } else if (raw.highlights != null) rep.notes.push(`${out.name}: highlights не масив`);
+  if (Array.isArray(raw.palette)) out.palette = raw.palette.map(normalizePaletteItem).filter(Boolean);
+  if (raw.takeaways && typeof raw.takeaways === 'object') out.takeaways = { ...out.takeaways, ...raw.takeaways };
+  for (const k of Object.keys(raw)) if (!KNOWN_REF_KEYS.includes(k) && !(k in out)) out[k] = raw[k];
+  return out;
+}
+
+// data: розібраний JSON експорту (version 1 або 2) -> {ok, error, refs, droppedHl, droppedRefs, notes}
+function normalizeImport(data) {
+  const res = { ok: false, error: null, refs: [], droppedHl: 0, droppedRefs: 0, notes: [] };
+  if (!data || typeof data !== 'object' || ![1, 2].includes(data.version) || !Array.isArray(data.references)) {
+    res.error = 'Непідтримуваний формат (очікується version 1 або 2)';
+    return res;
+  }
+  const map = new Map();
+  for (const raw of data.references) {
+    if (!raw || typeof raw !== 'object' || !isStr(raw.id) || !raw.id) { res.droppedRefs++; continue; }
+    const rep = { droppedHl: 0, notes: [] };
+    try { map.set(raw.id, normalizeRef(raw, raw.id, rep)); }
+    catch (e) { res.droppedRefs++; res.notes.push(`Запис ${raw.id}: ${e.message}`); continue; }
+    res.droppedHl += rep.droppedHl; res.notes.push(...rep.notes);
+  }
+  res.refs = [...map.values()];
+  res.ok = true;
+  return res;
+}
+
+function ratingTouched(c) { return c.selected || c.note.trim() !== '' || c.reasons.length > 0; }
+function selectedCount(r) { return RATING_KEYS.filter(k => r.ratings[k] && r.ratings[k].selected).length; }
+function isTouched(r) {
+  return r.highlights.length > 0 || r.comment.trim() !== '' || r.font.interesting || r.font.note.trim() !== '' ||
+    r.palette.length > 0 || r.source.trim() !== '' || r.tags.length > 0 || RATING_KEYS.some(k => ratingTouched(r.ratings[k]));
+}
+// 'done' | 'progress' | 'new' за наявними даними: оцінено = обрано >= 2 картки і є теза або загальний коментар
+function statusOfRef(r) {
+  if (!r) return 'new';
+  if (selectedCount(r) >= 2 && (r.highlights.length > 0 || r.comment.trim() !== '')) return 'done';
+  return isTouched(r) ? 'progress' : 'new';
+}
+const STATUS_SYM = { done: '●', progress: '◐', new: '○' };
+const STATUS_TXT = { done: 'оцінено', progress: 'в процесі', new: 'не оброблено' };
+
+// ---------- зіставлення ключів (relink) ----------
+function parseKey(key) {
+  const p = String(key).split('|');
+  const lm = p.length >= 3 ? p.pop() : null;
+  const size = p.length >= 2 ? Number(p.pop()) : NaN;
+  return { name: p.join('|'), size: isFinite(size) ? size : null, lm };
+}
+// orphans, candidates: масиви ключів. Повертає [{oldKey, newKey, by}]
+function matchOrphans(orphans, candidates) {
+  const used = new Set(), out = [];
+  const cand = candidates.map(k => ({ k, ...parseKey(k) }));
+  const orph = orphans.map(k => ({ k, ...parseKey(k) }));
+  for (const by of ['name+size', 'name']) {
+    for (const o of orph) {
+      if (out.some(x => x.oldKey === o.k)) continue;
+      const c = cand.find(c => !used.has(c.k) && c.name === o.name && (by === 'name' || (o.size != null && c.size === o.size)));
+      if (c) { used.add(c.k); out.push({ oldKey: o.k, newKey: c.k, by }); }
+    }
+  }
+  return out;
+}
+// Чиста частина привʼязки: переносить запис oldKey -> newKey у refs
+function relinkInRefs(refs, oldKey, newKey, newFileName) {
+  const old = refs[oldKey];
+  if (!old || oldKey === newKey) return false;
+  old.id = newKey;
+  if (newFileName) { old.file.name = newFileName; old.name = stripExt(newFileName); }
+  refs[newKey] = old;
+  delete refs[oldKey];
+  return true;
+}
+
+// ---------- сховище (localStorage) ----------
 function loadStore() {
   const empty = { refs: {}, scanIds: null, newIds: [], folderName: null };
   let raw = null;
@@ -216,51 +515,69 @@ function loadStore() {
   if (!raw) return empty;
   try {
     const s = JSON.parse(raw);
-    if (s && s.version === 1) return { refs: s.refs || {}, scanIds: s.scanIds || null, newIds: s.newIds || [], folderName: s.folderName || null };
+    if (s && (s.version === 1 || s.version === 2) && s.refs && typeof s.refs === 'object') {
+      if (s.version === 1 && !TEST_MODE) {   // одноразова резервна копія даних v1 перед міграцією
+        try { if (!localStorage.getItem(LS_KEY + ':backup-v1')) localStorage.setItem(LS_KEY + ':backup-v1', raw); } catch (e) { /* ignore */ }
+      }
+      const refs = {};
+      for (const [k, v] of Object.entries(s.refs)) { try { refs[k] = normalizeRef(v, k); } catch (e) { /* пропускаємо зіпсований запис */ } }
+      return { refs, scanIds: Array.isArray(s.scanIds) ? s.scanIds : null, newIds: Array.isArray(s.newIds) ? s.newIds : [], folderName: s.folderName || null };
+    }
   } catch (e) { /* fall through */ }
   try { localStorage.setItem(LS_KEY + ':broken', raw); } catch (e) { /* ignore */ }
   return empty;
 }
 const store = loadStore();
 
-function saveStore() {
+let saveTimer = null;
+function saveNow() {
+  clearTimeout(saveTimer); saveTimer = null;
   try {
     localStorage.setItem(LS_KEY, JSON.stringify({
-      version: 1, refs: store.refs, scanIds: store.scanIds, newIds: store.newIds, folderName: store.folderName
+      version: DATA_VERSION, refs: store.refs, scanIds: store.scanIds, newIds: store.newIds, folderName: store.folderName
     }));
   } catch (e) { toast('Не вдалося зберегти дані в браузері: ' + e.message); }
 }
+function saveSoon() { clearTimeout(saveTimer); saveTimer = setTimeout(saveNow, 300); }
+window.addEventListener('beforeunload', () => { if (saveTimer) saveNow(); });
+document.addEventListener('visibilitychange', () => { if (document.hidden && saveTimer) saveNow(); });
 
-function toast(msg) {
+// ---------- toast ----------
+function toast(msg, opts) {
+  opts = opts || {};
   const t = $('toast');
-  t.textContent = msg;
+  t.textContent = '';
+  const s = document.createElement('span'); s.textContent = msg; t.appendChild(s);
+  t.classList.toggle('act', !!opts.action);
+  if (opts.action) {
+    const b = document.createElement('button'); b.textContent = opts.action.label;
+    b.onclick = () => { t.classList.remove('show', 'act'); opts.action.fn(); };
+    t.appendChild(b);
+  }
   t.classList.add('show');
   clearTimeout(toast.t);
-  toast.t = setTimeout(() => t.classList.remove('show'), 2800);
+  toast.t = setTimeout(() => t.classList.remove('show', 'act'), opts.ms || 2800);
 }
 
-// ---------- references ----------
-function newRef(key, fileName) {
-  return {
-    id: key,
-    name: fileName.replace(/\.[^.]+$/, ''),
-    file: { name: fileName, w: null, h: null },
-    source: '', tags: [], status: 'draft',
-    comment: '', highlights: [], palette: [],
-    font: { interesting: false, note: '' },
-    ratings: Object.fromEntries(CRITERIA.map(([k]) => [k, { score: null, verdict: 'neutral', note: '' }])),
-    takeaways: { generatedAt: null, tokens: {}, rules: [], avoid: [] }
-  };
-}
-function normalizeRef(raw, key) {
-  const base = newRef(key, (raw.file && raw.file.name) || raw.name || key);
-  const out = { ...base, ...raw, id: key };
-  out.file = { ...base.file, ...(raw.file || {}) };
-  out.font = { ...base.font, ...(raw.font || {}) };
-  out.ratings = { ...base.ratings };
-  for (const [k, v] of Object.entries(raw.ratings || {})) out.ratings[k] = { ...(base.ratings[k] || { score: null, verdict: 'neutral', note: '' }), ...v };
-  out.highlights = Array.isArray(raw.highlights) ? raw.highlights : [];
-  return out;
+// ---------- стан ----------
+const S = {
+  supported: !!window.showDirectoryPicker && !TEST_MODE,
+  handle: null, permOk: false, writeOk: false,
+  files: new Map(),          // key -> {key, name, file, src: 'folder'|'added', url: null}
+  thumbs: new Map(),         // key -> objectURL мініатюри
+  suggest: new Map(),        // oldKey -> {newKey, by}
+  cur: null, tab: 'theses', mode: 'draw', sel: null,
+  draft: null, drag: null, undo: [],
+  scale: 1, fit: true, natW: 0, natH: 0,
+  busy: null, full: null
+};
+function ref() { return (S.cur && store.refs[S.cur]) || null; }
+function findHl(r, hid) { return r.highlights.find(h => h.id === hid); }
+function refName(key) {
+  const e = S.files.get(key);
+  if (e) return e.name;
+  const r = store.refs[key];
+  return (r && r.file && r.file.name) || key;
 }
 function ensureRef(key) {
   if (!store.refs[key]) {
@@ -269,44 +586,71 @@ function ensureRef(key) {
   }
   return store.refs[key];
 }
-function refName(key) {
-  const e = S.files.get(key);
-  if (e) return e.name;
-  const r = store.refs[key];
-  return (r && r.file && r.file.name) || key;
-}
-function isTouched(r) {
-  return r.highlights.length > 0 || r.comment.trim() !== '' || r.font.interesting || r.font.note.trim() !== '' ||
-    Object.values(r.ratings).some(x => x.score != null || x.note.trim() !== '' || x.verdict !== 'neutral');
-}
-function statusOf(key) {
-  const r = store.refs[key];
-  if (!r) return '○';
-  if (r.status === 'done') return '●';
-  return isTouched(r) ? '◐' : '○';
-}
-function findHl(r, hid) { return r.highlights.find(h => h.id === hid); }
-function ref() { return (S.cur && store.refs[S.cur]) || null; }
+function entryUrl(e) { if (!e.url) e.url = URL.createObjectURL(e.file); return e.url; }
+function releaseUrl(e) { if (e && e.url) { URL.revokeObjectURL(e.url); e.url = null; } }
 
-// ---------- files ----------
-function setFiles(list, replace) {
-  if (replace) {
-    for (const e of S.files.values()) URL.revokeObjectURL(e.url);
-    S.files = new Map();
+// ---------- файли ----------
+function mkEntry(key, f, src) { return { key, name: f.name, file: f, src, url: null }; }
+function dropEntry(key) {
+  const e = S.files.get(key);
+  releaseUrl(e);
+  S.files.delete(key);
+  dropThumb(key);
+  if (S.full && S.full.key === key) S.full = null;
+}
+function dropThumb(key) {
+  const u = S.thumbs.get(key);
+  if (u && u !== 'pending') URL.revokeObjectURL(u);
+  S.thumbs.delete(key);
+}
+
+// Мініатюри: зменшення до ~THUMB_W px, кеш за ключем, черга по 2
+const thumbQueue = []; let thumbActive = 0;
+function requestThumb(key) {
+  if (S.thumbs.has(key) || !S.files.has(key)) return;
+  S.thumbs.set(key, 'pending');
+  thumbQueue.push(key);
+  pumpThumbs();
+}
+function pumpThumbs() {
+  while (thumbActive < 2 && thumbQueue.length) {
+    const key = thumbQueue.shift();
+    const e = S.files.get(key);
+    if (!e) { S.thumbs.delete(key); continue; }
+    thumbActive++;
+    makeThumb(e.file).then(url => {
+      if (!S.files.has(key) || S.files.get(key).file !== e.file) { URL.revokeObjectURL(url); if (S.thumbs.get(key) === 'pending') S.thumbs.delete(key); return; }
+      S.thumbs.set(key, url);
+      updateItem(key);
+    }).catch(() => { S.thumbs.set(key, 'fail'); }).finally(() => { thumbActive--; pumpThumbs(); });
   }
-  for (const f of list) {
-    const key = fileKey(f);
-    if (S.files.has(key)) continue;
-    S.files.set(key, { key, name: f.name, file: f, url: URL.createObjectURL(f) });
-  }
+}
+async function makeThumb(file) {
+  let bmp;
+  try { bmp = await createImageBitmap(file, { resizeWidth: THUMB_W, resizeQuality: 'medium' }); }
+  catch (e) { bmp = await createImageBitmap(file); }
+  const sc = Math.min(1, THUMB_W / bmp.width);
+  const cv = document.createElement('canvas');
+  cv.width = Math.max(1, Math.round(bmp.width * sc)); cv.height = Math.max(1, Math.round(bmp.height * sc));
+  cv.getContext('2d').drawImage(bmp, 0, 0, cv.width, cv.height);
+  if (bmp.close) bmp.close();
+  const blob = await new Promise((res, rej) => cv.toBlob(b => b ? res(b) : rej(new Error('toBlob')), 'image/jpeg', 0.82));
+  return URL.createObjectURL(blob);
+}
+
+function computeSuggestions() {
+  S.suggest.clear();
+  const orphans = Object.keys(store.refs).filter(k => !S.files.has(k) && isTouched(store.refs[k]));
+  const cands = [...S.files.keys()].filter(k => !store.refs[k] || !isTouched(store.refs[k]));
+  for (const m of matchOrphans(orphans, cands)) S.suggest.set(m.oldKey, { newKey: m.newKey, by: m.by });
 }
 
 async function scanFolder() {
   const h = S.handle;
-  const list = [];
+  const found = new Map();
   try {
     for await (const entry of h.values()) {
-      if (entry.kind === 'file' && IMG_RE.test(entry.name)) list.push(await entry.getFile());
+      if (entry.kind === 'file' && IMG_RE.test(entry.name)) { const f = await entry.getFile(); found.set(fileKey(f), f); }
     }
   } catch (err) {
     S.permOk = false;
@@ -314,89 +658,86 @@ async function scanFolder() {
     renderAll();
     return;
   }
-  const keys = [...new Set(list.map(fileKey))];
-  const sameFolder = store.folderName === h.name;
-  setFiles(list, true);
-  if (sameFolder && store.scanIds) {
+  // видаляємо лише ключі з папки, яких там більше немає; додані вручну лишаються
+  for (const [k, e] of [...S.files]) if (e.src === 'folder' && !found.has(k)) dropEntry(k);
+  for (const [k, f] of found) {
+    const ex = S.files.get(k);
+    if (ex) { ex.src = 'folder'; ex.file = f; } else S.files.set(k, mkEntry(k, f, 'folder'));
+  }
+  const keys = [...found.keys()];
+  if (store.scanIds) {   // мітка «нове» лише відносно попереднього скану цієї ж папки
     const prev = new Set(store.scanIds);
     for (const k of keys) if (!prev.has(k) && !store.newIds.includes(k)) store.newIds.push(k);
   }
-  const kset = new Set(keys);
-  store.newIds = store.newIds.filter(k => kset.has(k));
+  store.newIds = store.newIds.filter(k => found.has(k));
   store.scanIds = keys;
   store.folderName = h.name;
-  saveStore();
+  computeSuggestions();
+  saveNow();
   renderAll();
-  toast(`Папка прочитана: ${keys.length} файлів`);
+  const sug = S.suggest.size;
+  toast(`Папка прочитана: ${keys.length} файлів` + (sug ? `. Можливі збіги для привʼязки: ${sug}` : ''));
 }
 
 function addFilesList(list) {
   const imgs = [...list].filter(f => /^image\/(png|jpeg|webp)$/.test(f.type) || IMG_RE.test(f.name));
   if (!imgs.length) { toast('Немає підтримуваних картинок (png, jpg, webp)'); return; }
-  setFiles(imgs, false);
+  let n = 0;
+  for (const f of imgs) { const k = fileKey(f); if (!S.files.has(k)) { S.files.set(k, mkEntry(k, f, 'added')); n++; } }
+  computeSuggestions();
   renderAll();
-  toast(`Додано файлів: ${imgs.length}`);
+  toast(`Додано файлів: ${n}`);
 }
 
-// ---------- IndexedDB (only the folder handle) ----------
+// ---------- IndexedDB: одне кешоване зʼєднання ----------
+let dbPromise = null;
 function idbOpen() {
-  return new Promise((res, rej) => {
-    const r = indexedDB.open(IDB_NAME, 1);
-    r.onupgradeneeded = () => r.result.createObjectStore(IDB_STORE);
-    r.onsuccess = () => res(r.result);
-    r.onerror = () => rej(r.error);
-  });
+  if (!dbPromise) {
+    dbPromise = new Promise((res, rej) => {
+      const r = indexedDB.open(IDB_NAME, 1);
+      r.onupgradeneeded = () => r.result.createObjectStore(IDB_STORE);
+      r.onsuccess = () => { const db = r.result; db.onclose = () => { dbPromise = null; }; db.onversionchange = () => { db.close(); dbPromise = null; }; res(db); };
+      r.onerror = () => { dbPromise = null; rej(r.error); };
+    });
+  }
+  return dbPromise;
 }
 async function idbGet(k) {
   const db = await idbOpen();
-  return new Promise((res, rej) => {
-    const q = db.transaction(IDB_STORE).objectStore(IDB_STORE).get(k);
-    q.onsuccess = () => res(q.result);
-    q.onerror = () => rej(q.error);
-  });
+  return new Promise((res, rej) => { const q = db.transaction(IDB_STORE).objectStore(IDB_STORE).get(k); q.onsuccess = () => res(q.result); q.onerror = () => rej(q.error); });
 }
 async function idbSet(k, v) {
   const db = await idbOpen();
-  return new Promise((res, rej) => {
-    const t = db.transaction(IDB_STORE, 'readwrite');
-    t.objectStore(IDB_STORE).put(v, k);
-    t.oncomplete = () => res();
-    t.onerror = () => rej(t.error);
-  });
+  return new Promise((res, rej) => { const t = db.transaction(IDB_STORE, 'readwrite'); t.objectStore(IDB_STORE).put(v, k); t.oncomplete = () => res(); t.onerror = () => rej(t.error); });
 }
 
-// ---------- folder actions ----------
+// ---------- дії з папкою ----------
+async function sameFolder(a, b) {
+  if (!a || !b) return false;
+  try { if (a.isSameEntry) return await a.isSameEntry(b); } catch (e) { /* фолбек на імʼя */ }
+  return a.name === b.name;
+}
 async function pickFolder() {
   let h;
-  try {
-    h = await window.showDirectoryPicker({ mode: 'readwrite', id: 'ref-board' });
-  } catch (e) {
-    if (e.name !== 'AbortError') toast('Не вдалося відкрити папку: ' + e.message);
-    return;
-  }
-  S.handle = h;
-  S.permOk = true;
+  try { h = await window.showDirectoryPicker({ mode: 'readwrite', id: 'ref-board' }); }
+  catch (e) { if (e.name !== 'AbortError') toast('Не вдалося відкрити папку: ' + e.message); return; }
+  const same = await sameFolder(S.handle, h);
+  if (!same) { store.scanIds = null; store.newIds = []; }   // інша папка: попереднього скану для неї немає
+  for (const [k, e] of [...S.files]) if (e.src === 'folder') dropEntry(k);
+  S.handle = h; S.permOk = true;
   S.writeOk = (await queryPerm(h, 'readwrite')) === 'granted';
-  try { await idbSet(IDB_KEY, h); } catch (e) { toast('Не вдалося запам\'ятати папку: ' + e.message); }
+  try { await idbSet(IDB_KEY, h); } catch (e) { toast('Не вдалося запамʼятати папку: ' + e.message); }
   await scanFolder();
   if (!S.writeOk) toast('Папку відкрито лише для читання. Натисніть «Дозволити запис», щоб експорт писав у папку.');
 }
-
-// Перевірка дозволу без запиту (не потребує жесту користувача).
-async function queryPerm(h, mode) {
-  try { return await h.queryPermission({ mode }); } catch (e) { return 'denied'; }
-}
-// Запит дозволу readwrite; викликати тільки з жесту користувача (клік).
-async function askPerm(h) {
-  try { return await h.requestPermission({ mode: 'readwrite' }); } catch (e) { return 'denied'; }
-}
+async function queryPerm(h, mode) { try { return await h.queryPermission({ mode }); } catch (e) { return 'denied'; } }
+async function askPerm(h) { try { return await h.requestPermission({ mode: 'readwrite' }); } catch (e) { return 'denied'; } }
 async function requestWrite() {
   if (!S.handle) return false;
   S.writeOk = (await askPerm(S.handle)) === 'granted';
   renderFolderBar();
   return S.writeOk;
 }
-
 async function restoreAccess() {
   const h = S.handle;
   S.writeOk = (await askPerm(h)) === 'granted';
@@ -406,17 +747,13 @@ async function restoreAccess() {
   if (!S.writeOk) toast('Доступ лише для читання. Натисніть «Дозволити запис», щоб експорт писав у папку.');
 }
 
-// ---------- import / export ----------
+// ---------- експорт / імпорт ----------
 function download(blob, name) {
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = name;
-  document.body.appendChild(a);
-  a.click();
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click();
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 0);
 }
-
-// Список ref-board_vNNN_*.json у папці, від новіших.
 async function listExports(h) {
   const out = [];
   for await (const entry of h.values()) {
@@ -426,44 +763,73 @@ async function listExports(h) {
   }
   return out.sort((a, b) => b.version - a.version || (a.name < b.name ? 1 : a.name > b.name ? -1 : 0));
 }
-
-// Створює новий файл з першим вільним іменем, починаючи з version (не перезаписує наявні).
 async function createExportFile(h, version, d) {
   for (let v = version; v < version + 1000; v++) {
     const name = exportName(v, d);
     let exists = true;
-    try { await h.getFileHandle(name); }
-    catch (e) { if (e.name !== 'NotFoundError') throw e; exists = false; }
+    try { await h.getFileHandle(name); } catch (e) { if (e.name !== 'NotFoundError') throw e; exists = false; }
     if (!exists) return { version: v, name, fh: await h.getFileHandle(name, { create: true }) };
   }
   throw new Error('не вдалося підібрати вільне імʼя файлу');
 }
-
 function buildExport(exportVersion, d) {
-  return { version: 1, exportVersion, exportedAt: d.toISOString(), references: Object.values(store.refs) };
+  saveNow();
+  return { version: DATA_VERSION, exportVersion, exportedAt: d.toISOString(), references: clone(Object.values(store.refs)) };
 }
-
 function fallbackExport(d, reason) {
   const data = buildExport(null, d);
   download(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }), 'ref-board.json');
-  toast(`${reason}Файл збережено в Downloads як ref-board.json (записів: ${data.references.length})`);
+  toast(`${reason}Файл збережено в Downloads як ref-board.json (записів: ${data.references.length})`, { ms: 6000 });
 }
 
-async function exportJson() {
+// Кропи виділень у ref-board_vNNN_crops/. Додає hl.crop у data (лише для записаних).
+async function writeCrops(h, version, data) {
+  const dirName = cropsDirName(version);
+  const dir = await h.getDirectoryHandle(dirName, { create: true });
+  let ok = 0, fail = 0;
+  for (const r of data.references) {
+    const e = S.files.get(r.id);
+    if (!e || !r.highlights.length) { for (const hl of r.highlights) hl.crop = null; fail += r.highlights.length; continue; }
+    let bmp = null;
+    try { bmp = await createImageBitmap(e.file); } catch (err) { for (const hl of r.highlights) hl.crop = null; fail += r.highlights.length; continue; }
+    for (const hl of r.highlights) {
+      try {
+        const b = cropBox(bmp.width, bmp.height, hl.rect);
+        const cv = document.createElement('canvas'); cv.width = b.w; cv.height = b.h;
+        cv.getContext('2d').drawImage(bmp, b.x, b.y, b.w, b.h, 0, 0, b.w, b.h);
+        const blob = await new Promise((res, rej) => cv.toBlob(x => x ? res(x) : rej(new Error('toBlob')), 'image/png'));
+        const name = cropFileName(r.id, hl.id);
+        const fh = await dir.getFileHandle(name, { create: true });
+        const w = await fh.createWritable(); await w.write(blob); await w.close();
+        hl.crop = `${dirName}/${name}`; ok++;
+      } catch (err) { hl.crop = null; fail++; }
+    }
+    if (bmp.close) bmp.close();
+  }
+  return { ok, fail, dirName };
+}
+
+async function exportJson(withCrops) {
   const d = new Date();
-  // askPerm першим викликом, поки ще є жест користувача
-  if (S.supported && S.handle && !S.writeOk) await requestWrite();
-  if (!S.supported || !S.handle) { fallbackExport(d, 'Папку не обрано. '); return; }
-  if (!S.writeOk) { fallbackExport(d, 'Немає дозволу на запис у папку. Натисніть «Дозволити запис». '); return; }
+  if (S.supported && S.handle && !S.writeOk) await requestWrite();   // жест користувача: запит першим
+  const note = withCrops ? ' Кропи для аналізу потребують запису в папку, тому збережено лише JSON (без кропів).' : '';
+  if (!S.supported || !S.handle) { fallbackExport(d, 'Папку не обрано.' + note + ' '); return; }
+  if (!S.writeOk) { fallbackExport(d, 'Немає дозволу на запис у папку. Натисніть «Дозволити запис».' + note + ' '); return; }
   let created = null;
   try {
     const entries = await listExports(S.handle);
     created = await createExportFile(S.handle, nextVersion(entries.map(x => x.name)), d);
     const data = buildExport(created.version, d);
+    let msg = `Записано у папку: ${created.name} (записів: ${data.references.length})`;
+    if (withCrops) {
+      toast('Готую кропи…', { ms: 20000 });
+      const c = await writeCrops(S.handle, created.version, data);
+      msg += `. Кропи: ${c.ok} у ${c.dirName}/` + (c.fail ? `, без кропа: ${c.fail} (файлу немає в поточному списку)` : '');
+    }
     const w = await created.fh.createWritable();
     await w.write(JSON.stringify(data, null, 2));
     await w.close();
-    toast(`Записано у папку: ${created.name} (записів: ${data.references.length})`);
+    toast(msg, { ms: 6000 });
   } catch (e) {
     if (created) { try { await S.handle.removeEntry(created.name); } catch (_) { /* ignore */ } }
     if (e.name === 'NotAllowedError') { S.writeOk = false; renderFolderBar(); }
@@ -475,73 +841,123 @@ async function openFolderImport() {
   if (!S.supported || !S.handle) { toast('Спочатку оберіть папку з референсами'); return; }
   if (!S.permOk) { toast('Натисніть «Відновити доступ», щоб прочитати папку'); return; }
   let items;
-  try { items = await listExports(S.handle); }
-  catch (e) { toast('Не вдалося прочитати папку: ' + e.message); return; }
+  try { items = await listExports(S.handle); } catch (e) { toast('Не вдалося прочитати папку: ' + e.message); return; }
   $('pickList').innerHTML = items.length
     ? items.map(it => `<button data-pf="${esc(it.name)}">${esc(it.name)}</button>`).join('')
     : '<div class="empty">У папці немає файлів ref-board_v*.json</div>';
   $('pickDlg').showModal();
 }
-
 async function importFromFolder(name) {
-  try {
-    const fh = await S.handle.getFileHandle(name);
-    await importJson(await fh.getFile());
-  } catch (e) { toast('Не вдалося прочитати файл: ' + e.message); }
+  try { const fh = await S.handle.getFileHandle(name); await importJson(await fh.getFile()); }
+  catch (e) { toast('Не вдалося прочитати файл: ' + e.message); }
 }
-
 async function importJson(file) {
   let data;
-  try { data = JSON.parse(await file.text()); }
-  catch (e) { toast('Файл не є коректним JSON'); return; }
-  if (!data || data.version !== 1 || !Array.isArray(data.references)) {
-    toast('Непідтримуваний формат (очікується version 1)');
-    return;
-  }
-  const items = data.references.filter(r => r && typeof r.id === 'string');
-  const overlap = items.filter(r => store.refs[r.id]).length;
+  try { data = JSON.parse(await file.text()); } catch (e) { toast('Файл не є коректним JSON'); return; }
+  const res = normalizeImport(data);
+  if (!res.ok) { toast(res.error); return; }
+  const overlap = res.refs.filter(r => store.refs[r.id]).length;
   if (overlap && !confirm(`Записи з тим самим ідентифікатором (${overlap}) буде замінено. Продовжити?`)) return;
-  for (const raw of items) store.refs[raw.id] = normalizeRef(raw, raw.id);
-  saveStore();
+  for (const r of res.refs) store.refs[r.id] = r;
+  computeSuggestions();
+  saveNow();
   renderAll();
-  toast(`Імпортовано записів: ${items.length}`);
+  let msg = `Імпортовано записів: ${res.refs.length}`;
+  if (res.droppedHl) msg += `. Відкинуто некоректних виділень: ${res.droppedHl}`;
+  if (res.droppedRefs) msg += `. Відкинуто записів: ${res.droppedRefs}`;
+  if (S.suggest.size) msg += `. Є записи без файлу, які можна привʼязати: ${S.suggest.size}`;
+  toast(msg, { ms: 6000 });
+  if (res.notes.length) console.warn('Ref Board import:', res.notes);
 }
 
-// ---------- open / select ----------
+// ---------- привʼязка запису до файлу ----------
+function openRelink(oldKey) {
+  const sug = S.suggest.get(oldKey);
+  const cands = [...S.files.values()].sort((a, b) => a.name.localeCompare(b.name, 'uk'));
+  $('relinkInfo').textContent = `Запис «${refName(oldKey)}» (тез: ${(store.refs[oldKey] || { highlights: [] }).highlights.length}) без файлу. Оберіть файл, до якого перенести тези й оцінки.`;
+  const rows = [];
+  if (sug && S.files.has(sug.newKey)) rows.push(`<button data-rl="${esc(sug.newKey)}" class="primary">Рекомендовано: ${esc(refName(sug.newKey))} (збіг за ${sug.by === 'name+size' ? 'імʼям і розміром' : 'імʼям'})</button>`);
+  for (const e of cands) {
+    if (sug && e.key === sug.newKey) continue;
+    const has = store.refs[e.key] && isTouched(store.refs[e.key]);
+    rows.push(`<button data-rl="${esc(e.key)}">${esc(e.name)}${has ? ' (вже має дані: буде замінено)' : ''}</button>`);
+  }
+  $('relinkList').innerHTML = rows.length ? rows.join('') : '<div class="empty">Немає файлів у списку</div>';
+  $('relinkDlg').dataset.old = oldKey;
+  $('relinkDlg').showModal();
+}
+function doRelink(oldKey, newKey) {
+  const e = S.files.get(newKey);
+  const ex = store.refs[newKey];
+  if (ex && isTouched(ex) && !confirm('У цього файлу вже є дані. Замінити їх даними старого запису?')) return;
+  delete store.refs[newKey];
+  if (!relinkInRefs(store.refs, oldKey, newKey, e && e.name)) return;
+  if (e && S.full && S.full.key === oldKey) S.full = null;
+  store.newIds = store.newIds.filter(k => k !== newKey);
+  if (store.scanIds) store.scanIds = store.scanIds.map(k => k === oldKey ? newKey : k);
+  if (S.cur === oldKey) S.cur = newKey;
+  computeSuggestions();
+  saveNow();
+  renderAll();
+  toast('Привʼязано до файлу ' + refName(newKey));
+}
+
+// ---------- відкриття, виділення, скасування ----------
 function openRef(key) {
   if (!S.files.has(key) && !store.refs[key]) return;
-  S.cur = key; S.sel = null; S.draft = null;
+  const prev = S.cur;
+  if (prev && prev !== key && S.files.get(prev)) { releaseUrl(S.files.get(prev)); $('img').removeAttribute('src'); $('img').dataset.url = ''; }
+  S.cur = key; S.sel = null; S.draft = null; S.busy = null;
   const i = store.newIds.indexOf(key);
-  if (i >= 0) { store.newIds.splice(i, 1); saveStore(); }
+  if (i >= 0) { store.newIds.splice(i, 1); saveNow(); }
   if (S.files.has(key)) ensureRef(key);
-  renderAll();
+  if (prev) updateItem(prev);
+  updateItem(key);
+  renderCenter(); renderMeta(); renderTabs(); renderPanel();
 }
 
 function selectHl(hid) {
   S.sel = hid;
-  if (hid) S.tab = 'tags';
-  renderTabs();
-  renderPanel();
-  renderOverlay();
-  if (hid) {
-    const el = $('panel').querySelector(`[data-hid="${hid}"]`);
-    if (el) el.scrollIntoView({ block: 'nearest' });
-  }
+  if (hid && S.tab !== 'color') S.tab = 'theses';
+  renderTabs(); renderPanel(); renderOverlay();
+  if (hid) { const el = $('panel').querySelector(`.titem[data-hid="${hid}"]`); if (el) el.scrollIntoView({ block: 'nearest' }); }
+}
+
+function pushUndo(label, fn) {
+  S.undo.push({ label, fn });
+  if (S.undo.length > 30) S.undo.shift();
+}
+function doUndo() {
+  const u = S.undo.pop();
+  if (!u) { toast('Нічого скасовувати'); return; }
+  u.fn();
+  toast('Скасовано: ' + u.label);
 }
 
 function deleteHl(hid) {
   const r = ref();
   if (!r) return;
-  r.highlights = r.highlights.filter(h => h.id !== hid);
+  const idx = r.highlights.findIndex(h => h.id === hid);
+  if (idx < 0) return;
+  const hl = r.highlights[idx], key = r.id;
+  r.highlights.splice(idx, 1);
   if (S.sel === hid) S.sel = null;
-  saveStore();
-  renderAll();
+  const restore = () => {
+    const rr = store.refs[key];
+    if (!rr || rr.highlights.some(h => h.id === hl.id)) return;
+    rr.highlights.splice(Math.min(idx, rr.highlights.length), 0, hl);
+    saveNow(); updateItem(key);
+    if (S.cur === key) { S.sel = hl.id; renderMeta(); renderPanel(); renderOverlay(); }
+  };
+  pushUndo('видалення виділення', restore);
+  saveNow(); updateItem(key); renderMeta(); renderPanel(); renderOverlay();
+  toast('Видалено. ', { ms: 6000, action: { label: 'Скасувати', fn: () => { const i = S.undo.findIndex(u => u.fn === restore); if (i >= 0) S.undo.splice(i, 1); restore(); } } });
 }
 
-// ---------- zoom / layout ----------
+// ---------- масштаб і розкладка ----------
 function fitScale() {
   const vp = $('vp');
-  const aw = vp.clientWidth - 40, ah = vp.clientHeight - 40;
+  const aw = vp.clientWidth - 32, ah = vp.clientHeight - 32;
   return Math.max(0.05, Math.min(aw / S.natW, ah / S.natH, 1));
 }
 function layoutStage() {
@@ -549,7 +965,7 @@ function layoutStage() {
   if (!S.natW) { $('zoomLabel').textContent = ''; return; }
   stage.style.width = Math.round(S.natW * S.scale) + 'px';
   stage.style.height = Math.round(S.natH * S.scale) + 'px';
-  $('zoomLabel').textContent = Math.round(S.scale * 100) + '%';
+  $('zoomLabel').textContent = Math.round(S.scale * 100) + ' %';
 }
 function setZoom(ns, cx, cy) {
   if (!S.natW) return;
@@ -558,29 +974,32 @@ function setZoom(ns, cx, cy) {
   if (cx == null) { cx = vp.clientWidth / 2; cy = vp.clientHeight / 2; }
   const fx = (vp.scrollLeft + cx - stage.offsetLeft) / (stage.offsetWidth || 1);
   const fy = (vp.scrollTop + cy - stage.offsetTop) / (stage.offsetHeight || 1);
-  S.fit = false;
-  S.scale = ns;
+  S.fit = false; S.scale = ns;
   layoutStage();
   vp.scrollLeft = stage.offsetLeft + fx * stage.offsetWidth - cx;
   vp.scrollTop = stage.offsetTop + fy * stage.offsetHeight - cy;
 }
 
-// ---------- pointer: draw / move / resize / pan ----------
+// ---------- вказівник: малювання / переміщення / resize / перегляд / піпетка ----------
 function pt(e) {
   const r = $('ov').getBoundingClientRect();
   return { x: clamp((e.clientX - r.left) / r.width * 100, 0, 100), y: clamp((e.clientY - r.top) / r.height * 100, 0, 100) };
 }
-
+function stopDrag() {
+  window.removeEventListener('pointermove', onMove);
+  window.removeEventListener('pointerup', onUp);
+  window.removeEventListener('pointercancel', onCancel);
+}
 function onDown(e) {
   if (e.button !== 0 || !S.natW) return;
+  if (S.mode === 'pick') { pickColorAt(e); return; }
   const hlEl = e.target.closest('.hl:not(.draft)');
   if (S.mode === 'pan') { startPan(e, hlEl ? hlEl.dataset.hid : null); return; }
   const r = ref();
   if (!r) return;
   e.preventDefault();
   if (hlEl) {
-    const hid = hlEl.dataset.hid;
-    const h = findHl(r, hid);
+    const hid = hlEl.dataset.hid, h = findHl(r, hid);
     if (!h) return;
     const handle = e.target.dataset.h || null;
     S.drag = { type: handle ? 'resize' : 'move', hid, handle, start: pt(e), orig: { ...h.rect } };
@@ -592,9 +1011,9 @@ function onDown(e) {
     if (S.sel) selectHl(null); else renderOverlay();
   }
   window.addEventListener('pointermove', onMove);
-  window.addEventListener('pointerup', onUp, { once: true });
+  window.addEventListener('pointerup', onUp);
+  window.addEventListener('pointercancel', onCancel);
 }
-
 function onMove(e) {
   const d = S.drag, r = ref();
   if (!d || !r) return;
@@ -607,9 +1026,8 @@ function onMove(e) {
     const h = findHl(r, d.hid);
     if (!h) return;
     if (d.type === 'move') {
-      const dx = p.x - d.start.x, dy = p.y - d.start.y;
-      h.rect.x = r2(clamp(d.orig.x + dx, 0, 100 - d.orig.w));
-      h.rect.y = r2(clamp(d.orig.y + dy, 0, 100 - d.orig.h));
+      h.rect.x = r2(clamp(d.orig.x + p.x - d.start.x, 0, 100 - d.orig.w));
+      h.rect.y = r2(clamp(d.orig.y + p.y - d.start.y, 0, 100 - d.orig.h));
     } else {
       let L = d.orig.x, R = d.orig.x + d.orig.w, T = d.orig.y, B = d.orig.y + d.orig.h;
       if (d.handle.includes('w')) L = p.x; else R = p.x;
@@ -621,9 +1039,16 @@ function onMove(e) {
   }
   renderOverlay();
 }
-
+function onCancel() {   // браузер перехопив жест: скасовуємо дію
+  stopDrag();
+  const d = S.drag, r = ref();
+  S.drag = null;
+  if (d && r && d.type !== 'draw') { const h = findHl(r, d.hid); if (h) h.rect = d.orig; }
+  S.draft = null;
+  renderOverlay();
+}
 function onUp() {
-  window.removeEventListener('pointermove', onMove);
+  stopDrag();
   const d = S.drag;
   S.drag = null;
   if (!d) return;
@@ -632,28 +1057,22 @@ function onUp() {
     const dr = S.draft;
     S.draft = null;
     if (r && dr && dr.w >= 0.5 && dr.h >= 0.5) {
-      const h = {
-        id: uid(),
-        rect: { x: r2(dr.x), y: r2(dr.y), w: r2(dr.w), h: r2(dr.h) },
-        title: 'Виділення ' + (r.highlights.length + 1),
-        note: '', category: 'component', verdict: 'neutral'
-      };
-      r.highlights.push(h);
-      S.sel = h.id;
-      S.tab = 'tags';
-      saveStore();
-      renderAll();
-      const el = $('panel').querySelector(`[data-hid="${h.id}"] .f-title`);
-      if (el) { el.focus(); el.select(); }
-      return;
+      const rect = validateRect({ x: r2(dr.x), y: r2(dr.y), w: r2(dr.w), h: r2(dr.h) });
+      if (rect) {
+        const h = { id: uid(), rect, title: 'Виділення ' + (r.highlights.length + 1), note: '', why: '', category: 'component', verdict: 'neutral' };
+        r.highlights.push(h);
+        S.sel = h.id; S.tab = 'theses';
+        saveNow(); updateItem(r.id); renderMeta(); renderTabs(); renderPanel(); renderOverlay();
+        const el = $('panel').querySelector('.f-title');
+        if (el) { el.focus(); el.select(); }
+        return;
+      }
     }
     renderOverlay();
   } else {
-    saveStore();
-    renderPanel();
+    saveNow(); renderPanel();
   }
 }
-
 function startPan(e, hid) {
   const vp = $('vp');
   const sx = e.clientX, sy = e.clientY, l0 = vp.scrollLeft, t0 = vp.scrollTop;
@@ -661,33 +1080,199 @@ function startPan(e, hid) {
   const mv = ev => {
     const dx = ev.clientX - sx, dy = ev.clientY - sy;
     if (Math.abs(dx) + Math.abs(dy) > 3) moved = true;
-    vp.scrollLeft = l0 - dx;
-    vp.scrollTop = t0 - dy;
+    vp.scrollLeft = l0 - dx; vp.scrollTop = t0 - dy;
   };
-  const up = () => {
+  const end = fire => {
     window.removeEventListener('pointermove', mv);
-    if (!moved && hid) selectHl(hid);
+    window.removeEventListener('pointerup', up);
+    window.removeEventListener('pointercancel', cancel);
+    if (fire && !moved && hid) selectHl(hid);
   };
+  const up = () => end(true), cancel = () => end(false);
   window.addEventListener('pointermove', mv);
-  window.addEventListener('pointerup', up, { once: true });
+  window.addEventListener('pointerup', up);
+  window.addEventListener('pointercancel', cancel);
   e.preventDefault();
 }
 
-// ---------- rendering ----------
+// ---------- повне зображення (піпетка, витягування кольору) ----------
+async function getFull() {
+  const key = S.cur, e = key && S.files.get(key);
+  if (!e) throw new Error('немає файлу');
+  if (S.full && S.full.key === key && S.full.file === e.file) return S.full;
+  const bmp = await createImageBitmap(e.file);
+  const cv = document.createElement('canvas');
+  cv.width = bmp.width; cv.height = bmp.height;
+  const ctx = cv.getContext('2d', { willReadFrequently: true });
+  ctx.drawImage(bmp, 0, 0);
+  if (bmp.close) bmp.close();
+  S.full = { key, file: e.file, cv, ctx, w: cv.width, h: cv.height };
+  return S.full;
+}
+function pixelHex(ctx, x, y) {
+  const d = ctx.getImageData(x, y, 1, 1).data;
+  return '#' + [d[0], d[1], d[2]].map(v => v.toString(16).padStart(2, '0')).join('');
+}
+function pctToPx(full, p) { return { x: clamp(Math.floor(p.x / 100 * full.w), 0, full.w - 1), y: clamp(Math.floor(p.y / 100 * full.h), 0, full.h - 1) }; }
+
+async function pickColorAt(e) {
+  const r = ref();
+  if (!r) return;
+  e.preventDefault();
+  const p = pt(e);
+  try {
+    const full = await getFull();
+    const px = pctToPx(full, p);
+    const hex = pixelHex(full.ctx, px.x, px.y);
+    addColor(r, hex, 'eyedropper');
+    toast(`Додано колір ${hex}`);
+  } catch (err) { toast('Піпетка: не вдалося прочитати піксель (' + err.message + ')'); }
+}
+let hoverRaf = 0;
+function onHover(e) {
+  if (S.mode !== 'pick' || !S.full || !S.cur || S.full.key !== S.cur) return;
+  const cx = e.clientX, cy = e.clientY;
+  cancelAnimationFrame(hoverRaf);
+  hoverRaf = requestAnimationFrame(() => {
+    const rc = $('ov').getBoundingClientRect();
+    const p = { x: clamp((cx - rc.left) / rc.width * 100, 0, 100), y: clamp((cy - rc.top) / rc.height * 100, 0, 100) };
+    const px = pctToPx(S.full, p);
+    const hex = pixelHex(S.full.ctx, px.x, px.y);
+    const el = $('pickPrev');
+    el.hidden = false; el.firstChild.style.background = hex; el.lastChild.textContent = hex;
+  });
+}
+
+// ---------- палітра ----------
+function addColor(r, hex, source) {
+  hex = hex.toLowerCase();
+  const old = clone(r.palette);
+  const ex = r.palette.find(c => c.hex === hex);
+  if (ex) { toast(`Колір ${hex} уже є в палітрі`); return; }
+  r.palette.push({ hex, share: null, role: 'other', source });
+  const key = r.id;
+  pushUndo('додавання кольору', () => { const rr = store.refs[key]; if (rr) { rr.palette = old; saveNow(); updateItem(key); if (S.cur === key) { renderMeta(); renderPanel(); } } });
+  saveSoon(); updateItem(key); renderMeta();
+  if (S.cur === key) { if (S.mode === 'pick') S.tab = 'color'; renderTabs(); renderPanel(); }
+}
+
+// Витягування: Web Worker з підключенням бібліотеки; якщо воркер недоступний, рахуємо в головному потоці
+let worker = null, workerBad = false, workerSeq = 0, workerTimeoutMs = 30000, workerReplies = 0, workerFallbacks = 0;
+function getWorker() {
+  if (worker || workerBad) return worker;
+  try {
+    const code = 'self.onmessage=function(e){var m=e.data;try{if(!self.ColorExtract)importScripts(m.lib);' +
+      'var p=self.ColorExtract.extractPalette({data:new Uint8ClampedArray(m.buf),width:m.w,height:m.h},m.opts);' +
+      'self.postMessage({id:m.id,palette:p});}catch(err){self.postMessage({id:m.id,error:String(err&&err.message||err)});}};';
+    worker = new Worker(URL.createObjectURL(new Blob([code], { type: 'text/javascript' })));
+    worker.onerror = () => { workerBad = true; try { worker.terminate(); } catch (e) { /* ignore */ } worker = null; };
+  } catch (e) { workerBad = true; worker = null; }
+  return worker;
+}
+function extractSync(imageData, opts) {
+  if (typeof ColorExtract === 'undefined') throw new Error('color-test/extract-colors.js не завантажено');
+  return ColorExtract.extractPalette(imageData, opts);
+}
+function extractAsync(imageData, opts) {
+  const w = getWorker();
+  const fallback = async () => { await nextFrame(); return extractSync(imageData, opts); };
+  if (!w) return fallback();
+  return new Promise(resolve => {
+    const id = ++workerSeq;
+    const timer = setTimeout(() => { w.removeEventListener('message', on); workerFallbacks++; resolve(fallback()); }, workerTimeoutMs);
+    const on = ev => {
+      if (!ev.data || ev.data.id !== id) return;
+      clearTimeout(timer); w.removeEventListener('message', on);
+      if (ev.data.error) { workerFallbacks++; resolve(fallback()); } else { workerReplies++; resolve(ev.data.palette); }
+    };
+    w.addEventListener('message', on);
+    w.addEventListener('error', () => { clearTimeout(timer); w.removeEventListener('message', on); resolve(fallback()); }, { once: true });
+    w.postMessage({ id, lib: new URL('color-test/extract-colors.js', location.href).href, buf: imageData.data.buffer, w: imageData.width, h: imageData.height, opts });
+  });
+}
+
+function applyPalette(r, pal, source, hlId) {
+  const old = clone(r.palette), key = r.id;
+  const keep = r.palette.filter(c => c.source === 'eyedropper' || c.source === 'manual');
+  const fresh = pal.map(p => normalizePaletteItem({ hex: p.hex, share: p.share, role: p.role, source, removed: p.removed, from: hlId })).filter(Boolean);
+  r.palette = fresh.concat(keep.filter(k => !fresh.some(f => f.hex === k.hex)));
+  pushUndo('зміна палітри', () => { const rr = store.refs[key]; if (rr) { rr.palette = old; saveNow(); updateItem(key); if (S.cur === key) { renderMeta(); renderPanel(); } } });
+  saveNow(); updateItem(key);
+}
+
+async function runExtract(mode) {
+  const r = ref(), e = r && S.files.get(r.id);
+  if (!r || !e || S.busy) return;
+  let rect = null, hl = null;
+  if (mode === 'sel') {
+    hl = S.sel && findHl(r, S.sel);
+    if (!hl) { toast('Спершу виберіть виділення (вкладка «Тези» або клік по картинці)'); return; }
+    rect = hl.rect;
+  }
+  S.busy = { mode, key: r.id };
+  renderPanel();
+  try {
+    await nextFrame();
+    let imageData;
+    if (mode === 'sel') {
+      const full = await getFull();
+      imageData = full.w * full.h > 40e6 ? await ColorExtract.imageDataFromSource(e.file, 4000) : full.ctx.getImageData(0, 0, full.w, full.h);
+    } else {
+      if (typeof ColorExtract === 'undefined') throw new Error('color-test/extract-colors.js не завантажено');
+      imageData = await ColorExtract.imageDataFromSource(e.file, 1600);
+    }
+    const opts = {};
+    if (rect) {
+      opts.rect = rect;
+      if (imageData.width * imageData.height * rect.w * rect.h / 1e4 <= 1.5e6) opts.hiRes = true;
+    }
+    const pal = await extractAsync(imageData, opts);
+    if (!pal.length) toast('Не вдалося виділити кольори');
+    else { applyPalette(r, pal, mode === 'sel' ? 'selection' : 'auto', hl && hl.id); toast(`Палітра: ${pal.length} кольорів`, { ms: 5000, action: { label: 'Скасувати', fn: doUndo } }); }
+  } catch (err) { toast('Витягування кольорів не вдалося: ' + err.message); }
+  finally { S.busy = null; if (S.cur === r.id) { renderMeta(); renderPanel(); } }
+}
+
+function paletteJson(r) { return JSON.stringify(r.palette.map(c => ({ hex: c.hex, role: c.role, share: c.share, source: c.source })), null, 2); }
+const ROLE_CSS = { background: 'background', surface: 'surface', accent: 'accent', textPrimary: 'text-primary', textSecondary: 'text-secondary', other: 'other' };
+function paletteCss(r) {
+  const used = {};
+  const lines = r.palette.map(c => {
+    const base = ROLE_CSS[c.role] || 'other';
+    used[base] = (used[base] || 0) + 1;
+    return `  --color-${base}${used[base] > 1 || base === 'other' ? '-' + used[base] : ''}: ${c.hex};`;
+  });
+  return `:root {\n${lines.join('\n')}\n}`;
+}
+async function copyText(text, okMsg) {
+  try { await navigator.clipboard.writeText(text); toast(okMsg); return; } catch (e) { /* fallback */ }
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  let ok = false; try { ok = document.execCommand('copy'); } catch (e) { /* ignore */ }
+  ta.remove();
+  toast(ok ? okMsg : 'Не вдалося скопіювати');
+}
+function roleColor(r, role) { return r.palette.find(c => c.role === role); }
+function contrastPairs(r) {
+  const fg = [['textPrimary', 'Основний'], ['textSecondary', 'Другорядний'], ['accent', 'Акцент']];
+  const bg = [['background', 'Фон'], ['surface', 'Поверхня']];
+  const out = [];
+  for (const [fr, fl] of fg) for (const [br, bl] of bg) {
+    const f = roleColor(r, fr), b = roleColor(r, br);
+    if (f && b) { const ratio = contrast(f.hex, b.hex); out.push({ label: `${fl} / ${bl}`, fg: f.hex, bg: b.hex, ratio, grade: grade(ratio) }); }
+  }
+  return out;
+}
+
+// ---------- рендер: каркас ----------
 function emptyText() {
-  if (!S.supported) return 'Вибір папки недоступний: потрібні Chrome або Edge. Додайте картинки кнопкою «Додати файли» або перетягніть їх сюди. Після перезавантаження файли треба додати знову, тези збережуться.';
+  if (!S.supported) return TEST_MODE ? 'Тестовий режим.' : 'Вибір папки недоступний: потрібні Chrome або Edge. Додайте картинки кнопкою «Додати файли» або перетягніть їх сюди. Після перезавантаження файли треба додати знову, тези збережуться.';
   if (!S.handle) return 'Оберіть папку з референсами кнопкою «Обрати папку».';
   if (!S.permOk) return 'Натисніть «Відновити доступ», щоб прочитати папку.';
   return 'У папці немає файлів png, jpg чи webp.';
 }
-
-function renderAll() {
-  renderFolderBar();
-  renderList();
-  renderCenter();
-  renderTabs();
-  renderPanel();
-}
+function renderAll() { renderFolderBar(); renderList(); renderCenter(); renderMeta(); renderTabs(); renderPanel(); }
 
 function renderFolderBar() {
   let h = '';
@@ -698,140 +1283,257 @@ function renderFolderBar() {
     h += '<button data-act="rescan">Оновити</button><button data-act="pick">Змінити папку</button>';
     if (!S.writeOk) h += '<button class="primary" data-act="write">Дозволити запис</button>';
   }
-  if (S.handle) h += `<span class="muted folder" title="${esc(S.handle.name)}">Папка: ${esc(S.handle.name)}</span>`;
   h += '<button data-act="addfiles">Додати файли</button>';
+  if (S.handle) h += `<span class="muted folder" title="${esc(S.handle.name)}">Папка: ${esc(S.handle.name)} (${[...S.files.values()].filter(e => e.src === 'folder').length} файлів)</span>`;
   $('folderBar').innerHTML = h;
 }
 
+// ---------- рендер: список (точкове оновлення елементів) ----------
+const itemEls = new Map();
+function listItems() {
+  const keys = new Set(S.files.keys());
+  for (const [k, r] of Object.entries(store.refs)) if (S.files.has(k) || isTouched(r)) keys.add(k);
+  return [...keys].map(k => ({ k, name: refName(k), missing: !S.files.has(k) })).sort((a, b) => a.name.localeCompare(b.name, 'uk'));
+}
+function makeItemEl(key) {
+  const el = document.createElement('div');
+  el.className = 'item'; el.dataset.key = key;
+  const img = document.createElement('img'); img.className = 'thumb'; img.alt = ''; img.style.visibility = 'hidden';
+  const meta = document.createElement('div'); meta.className = 'meta';
+  el.append(img, meta);
+  el._img = img; el._meta = meta;
+  return el;
+}
+function updateItemEl(el, it) {
+  const r = store.refs[it.k];
+  const st = statusOfRef(r);
+  const isNew = store.newIds.includes(it.k);
+  const sug = S.suggest.get(it.k);
+  const sig = [it.name, st, isNew, it.missing, r ? r.highlights.length : 0, sug ? sug.newKey : ''].join('\u0001');
+  if (el._sig !== sig) {
+    el._sig = sig;
+    el._meta.innerHTML = `<div class="name" title="${esc(it.name)}">${esc(it.name)}</div>
+      <div class="sub"><span class="st">${STATUS_SYM[st]}</span><span>${STATUS_TXT[st]}</span>${isNew ? '<span class="badge-new">нове</span>' : ''}${r && r.highlights.length ? `<span>тез: ${r.highlights.length}</span>` : ''}</div>
+      ${it.missing ? `<div class="sub"><span>немає файлу</span><button class="mini" data-relink="${esc(it.k)}">${sug ? 'Привʼязати: ' + esc(refName(sug.newKey)) : 'Привʼязати до файлу'}</button></div>` : ''}`;
+  }
+  el.classList.toggle('cur', it.k === S.cur);
+  el.classList.toggle('missing', it.missing);
+  if (!it.missing) {
+    const u = S.thumbs.get(it.k);
+    if (u && u !== 'pending' && u !== 'fail') { if (el._img.getAttribute('src') !== u) el._img.src = u; el._img.style.visibility = 'visible'; }
+    else { el._img.style.visibility = 'hidden'; requestThumb(it.k); }
+  } else el._img.style.visibility = 'hidden';
+}
 function renderList() {
-  const keys = new Set([...S.files.keys(), ...Object.keys(store.refs)]);
-  const items = [...keys].map(k => ({ k, name: refName(k), missing: !S.files.has(k) }))
-    .sort((a, b) => a.name.localeCompare(b.name, 'uk'));
   const list = $('list');
-  if (!items.length) { list.innerHTML = `<div class="empty">${esc(emptyText())}</div>`; return; }
-  list.innerHTML = items.map(it => {
-    const e = S.files.get(it.k);
-    const r = store.refs[it.k];
-    const isNew = store.newIds.includes(it.k);
-    const thumb = e ? `<img class="thumb" src="${esc(e.url)}" alt="" loading="lazy">` : '<div class="thumb"></div>';
-    return `<div class="item${it.k === S.cur ? ' cur' : ''}${it.missing ? ' missing' : ''}" data-key="${esc(it.k)}">
-      ${thumb}
-      <div class="meta">
-        <div class="name" title="${esc(it.name)}">${esc(it.name)}</div>
-        <div class="sub"><span class="st">${statusOf(it.k)}</span>${isNew ? '<span class="badge-new">нове</span>' : ''}${it.missing ? '<span>немає файлу</span>' : ''}${r && r.highlights.length ? `<span>тез: ${r.highlights.length}</span>` : ''}</div>
-      </div>
-    </div>`;
-  }).join('');
+  const items = listItems();
+  if (!items.length) { list.innerHTML = `<div class="empty">${esc(emptyText())}</div>`; itemEls.clear(); return; }
+  const ph = list.querySelector('.empty'); if (ph) ph.remove();
+  const seen = new Set();
+  items.forEach((it, i) => {
+    let el = itemEls.get(it.k);
+    if (!el) { el = makeItemEl(it.k); itemEls.set(it.k, el); }
+    updateItemEl(el, it); seen.add(it.k);
+    if (list.children[i] !== el) list.insertBefore(el, list.children[i] || null);
+  });
+  for (const [k, el] of [...itemEls]) if (!seen.has(k)) { el.remove(); itemEls.delete(k); }
+}
+function updateItem(key) {   // точкове оновлення одного рядка
+  const el = itemEls.get(key);
+  if (!el) { if (S.files.has(key) || store.refs[key]) renderList(); return; }
+  if (!S.files.has(key) && !(store.refs[key] && isTouched(store.refs[key]))) { renderList(); return; }
+  updateItemEl(el, { k: key, name: refName(key), missing: !S.files.has(key) });
 }
 
+// ---------- рендер: картинка ----------
 function renderCenter() {
   const key = S.cur, e = key && S.files.get(key);
   const stage = $('stage'), img = $('img'), empty = $('emptyCenter');
   document.querySelectorAll('[data-mode]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === S.mode)));
   stage.classList.toggle('pan', S.mode === 'pan');
+  stage.classList.toggle('pick', S.mode === 'pick');
+  if (S.mode !== 'pick') $('pickPrev').hidden = true;
+  $('refTitle').textContent = '';
   if (!key) {
     stage.hidden = true; empty.hidden = false;
     empty.textContent = (S.files.size || Object.keys(store.refs).length) ? 'Оберіть референс зліва.' : emptyText();
-    $('zoomLabel').textContent = '';
+    $('zoomLabel').textContent = ''; S.natW = 0;
     return;
   }
   if (!e) {
-    stage.hidden = true; empty.hidden = false;
-    empty.textContent = 'Цього файлу немає в поточній папці. Тези й оцінку можна переглянути праворуч.';
+    stage.hidden = true; empty.hidden = false; S.natW = 0;
+    empty.textContent = 'Цього файлу немає в поточному списку. Тези й оцінку видно нижче; щоб перенести їх на інший файл, натисніть «Привʼязати до файлу» в списку.';
     $('zoomLabel').textContent = '';
+    $('refTitle').textContent = refName(key);
     return;
   }
   empty.hidden = true; stage.hidden = false;
-  if (img.dataset.url !== e.url) {
-    img.dataset.url = e.url;
+  const url = entryUrl(e);
+  if (img.dataset.url !== url) {
+    img.dataset.url = url;
     S.natW = 0; S.natH = 0;
     stage.style.width = '0px'; stage.style.height = '0px';
-    img.src = e.url;
+    img.src = url;
   }
+  const r = store.refs[key];
+  $('refTitle').textContent = e.name + (r && r.file.w ? ` · ${r.file.w} × ${r.file.h}` : '');
   layoutStage();
   renderOverlay();
 }
-
 function hlHtml(h, i, sel) {
   const handles = sel ? ['nw', 'ne', 'sw', 'se'].map(p => `<div class="h ${p}" data-h="${p}"></div>`).join('') : '';
   const cls = ['hl', h.verdict === 'take' ? 'take' : h.verdict === 'avoid' ? 'avoid' : '', sel ? 'sel' : ''].join(' ');
   return `<div class="${cls}" data-hid="${esc(h.id)}" style="left:${h.rect.x}%;top:${h.rect.y}%;width:${h.rect.w}%;height:${h.rect.h}%"><span class="n">${i + 1}</span>${handles}</div>`;
 }
-
 function renderOverlay() {
   const ov = $('ov'), r = ref();
   if (!r || !S.natW) { ov.innerHTML = ''; return; }
-  let html = r.highlights.map((h, i) => hlHtml(h, i, h.id === S.sel)).join('');
+  let html = '';
+  try { html = r.highlights.map((h, i) => hlHtml(h, i, h.id === S.sel)).join(''); } catch (e) { console.error(e); }
   if (S.draft) html += `<div class="hl draft" style="left:${S.draft.x}%;top:${S.draft.y}%;width:${S.draft.w}%;height:${S.draft.h}%"></div>`;
   ov.innerHTML = html;
 }
 
+// ---------- рендер: метадані ----------
+function renderMeta() {
+  const el = $('metaRow'), r = ref();
+  if (!r) { el.innerHTML = '<span>Оберіть референс зліва.</span>'; return; }
+  const n = selectedCount(r);
+  el.innerHTML = `<span>Тези: <b>${r.highlights.length}</b></span>
+    <span>Оцінка: <b>${n} з ${RATING_KEYS.length}</b></span>
+    <span>Шрифт: <b>${r.font.interesting ? 'цікавий' : '—'}</b></span>
+    <label class="row" style="gap:6px">Джерело: <input type="text" class="src" data-src value="${esc(r.source)}" placeholder="URL або назва"></label>
+    <span class="row" style="gap:6px">Теги: ${r.tags.map((t, i) => `<span class="tag">${esc(t)}<button data-tagdel="${i}" aria-label="Прибрати тег">✕</button></span>`).join('')}<input type="text" class="tagin" data-tagin placeholder="+ тег, Enter"></span>`;
+}
+
+// ---------- рендер: вкладки ----------
 function renderTabs() {
-  $('tabs').innerHTML = [['tags', 'Тези'], ['rating', 'Оцінка'], ['color', 'Колір']]
+  $('tabs').innerHTML = [['theses', '🎯 Тези по областях'], ['ratings', '⭐ Загальна оцінка'], ['color', '🎨 Колір']]
     .map(([k, l]) => `<button data-tab="${k}" class="${S.tab === k ? 'active' : ''}">${l}</button>`).join('');
 }
-
 function renderPanel() {
-  const p = $('panel');
-  if (S.tab === 'color') {
-    p.innerHTML = '<div class="empty"><b>Колір: скоро</b><br>Палітра, піпетка й перевірка контрасту зʼявляться на наступному етапі.</div>';
-    return;
-  }
-  const r = ref();
-  if (!r) { p.innerHTML = '<div class="empty">Оберіть референс зліва, щоб бачити його тези й оцінку.</div>'; return; }
-  p.innerHTML = S.tab === 'tags' ? tagsHtml(r) : ratingHtml(r);
+  const p = $('panel'), r = ref();
+  if (!r) { p.innerHTML = '<div class="empty">Оберіть референс зліва, щоб бачити його тези, оцінку і палітру.</div>'; return; }
+  try {
+    p.innerHTML = S.tab === 'theses' ? thesesHtml(r) : S.tab === 'ratings' ? ratingsHtml(r) : colorsHtml(r);
+  } catch (e) { console.error(e); p.innerHTML = '<div class="empty">Не вдалося відобразити вкладку: ' + esc(e.message) + '</div>'; }
 }
 
-function tagsHtml(r) {
-  const head = `<div class="muted" style="margin-bottom:8px">Тези: ${r.highlights.length}. Малюйте в режимі «Виділити» на картинці.</div>`;
-  if (!r.highlights.length) return head + '<div class="empty">Ще немає тез.<br>Натисніть «Виділити» й намалюйте прямокутник на картинці.</div>';
-  return head + r.highlights.map((h, i) => `
-    <div class="card${h.id === S.sel ? ' cur' : ''}" data-hid="${esc(h.id)}">
-      <div class="row" style="flex-wrap:nowrap">
-        <span class="num" data-pick="${esc(h.id)}" title="Показати на картинці">${i + 1}</span>
-        <input type="text" class="f-title" data-hf="title" value="${esc(h.title)}" placeholder="Заголовок">
-        <button class="ghost" data-del="${esc(h.id)}" title="Видалити виділення" aria-label="Видалити виділення">✕</button>
-      </div>
-      <textarea data-hf="note" rows="2" placeholder="Нотатка: що саме і чому">${esc(h.note)}</textarea>
-      <div class="row" style="flex-wrap:nowrap">
-        <select data-hf="category" aria-label="Категорія">${Object.entries(CATS).map(([k, l]) => `<option value="${k}"${h.category === k ? ' selected' : ''}>${l}</option>`).join('')}</select>
-        <select data-hf="verdict" aria-label="Вердикт">${Object.entries(VERDICTS).map(([k, l]) => `<option value="${k}"${h.verdict === k ? ' selected' : ''}>${l}</option>`).join('')}</select>
-      </div>
-    </div>`).join('');
+const catLabel = k => { const c = CATS.find(x => x[0] === k); return c ? `${c[1]} ${c[2]}` : k; };
+const verLabel = k => { const v = VERDICTS.find(x => x[0] === k); return v ? `${v[1]} ${v[2]}` : k; };
+
+function thesesHtml(r) {
+  const list = r.highlights.length ? r.highlights.map((h, i) => `
+    <div class="titem ${h.verdict === 'take' ? 'take' : h.verdict === 'avoid' ? 'avoid' : ''}${h.id === S.sel ? ' sel' : ''}" data-hid="${esc(h.id)}">
+      <span class="num">${i + 1}</span>
+      <div class="tt"><div class="ttl" data-ttl>${esc(h.title || 'Без заголовка')}</div>
+        <div class="chips"><span class="chip static" data-tcat>${catLabel(h.category)}</span><span class="chip static v-${h.verdict}" data-tver>${verLabel(h.verdict)}</span></div></div>
+    </div>`).join('') : '<div class="empty">Ще немає тез.<br>Увімкніть «Виділити» і намалюйте прямокутник на картинці.</div>';
+  const idx = r.highlights.findIndex(h => h.id === S.sel);
+  const h = idx >= 0 ? r.highlights[idx] : null;
+  const form = h ? `
+    <div class="tform" data-hid="${esc(h.id)}">
+      <h3><span class="num">${idx + 1}</span> Теза до виділення №${idx + 1}<span class="sp"></span><button class="ghost" data-del="${esc(h.id)}" title="Видалити виділення (Delete)">🗑 Видалити</button></h3>
+      <span class="lbl">Заголовок</span>
+      <input type="text" class="f-title" data-hf="title" value="${esc(h.title)}" placeholder="Коротко, що це">
+      <span class="lbl">Нотатка</span>
+      <textarea data-hf="note" rows="3" placeholder="Що саме тут і чому цікаво">${esc(h.note)}</textarea>
+      <span class="lbl">Чому це працює (одне речення)</span>
+      <input type="text" data-hf="why" value="${esc(h.why)}" placeholder="Принцип, який можна узагальнити">
+      <span class="lbl">Категорія</span>
+      <div class="chips">${CATS.map(([k, em, l]) => `<button class="chip" data-cat="${k}" aria-pressed="${h.category === k}">${em} ${l}</button>`).join('')}</div>
+      <span class="lbl">Вердикт</span>
+      <div class="chips">${VERDICTS.map(([k, em, l]) => `<button class="chip v-${k}" data-ver="${k}" aria-pressed="${h.verdict === k}">${em} ${l}</button>`).join('')}</div>
+    </div>` : `<div class="tform"><div class="empty">Виберіть тезу зі списку або виділення на картинці.</div></div>`;
+  return `<div class="theses"><div><span class="lbl">Тези цього референсу (${r.highlights.length})</span>${list}</div>${form}</div>`;
 }
 
-function ratingHtml(r) {
-  const crit = CRITERIA.map(([k, label]) => {
-    const c = r.ratings[k];
-    return `
-    <div class="card">
-      <div class="row" style="justify-content:space-between;flex-wrap:nowrap">
-        <span class="crit-label">${label}</span>
-        <div class="seg">${['take', 'neutral', 'avoid'].map(v =>
-          `<button data-rc="${k}" data-rv="${v}" class="v-${v}" aria-pressed="${c.verdict === v}">${VERDICTS[v]}</button>`).join('')}</div>
-      </div>
-      <div class="row scores" style="margin-top:6px">
-        <span class="muted" style="width:56px">Оцінка</span>
-        ${[1, 2, 3, 4, 5].map(n => `<button data-rc="${k}" data-rs="${n}" aria-pressed="${c.score === n}" aria-label="Оцінка ${n}">${n}</button>`).join('')}
-      </div>
-      <input type="text" data-rnote="${k}" value="${esc(c.note)}" placeholder="Коментар">
+const ILLUS = {
+  color: '<svg width="200" height="40" viewBox="0 0 200 40" aria-hidden="true"><circle cx="20" cy="20" r="14" fill="#f4f5f7" stroke="#c3c9d4"/><circle cx="58" cy="20" r="14" fill="#1d2330"/><circle cx="96" cy="20" r="14" fill="#6b7385"/><circle cx="134" cy="20" r="14" fill="#c3c9d4"/><circle cx="172" cy="20" r="14" fill="#3b6fe0"/></svg>',
+  font: '<svg width="120" height="44" viewBox="0 0 120 44" aria-hidden="true"><text x="60" y="35" text-anchor="middle" font-size="34" font-weight="600" fill="#1d2330" font-family="Georgia,serif">Aa</text></svg>',
+  components: '<svg width="200" height="40" viewBox="0 0 200 40" aria-hidden="true"><rect x="4" y="8" width="72" height="24" rx="6" fill="#fff" stroke="#c3c9d4"/><rect x="16" y="15" width="32" height="6" rx="3" fill="#6b7385"/><rect x="84" y="10" width="20" height="20" rx="10" fill="#1d2330"/><rect x="112" y="8" width="84" height="24" rx="6" fill="#fff" stroke="#c3c9d4"/><rect x="122" y="15" width="48" height="5" rx="2.5" fill="#c3c9d4"/><rect x="122" y="23" width="28" height="4" rx="2" fill="#e2e5eb"/></svg>',
+  grid: '<svg width="200" height="40" viewBox="0 0 200 40" aria-hidden="true"><g stroke="#c3c9d4" stroke-width="1"><line x1="16" y1="0" x2="16" y2="40"/><line x1="50" y1="0" x2="50" y2="40"/><line x1="84" y1="0" x2="84" y2="40"/><line x1="118" y1="0" x2="118" y2="40"/><line x1="152" y1="0" x2="152" y2="40"/><line x1="186" y1="0" x2="186" y2="40"/><line x1="0" y1="10" x2="200" y2="10"/><line x1="0" y1="30" x2="200" y2="30"/></g><rect x="50" y="10" width="68" height="20" rx="3" fill="#3b6fe0" opacity=".85"/></svg>',
+  mood: '<svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="13" fill="#e2e5eb" stroke="#6b7385" stroke-width="1.5"/><circle cx="16" cy="17" r="1.8" fill="#1d2330"/><circle cx="24" cy="17" r="1.8" fill="#1d2330"/><path d="M15 23 Q20 28 25 23" stroke="#3b6fe0" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
+  icons: '<svg width="200" height="40" viewBox="0 0 200 40" aria-hidden="true" fill="none" stroke="#6b7385" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M30 26 L44 14 L58 26 V36 H30 Z"/><path d="M84 12 l-5 9 h7 l-5 9" stroke="#3b6fe0"/><path d="M110 30 a8 8 0 0 1 16 0 M114 18 a14 14 0 0 1 24 0"/><circle cx="170" cy="20" r="7"/><path d="M170 8 v3 M170 29 v3 M158 20 h3 M179 20 h3"/></svg>'
+};
+
+function cardHtml(r, card) {
+  const c = r.ratings[card.k], on = c.selected;
+  const status = on ? verLabel(c.verdict) : 'не обрано';
+  let body = '';
+  if (on) {
+    body = `<div class="rc-body">
+      <div class="chips vchips">${VERDICTS.map(([k, em, l]) => `<button class="chip v-${k}" data-rv="${card.k}" data-v="${k}" aria-pressed="${c.verdict === k}">${em} ${k === 'neutral' ? '' : l}${k === 'neutral' ? '' : ''}</button>`).join('')}</div>
+      <div class="chips">${card.reasons.map(t => `<button class="chip reason" data-rr="${card.k}" data-reason="${esc(t)}" aria-pressed="${c.reasons.includes(t)}">${esc(t)}</button>`).join('')}</div>
+      ${card.k === 'font' ? '' : ''}
+      <textarea data-rnote="${card.k}" rows="2" placeholder="Коментар: чому так">${esc(c.note)}</textarea>
     </div>`;
-  }).join('');
-  const done = r.status === 'done';
-  return crit + `
-    <div class="card">
-      <span class="crit-label">Шрифт</span>
-      <label class="row" style="margin-top:6px"><input type="checkbox" data-font-check ${r.font.interesting ? 'checked' : ''}> Шрифт цікавий</label>
-      <input type="text" data-font-note value="${esc(r.font.note)}" placeholder="Нотатка про шрифт (необов'язково)">
-    </div>
-    <div class="card">
-      <span class="crit-label">Загальний коментар</span>
-      <textarea data-gf="comment" rows="3" placeholder="Що подобається загалом">${esc(r.comment)}</textarea>
-    </div>
-    <button data-act="done" class="${done ? '' : 'primary'}" style="width:100%">${done ? 'Повернути в роботу' : 'Позначити як оцінений'}</button>`;
+  }
+  const fontToggle = card.k === 'font' ? `<div class="rc-body" style="padding-top:0${on ? ';padding-bottom:0' : ''}"><button class="toggle" data-font-toggle aria-pressed="${r.font.interesting}"><i></i>Шрифт цікавий</button></div>` : '';
+  return `<div class="rcard${on ? ' on' : ''}" data-card="${card.k}">
+    <button class="rc-face" data-card-toggle="${card.k}" aria-expanded="${on}" style="${on ? 'background:transparent;border:0' : ''}">
+      <div class="illus">${ILLUS[card.k]}</div>
+      <div class="rc-top"><span class="rc-name">${card.label}</span><span class="rc-status">${status}</span></div>
+    </button>${fontToggle}${body}</div>`;
+}
+function ratingsHtml(r) {
+  return `<div class="cards">${CARDS.map(c => cardHtml(r, c)).join('')}</div>
+    <div class="generalc"><span class="lbl">Загальний коментар референсу</span>
+    <textarea data-gf="comment" rows="3" placeholder="Що подобається загалом, чому цей референс у колекції">${esc(r.comment)}</textarea></div>`;
+}
+function refreshCard(k) {
+  const r = ref(), el = $('panel').querySelector(`[data-card="${k}"]`);
+  if (!r || !el) return;
+  el.outerHTML = cardHtml(r, CARDS.find(c => c.k === k));
+}
+function toggleCard(k) {
+  const r = ref(); if (!r) return;
+  const c = r.ratings[k];
+  if (!c.selected) { c.selected = true; if (!c.verdict) c.verdict = 'neutral'; }
+  else {
+    if ((c.note.trim() || c.reasons.length) && !confirm('Зняти вибір картки? Вердикт, причини й коментар буде очищено.')) return;
+    c.selected = false; c.verdict = 'neutral'; c.reasons = []; c.note = '';   // score лишається в даних
+  }
+  saveNow(); refreshCard(k); renderMeta(); updateItem(r.id);
+  if (c.selected) { const ta = $('panel').querySelector(`[data-rnote="${k}"]`); if (ta) ta.focus(); }
 }
 
-// ---------- events ----------
+function colorsHtml(r) {
+  const busy = S.busy && S.busy.key === r.id;
+  const hasFile = S.files.has(r.id);
+  const selIdx = r.highlights.findIndex(h => h.id === S.sel);
+  const tiles = r.palette.map((c, i) => `
+    <div class="tile">
+      <div class="swatch" style="background:${c.hex}"><button class="del" data-cdel="${i}" aria-label="Видалити колір" title="Видалити колір">✕</button></div>
+      <div class="hexrow"><button data-ccopy="${i}" title="Копіювати hex">${c.hex.toUpperCase()}</button><span>${c.share == null ? '—' : Math.round(c.share * 100) + '%'}</span></div>
+      <div class="bar"><i style="width:${c.share == null ? 0 : Math.round(c.share * 100)}%"></i></div>
+      <div class="chips">${ROLES.map(([k, l]) => `<button class="chip" data-crole="${i}" data-role="${k}" aria-pressed="${c.role === k}">${l}</button>`).join('')}</div>
+      <div class="srcnote">${SRC_LABEL[c.source] || c.source}${c.removed ? ' · фон вилучено з розрахунку' : ''}${c.from ? ' · виділення ' + (r.highlights.findIndex(h => h.id === c.from) + 1 || '?') : ''}</div>
+    </div>`).join('');
+  const pairs = contrastPairs(r);
+  const pairsHtml = pairs.length ? pairs.map(p => `
+    <div class="pair"><div class="aa" style="background:${p.bg};color:${p.fg}">Aa</div>
+      <div class="pm"><b>${p.label}</b><small>${p.fg.toUpperCase()} · ${p.bg.toUpperCase()} · ${p.ratio.toFixed(1)}:1</small></div>
+      <span class="grade ${p.grade}">${GRADE_LABEL[p.grade]}</span></div>`).join('')
+    : '<div class="muted">Призначте ролі «Фон», «Поверхня» та «Текст основний / другорядний» або «Акцент», щоб побачити пари.</div>';
+  return `<div class="colors">
+    ${r.palette.length ? `<div class="tiles">${tiles}</div>` : '<div class="empty">Палітри ще немає. Витягніть її з картинки, з виділення або піпеткою.</div>'}
+    <div class="actions">
+      ${busy ? '<span class="busy">Рахую…</span>' : ''}
+      <button class="primary" data-act="ex-all" ${busy || !hasFile ? 'disabled' : ''}>Витягнути з усієї картинки</button>
+      <button data-act="ex-sel" ${busy || !hasFile || selIdx < 0 ? 'disabled' : ''} title="${selIdx < 0 ? 'Спершу виберіть виділення' : ''}">Витягнути з виділення${selIdx >= 0 ? ' №' + (selIdx + 1) : ''}</button>
+      <button data-act="eyedrop" ${hasFile ? '' : 'disabled'} aria-pressed="${S.mode === 'pick'}">Піпетка: додати колір</button>
+      <label class="toggle" style="cursor:pointer"><i style="background:#c3c9d4"></i>Додати вручну <input type="color" data-manual value="#3b6fe0" style="width:28px;height:22px;border:0;padding:0;background:none"></label>
+      <span class="sp"></span>
+      <button data-act="copy-json" ${r.palette.length ? '' : 'disabled'}>Копіювати JSON</button>
+      <button data-act="copy-css" ${r.palette.length ? '' : 'disabled'}>Копіювати CSS</button>
+    </div>
+    <span class="lbl">Пари текст / фон (WCAG, за обраними ролями)</span>
+    <div class="pairs">${pairsHtml}</div>
+  </div>`;
+}
+
+// ---------- події ----------
 function wireEvents() {
   $('folderBar').addEventListener('click', e => {
     const b = e.target.closest('button[data-act]');
@@ -843,55 +1545,51 @@ function wireEvents() {
     else if (a === 'write') requestWrite().then(ok => toast(ok ? 'Запис у папку дозволено' : 'Запис не дозволено: експорт піде в Downloads'));
     else if (a === 'addfiles') $('addFiles').click();
   });
-
   $('addFiles').addEventListener('change', e => { addFilesList(e.target.files); e.target.value = ''; });
 
   const list = $('list');
   list.addEventListener('click', e => {
+    const rl = e.target.closest('[data-relink]');
+    if (rl) { openRelink(rl.dataset.relink); return; }
     const it = e.target.closest('.item');
     if (it) openRef(it.dataset.key);
   });
-  list.addEventListener('dragover', e => { e.preventDefault(); list.classList.add('over'); });
-  list.addEventListener('dragleave', () => list.classList.remove('over'));
-  list.addEventListener('drop', e => { e.preventDefault(); list.classList.remove('over'); addFilesList(e.dataTransfer.files); });
+  const dnd = $('work');
+  for (const z of [list, dnd]) {
+    z.addEventListener('dragover', e => { e.preventDefault(); list.classList.add('over'); });
+    z.addEventListener('dragleave', () => list.classList.remove('over'));
+    z.addEventListener('drop', e => { e.preventDefault(); list.classList.remove('over'); addFilesList(e.dataTransfer.files); });
+  }
   window.addEventListener('dragover', e => e.preventDefault());
   window.addEventListener('drop', e => e.preventDefault());
 
-  $('btnExport').addEventListener('click', exportJson);
+  $('btnExport').addEventListener('click', () => exportJson(false));
+  $('btnExportCrops').addEventListener('click', () => exportJson(true));
   $('btnImport').addEventListener('click', () => $('importFile').click());
   $('btnImportFolder').addEventListener('click', openFolderImport);
-  $('pickList').addEventListener('click', e => {
-    const b = e.target.closest('[data-pf]');
-    if (!b) return;
-    $('pickDlg').close();
-    importFromFolder(b.dataset.pf);
-  });
+  $('pickList').addEventListener('click', e => { const b = e.target.closest('[data-pf]'); if (!b) return; $('pickDlg').close(); importFromFolder(b.dataset.pf); });
   $('pickClose').addEventListener('click', () => $('pickDlg').close());
-  $('importFile').addEventListener('change', e => {
-    const f = e.target.files[0];
-    if (f) importJson(f);
-    e.target.value = '';
-  });
+  $('relinkClose').addEventListener('click', () => $('relinkDlg').close());
+  $('relinkList').addEventListener('click', e => { const b = e.target.closest('[data-rl]'); if (!b) return; const old = $('relinkDlg').dataset.old; $('relinkDlg').close(); doRelink(old, b.dataset.rl); });
+  $('importFile').addEventListener('change', e => { const f = e.target.files[0]; if (f) importJson(f); e.target.value = ''; });
 
-  document.querySelector('.toolbar').addEventListener('click', e => {
+  $('modeSeg').addEventListener('click', e => {
     const m = e.target.closest('[data-mode]');
-    if (m) { S.mode = m.dataset.mode; renderCenter(); return; }
+    if (!m) return;
+    S.mode = m.dataset.mode;
+    renderCenter();
+    if (S.mode === 'pick') { S.tab = 'color'; renderTabs(); renderPanel(); if (S.cur && S.files.has(S.cur)) getFull().catch(() => {}); }
+    else if (S.tab === 'color') renderPanel();
+  });
+  document.querySelector('.toolbar').addEventListener('click', e => {
     const z = e.target.closest('[data-zoom]');
     if (!z || !S.natW) return;
     const k = z.dataset.zoom;
     if (k === 'in') setZoom(S.scale * 1.25);
     else if (k === 'out') setZoom(S.scale / 1.25);
     else if (k === '100') setZoom(1);
-    else {
-      S.fit = true;
-      S.scale = fitScale();
-      layoutStage();
-      $('vp').scrollLeft = 0;
-      $('vp').scrollTop = 0;
-      renderOverlay();
-    }
+    else { S.fit = true; S.scale = fitScale(); layoutStage(); $('vp').scrollLeft = 0; $('vp').scrollTop = 0; renderOverlay(); }
   });
-
   $('vp').addEventListener('wheel', e => {
     if (!e.ctrlKey && !e.metaKey) return;
     if (!S.natW) return;
@@ -901,114 +1599,350 @@ function wireEvents() {
   }, { passive: false });
 
   $('ov').addEventListener('pointerdown', onDown);
+  $('ov').addEventListener('pointermove', onHover);
 
   const img = $('img');
   img.addEventListener('load', () => {
     const key = S.cur, e = key && S.files.get(key);
     if (!e || e.url !== img.dataset.url) return;
-    S.natW = img.naturalWidth;
-    S.natH = img.naturalHeight;
+    S.natW = img.naturalWidth; S.natH = img.naturalHeight;
     const r = ensureRef(key);
-    if (r.file.w !== S.natW || r.file.h !== S.natH) {
-      r.file.w = S.natW; r.file.h = S.natH;
-      saveStore();
-    }
-    S.fit = true;
-    S.scale = fitScale();
-    layoutStage();
-    renderOverlay();
+    if (r.file.w !== S.natW || r.file.h !== S.natH) { r.file.w = S.natW; r.file.h = S.natH; saveSoon(); }
+    $('refTitle').textContent = e.name + ` · ${S.natW} × ${S.natH}`;
+    S.fit = true; S.scale = fitScale();
+    layoutStage(); renderOverlay();
   });
-  img.addEventListener('error', () => toast('Не вдалося відкрити картинку'));
-
-  window.addEventListener('resize', () => {
-    if (S.natW && S.fit) { S.scale = fitScale(); layoutStage(); renderOverlay(); }
-  });
+  img.addEventListener('error', () => { if (img.getAttribute('src')) toast('Не вдалося відкрити картинку'); });
+  window.addEventListener('resize', () => { if (S.natW && S.fit) { S.scale = fitScale(); layoutStage(); renderOverlay(); } });
 
   $('tabs').addEventListener('click', e => {
     const b = e.target.closest('[data-tab]');
     if (!b) return;
     S.tab = b.dataset.tab;
-    renderTabs();
-    renderPanel();
+    if (S.tab !== 'color' && S.mode === 'pick') { S.mode = 'draw'; renderCenter(); }
+    renderTabs(); renderPanel();
+  });
+
+  // метадані: джерело і теги
+  const meta = $('metaRow');
+  meta.addEventListener('input', e => { const r = ref(); if (r && e.target.dataset.src !== undefined) { r.source = e.target.value; saveSoon(); updateItem(r.id); } });
+  meta.addEventListener('keydown', e => {
+    const r = ref();
+    if (!r || e.target.dataset.tagin === undefined) return;
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault();
+      const t = e.target.value.trim().replace(/,$/, '');
+      if (t && !r.tags.includes(t)) { r.tags.push(t); saveNow(); renderMeta(); updateItem(r.id); const i = meta.querySelector('[data-tagin]'); if (i) i.focus(); }
+    }
+  });
+  meta.addEventListener('click', e => {
+    const r = ref(), d = e.target.closest('[data-tagdel]');
+    if (r && d) { r.tags.splice(Number(d.dataset.tagdel), 1); saveNow(); renderMeta(); updateItem(r.id); }
   });
 
   const panel = $('panel');
-  panel.addEventListener('focusin', e => {
-    const c = e.target.closest('[data-hid]');
-    if (c && c.dataset.hid !== S.sel) {
-      S.sel = c.dataset.hid;
-      panel.querySelectorAll('[data-hid]').forEach(x => x.classList.toggle('cur', x === c));
-      renderOverlay();
-    }
-  });
   panel.addEventListener('input', e => {
     const t = e.target, r = ref();
     if (!r) return;
     if (t.dataset.hf) {
-      const h = findHl(r, t.closest('[data-hid]').dataset.hid);
+      const host = t.closest('[data-hid]'), h = host && findHl(r, host.dataset.hid);
       if (!h) return;
       h[t.dataset.hf] = t.value;
+      if (t.dataset.hf === 'title') { const ti = panel.querySelector(`.titem[data-hid="${h.id}"] [data-ttl]`); if (ti) ti.textContent = t.value || 'Без заголовка'; }
     } else if (t.dataset.gf) r.comment = t.value;
-    else if (t.dataset.fontNote !== undefined) r.font.note = t.value;
     else if (t.dataset.rnote) r.ratings[t.dataset.rnote].note = t.value;
     else return;
-    saveStore();
+    saveSoon();
   });
   panel.addEventListener('change', e => {
     const t = e.target, r = ref();
     if (!r) return;
-    if (t.dataset.hf) {
-      const h = findHl(r, t.closest('[data-hid]').dataset.hid);
-      if (!h) return;
-      h[t.dataset.hf] = t.value;
-      saveStore();
-      renderOverlay();
-    } else if (t.dataset.fontCheck !== undefined) {
-      r.font.interesting = t.checked;
-      saveStore();
-    } else if (t.dataset.gf || t.dataset.fontNote !== undefined || t.dataset.rnote) {
-      saveStore();
-    } else return;
-    renderList();
+    if (t.dataset.manual !== undefined) { addColor(r, t.value, 'manual'); return; }
+    if (t.dataset.gf || t.dataset.rnote || t.dataset.hf) { saveNow(); updateItem(r.id); }
   });
   panel.addEventListener('click', e => {
     const r = ref();
     if (!r) return;
-    const pick = e.target.closest('[data-pick]');
-    if (pick) { selectHl(pick.dataset.pick); return; }
-    const del = e.target.closest('[data-del]');
-    if (del) { deleteHl(del.dataset.del); return; }
-    const rb = e.target.closest('button[data-rc]');
-    if (rb) {
-      const c = r.ratings[rb.dataset.rc];
-      if (rb.dataset.rv) c.verdict = rb.dataset.rv;
-      if (rb.dataset.rs) {
-        const n = Number(rb.dataset.rs);
-        c.score = c.score === n ? null : n;
-      }
-      saveStore();
-      renderPanel();
-      renderList();
-      return;
+    const T = sel => e.target.closest(sel);
+    let b;
+    if ((b = T('.titem'))) { selectHl(b.dataset.hid); return; }
+    if ((b = T('[data-del]'))) { deleteHl(b.dataset.del); return; }
+    if ((b = T('[data-cat]'))) { const h = findHl(r, S.sel); if (h) { h.category = b.dataset.cat; saveNow(); renderPanel(); } return; }
+    if ((b = T('[data-ver]'))) { const h = findHl(r, S.sel); if (h) { h.verdict = b.dataset.ver; saveNow(); renderPanel(); renderOverlay(); } return; }
+    if ((b = T('[data-card-toggle]'))) { toggleCard(b.dataset.cardToggle); return; }
+    if ((b = T('[data-rv]'))) { r.ratings[b.dataset.rv].verdict = b.dataset.v; saveNow(); refreshCard(b.dataset.rv); return; }
+    if ((b = T('[data-rr]'))) {
+      const c = r.ratings[b.dataset.rr], t = b.dataset.reason, i = c.reasons.indexOf(t);
+      if (i >= 0) c.reasons.splice(i, 1); else c.reasons.push(t);
+      saveNow(); refreshCard(b.dataset.rr); return;
     }
-    if (e.target.closest('[data-act="done"]')) {
-      r.status = r.status === 'done' ? 'draft' : 'done';
-      saveStore();
-      renderPanel();
-      renderList();
+    if ((b = T('[data-font-toggle]'))) { r.font.interesting = !r.font.interesting; saveNow(); refreshCard('font'); renderMeta(); updateItem(r.id); return; }
+    if ((b = T('[data-ccopy]'))) { const c = r.palette[Number(b.dataset.ccopy)]; if (c) copyText(c.hex, `Скопійовано ${c.hex}`); return; }
+    if ((b = T('[data-cdel]'))) {
+      const i = Number(b.dataset.cdel), old = clone(r.palette), key = r.id;
+      r.palette.splice(i, 1);
+      pushUndo('видалення кольору', () => { const rr = store.refs[key]; if (rr) { rr.palette = old; saveNow(); updateItem(key); if (S.cur === key) { renderMeta(); renderPanel(); } } });
+      saveNow(); updateItem(key); renderMeta(); renderPanel(); return;
     }
+    if ((b = T('[data-crole]'))) { const c = r.palette[Number(b.dataset.crole)]; if (c) { c.role = b.dataset.role; saveNow(); renderPanel(); } return; }
+    if ((b = T('[data-act]'))) {
+      const a = b.dataset.act;
+      if (a === 'ex-all') runExtract('all');
+      else if (a === 'ex-sel') runExtract('sel');
+      else if (a === 'eyedrop') { S.mode = S.mode === 'pick' ? 'draw' : 'pick'; renderCenter(); renderPanel(); if (S.mode === 'pick') getFull().catch(() => {}); }
+      else if (a === 'copy-json') copyText(paletteJson(r), 'Палітру скопійовано (JSON)');
+      else if (a === 'copy-css') copyText(paletteCss(r), 'Палітру скопійовано (CSS-змінні)');
+    }
+  });
+  panel.addEventListener('focusin', e => {
+    const c = e.target.closest('.tform[data-hid]');
+    if (c && c.dataset.hid !== S.sel) { S.sel = c.dataset.hid; renderOverlay(); }
   });
 
   document.addEventListener('keydown', e => {
-    if (/INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+    const inField = /INPUT|TEXTAREA|SELECT/.test(e.target.tagName);
+    if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === 'z' && !inField) { e.preventDefault(); doUndo(); return; }
+    if (inField) return;
     if ((e.key === 'Delete' || e.key === 'Backspace') && S.sel) { e.preventDefault(); deleteHl(S.sel); }
     else if (e.key === 'Escape' && S.sel) selectHl(null);
   });
 }
 
+// ---------- демо-режим (?demo=1): згенерована картинка, без звернення до папки референсів ----------
+async function makeDemoFile() {
+  const cv = document.createElement('canvas'); cv.width = 1600; cv.height = 1100;
+  const c = cv.getContext('2d');
+  c.fillStyle = '#e6e3db'; c.fillRect(0, 0, 1600, 1100);
+  const card = (x, y, w, h, f) => { c.fillStyle = f; c.beginPath(); c.roundRect(x, y, w, h, 28); c.fill(); };
+  card(80, 80, 640, 420, '#efede9');
+  card(760, 80, 760, 420, '#1b1a17');
+  card(80, 540, 440, 480, '#efede9');
+  card(560, 540, 960, 480, '#d8d2c4');
+  c.fillStyle = '#1b1a17'; c.font = '600 120px Georgia,serif'; c.fillText('25.5°', 130, 260);
+  c.fillStyle = '#85827a'; c.font = '34px sans-serif'; c.fillText('Living room · Cooling to 23°', 130, 330);
+  card(130, 380, 260, 70, '#c8461f');
+  c.fillStyle = '#fbfaf7'; c.font = '600 30px sans-serif'; c.fillText('Turn on', 205, 425);
+  c.fillStyle = '#fbfaf7'; c.font = '600 72px sans-serif'; c.fillText('Energy', 820, 200);
+  c.fillStyle = '#c8461f'; c.fillRect(820, 240, 360, 14);
+  c.fillStyle = '#5c5a53'; c.fillRect(820, 300, 520, 14); c.fillRect(820, 340, 420, 14);
+  for (let i = 0; i < 4; i++) card(130, 590 + i * 100, 340, 70, i === 0 ? '#c8461f' : '#e6e3db');
+  c.fillStyle = '#1b1a17'; for (let i = 0; i < 7; i++) c.fillRect(620 + i * 120, 960 - (i % 4 + 1) * 90, 60, (i % 4 + 1) * 90);
+  const blob = await new Promise(r => cv.toBlob(r, 'image/png'));
+  return new File([blob], 'Demo Dashboard.png', { type: 'image/png', lastModified: 1700000000000 });
+}
+async function setupDemo() {
+  const f = await makeDemoFile();
+  const key = fileKey(f);
+  S.files.set(key, mkEntry(key, f, 'added'));
+  const r = newRef(key, f.name);
+  r.source = 'demo'; r.tags = ['дашборд', 'теплий'];
+  r.highlights = [
+    { id: 'hd1', rect: { x: 5, y: 7.3, w: 40, h: 38 }, title: 'Число як герой екрана', note: 'Ієрархія: число ~120 px тонкої ваги, підпис сірий.', why: 'Без цього числа екран читається як список', category: 'font', verdict: 'take' },
+    { id: 'hd2', rect: { x: 8.1, y: 34.5, w: 16.3, h: 6.4 }, title: 'Єдина тепла кнопка', note: 'Акцент лише на головній дії.', why: 'Один акцент ведe погляд', category: 'component', verdict: 'take' },
+    { id: 'hd3', rect: { x: 35, y: 49, w: 60, h: 44 }, title: 'Стовпчики без підписів', note: 'Забагато однакових ваг.', why: '', category: 'component', verdict: 'avoid' }
+  ];
+  const sel = (k, v, reasons, note) => { r.ratings[k] = { selected: true, verdict: v, reasons, note, score: null }; };
+  sel('color', 'take', ['контраст', 'акцент'], 'Теплий нейтральний фон і один мідний акцент.');
+  sel('components', 'avoid', ['вага', 'ритм'], 'Піґулка і картка в одній вазі розмивають ієрархію.');
+  sel('mood', 'neutral', ['тон'], '');
+  r.font.interesting = true;
+  r.comment = 'Спокійний теплий дашборд: добре для ідей з акцентом.';
+  store.refs = { [key]: r }; store.newIds = []; store.scanIds = null;
+  S.cur = key; S.sel = 'hd2';
+  const tab = QS.get('tab');
+  S.tab = tab === 'ratings' ? 'ratings' : tab === 'color' ? 'color' : 'theses';
+  if (tab === 'ratings') S.sel = null;
+  renderAll();
+  if (tab === 'color') {
+    await new Promise(res => { const t = setInterval(() => { if (S.natW) { clearInterval(t); res(); } }, 50); });
+    await runExtract('all');
+    const pal = r.palette; // демо: ролі лишаються підказкою бібліотеки
+    if (!pal.length) console.warn('demo: порожня палітра');
+  }
+}
+
+// ---------- selftest (?selftest=1) ----------
+async function runSelftest() {
+  const out = []; let failed = 0;
+  const pre = document.createElement('pre'); pre.id = 'selftest-result'; document.body.appendChild(pre);
+  const show = head => { pre.textContent = head + '\n' + out.join('\n'); };
+  window.addEventListener('error', e => { out.push('ERROR ' + e.message); show('SELFTEST RUNNING'); });
+  window.addEventListener('unhandledrejection', e => { out.push('REJECT ' + (e.reason && e.reason.message || e.reason)); show('SELFTEST RUNNING'); });
+  workerTimeoutMs = 800;   // у headless з віртуальним часом таймер може спрацювати раніше за воркер
+  show('SELFTEST RUNNING');
+  const T = async (name, fn) => {
+    try { const d = await fn(); if (d && d.skip) out.push(`SKIP  ${name}: ${d.skip}`); else out.push(`PASS  ${name}${d ? ' - ' + d : ''}`); }
+    catch (e) { failed++; out.push(`FAIL  ${name}: ${e && e.message || e}`); }
+    show('SELFTEST RUNNING');
+  };
+  const ok = (c, m) => { if (!c) throw new Error(m || 'assertion'); };
+  const eq = (a, b, m) => { if (JSON.stringify(a) !== JSON.stringify(b)) throw new Error(`${m || 'eq'}: ${JSON.stringify(a)} != ${JSON.stringify(b)}`); };
+
+  const R = (c, o) => Object.assign({ verdict: 'neutral', note: '', score: null }, c, o);
+  const V1 = {
+    version: 1, exportedAt: '2026-11-12T12:44:16.116Z',
+    references: [
+      {
+        id: 'A.webp|100|1', name: 'A', file: { name: 'A.webp', w: 2048, h: 1536 }, source: '', tags: [], status: 'done', comment: '',
+        highlights: [
+          { id: 'h1', rect: { x: 72.65, y: 66.55, w: 24.81, h: 29.92 }, title: 'Кольори', note: 'n', category: 'typography', verdict: 'neutral' },
+          { id: 'h2', title: 'без rect', category: 'color', verdict: 'take' },
+          { id: 'h3', rect: { x: 'a', y: 1, w: 2, h: 3 } },
+          { id: 'h4', rect: { x: null, y: 1, w: 2, h: 3 } },
+          { id: 'h5', rect: { x: -5, y: 0, w: 10, h: 10 } },
+          { id: 'h6', rect: { x: 90, y: 0, w: 50, h: 10 } },
+          { id: 'h7', rect: { x: 0, y: 0, w: 0, h: 10 } },
+          { rect: { x: 0, y: 0, w: 10, h: 10 } },
+          { id: 'h9', rect: { x: 1, y: 1, w: 5, h: 5 }, category: 'layout', verdict: 'zzz' },
+          { id: 'h1', rect: { x: 1, y: 1, w: 5, h: 5 } },
+          null
+        ],
+        palette: [], font: { interesting: false, note: '' },
+        ratings: { color: R({}, { score: 4, verdict: 'take' }), typography: R(), layout: R({}, { verdict: 'avoid', note: 'x' }), components: R(), mood: R() },
+        takeaways: { generatedAt: null, tokens: {}, rules: [], avoid: [] }
+      },
+      { id: 'B.png|5|2', name: 'B' },
+      { name: 'без id' }, 42
+    ]
+  };
+
+  await T('імпорт v1: виділення (валідація)', () => {
+    const res = normalizeImport(V1);
+    ok(res.ok, 'ok'); eq(res.refs.length, 2, 'refs'); eq(res.droppedRefs, 2, 'droppedRefs');
+    const a = res.refs.find(r => r.id === 'A.webp|100|1');
+    eq(a.highlights.map(h => h.id), ['h1', 'h9'], 'збережені виділення'); eq(res.droppedHl, 9, 'відкинуто');
+    eq(a.highlights[0].category, 'font', 'typography->font'); eq(a.highlights[1].category, 'grid', 'layout->grid');
+    eq(a.highlights[1].verdict, 'neutral', 'невідомий вердикт'); eq(a.highlights[0].why, '', 'why');
+    return `збережено ${a.highlights.length}, відкинуто ${res.droppedHl}`;
+  });
+  await T('міграція ratings v1 -> v2', () => {
+    const a = normalizeImport(V1).refs[0];
+    eq(Object.keys(a.ratings).sort(), ['color', 'components', 'font', 'grid', 'icons', 'mood'], 'ключі');
+    ok(a.ratings.color.selected && a.ratings.color.score === 4 && a.ratings.color.verdict === 'take', 'color');
+    ok(a.ratings.grid.selected && a.ratings.grid.verdict === 'avoid' && a.ratings.grid.note === 'x', 'layout->grid');
+    ok(!a.ratings.font.selected && !a.ratings.components.selected && !a.ratings.mood.selected && !a.ratings.icons.selected, 'порожні не обрано');
+    ok(!('status' in a), 'status не переноситься'); ok(Array.isArray(a.ratings.color.reasons), 'reasons');
+    eq(statusOfRef(a), 'done', 'статус за даними (2 картки + теза)'); a.ratings.grid.selected = false; eq(statusOfRef(a), 'progress', 'одна картка: в процесі');
+  });
+  await T('міграція ідемпотентна', () => {
+    const a = normalizeImport(V1).refs[0];
+    eq(normalizeRef(clone(a), a.id), a);
+  });
+  await T('нормалізація не кидає на сміті', () => {
+    const junk = [null, undefined, 5, 'x', [], { highlights: 'x', ratings: 5, palette: {}, font: 7, file: 3, tags: 'a' }, { highlights: [null, 1, {}, { id: 1, rect: {} }] }];
+    for (const j of junk) { const r = normalizeRef(j, 'k|1|1'); thesesHtml(r); ratingsHtml(r); colorsHtml(r); r.highlights.map((h, i) => hlHtml(h, i, true)); }
+    for (const d of [null, 1, {}, { version: 3, references: [] }, { version: 2, references: 'x' }]) ok(!normalizeImport(d).ok, 'має відхилити');
+    ok(normalizeImport({ version: 2, references: [] }).ok, 'v2 порожній');
+  });
+  await T('validateRect: NaN, Infinity, межі', () => {
+    for (const r of [{ x: NaN, y: 0, w: 1, h: 1 }, { x: 0, y: 0, w: Infinity, h: 1 }, { x: 0, y: 0, w: -1, h: 1 }, { x: 101, y: 0, w: 1, h: 1 }, { x: 50, y: 50, w: 60, h: 10 }, '1', null]) ok(validateRect(r) === null, JSON.stringify(r));
+    ok(validateRect({ x: 0, y: 0, w: 100, h: 100 }) !== null, 'повна картинка'); ok(validateRect({ x: 99.99, y: 0, w: 0.04, h: 5 }) !== null, 'допуск');
+  });
+  await T('реальний «Ref Board.json» (за наявності)', async () => {
+    let txt; try { const r = await fetch('Ref%20Board.json'); if (!r.ok) return { skip: 'файлу немає' }; txt = await r.text(); } catch (e) { return { skip: 'недоступний' }; }
+    const res = normalizeImport(JSON.parse(txt));
+    ok(res.ok && res.refs.length > 0, 'імпорт');
+    for (const r of res.refs) { thesesHtml(r); ratingsHtml(r); }
+    return `записів ${res.refs.length}, відкинуто виділень ${res.droppedHl}`;
+  });
+  await T('імена експорту і версії', () => {
+    const d = new Date(2026, 10, 12, 9, 5);
+    eq(exportName(1, d), 'ref-board_v001_2026-11-12_0905.json'); eq(exportName(12, d), 'ref-board_v012_2026-11-12_0905.json');
+    eq(nextVersion([]), 1); eq(nextVersion(['ref-board_v003_x.json', 'ref-board_v010_y.json', 'other.json', 'Ref Board.json']), 11);
+    ok(EXPORT_RE.test(exportName(7, d)), 'RE'); eq(cropsDirName(7), 'ref-board_v007_crops');
+    eq(cropFileName('Name x.webp|10|20', 'h1'), 'Name_x.webp_10_20_h1.png');
+    eq(cropBox(2048, 1536, { x: 50, y: 50, w: 25, h: 10 }), { x: 1024, y: 768, w: 512, h: 154 }, 'cropBox');
+    eq(cropBox(100, 100, { x: 99.9, y: 99.9, w: 0.1, h: 0.1 }).w, 1, 'мін. розмір кропа');
+  });
+  await T('relink: зіставлення ключів', () => {
+    const m = matchOrphans(['Shot.png|100|1', 'Other.png|50|1', 'Lost.png|9|9'], ['Shot.png|100|2', 'Other.png|77|3', 'New.png|1|1']);
+    eq(m, [{ oldKey: 'Shot.png|100|1', newKey: 'Shot.png|100|2', by: 'name+size' }, { oldKey: 'Other.png|50|1', newKey: 'Other.png|77|3', by: 'name' }]);
+    eq(parseKey('a|b.png|10|20'), { name: 'a|b.png', size: 10, lm: '20' }, 'parseKey');
+    const refs = { 'Shot.png|100|1': newRef('Shot.png|100|1', 'Shot.png') };
+    refs['Shot.png|100|1'].comment = 'keep';
+    ok(relinkInRefs(refs, 'Shot.png|100|1', 'Shot.png|100|2', 'Shot.png'), 'relink');
+    eq(Object.keys(refs), ['Shot.png|100|2']); eq(refs['Shot.png|100|2'].id, 'Shot.png|100|2'); eq(refs['Shot.png|100|2'].comment, 'keep');
+  });
+  await T('WCAG контраст', () => {
+    ok(Math.abs(contrast('#000000', '#ffffff') - 21) < 0.01, '21:1');
+    ok(Math.abs(contrast('#767676', '#ffffff') - 4.54) < 0.02, '767676');
+    eq(grade(contrast('#000000', '#ffffff')), 'AAA'); eq(grade(contrast('#767676', '#ffffff')), 'AA');
+    eq(grade(contrast('#777777', '#ffffff')), 'AAL'); eq(grade(contrast('#aaaaaa', '#ffffff')), 'fail');
+    eq(grade(4.5), 'AA'); eq(grade(7), 'AAA'); eq(grade(3), 'AAL'); eq(grade(2.99), 'fail');
+  });
+  await T('статус за даними', () => {
+    const r = newRef('x|1|1', 'x.png'); eq(statusOfRef(r), 'new');
+    r.comment = 'a'; eq(statusOfRef(r), 'progress');
+    r.ratings.color.selected = true; r.ratings.mood.selected = true; eq(statusOfRef(r), 'done');
+    eq(statusOfRef(undefined), 'new');
+  });
+  await T('палітра: CSS і JSON', () => {
+    const r = newRef('x|1|1', 'x.png');
+    r.palette = [{ hex: '#111111', share: 0.5, role: 'background', source: 'auto' }, { hex: '#eeeeee', share: 0.2, role: 'other', source: 'manual' }, { hex: '#222222', share: 0.1, role: 'other', source: 'manual' }];
+    const css = paletteCss(r);
+    ok(css.includes('--color-background: #111111;') && css.includes('--color-other-1: #eeeeee;') && css.includes('--color-other-2: #222222;'), css);
+    eq(JSON.parse(paletteJson(r)).length, 3);
+  });
+
+  // зображення: два кольори
+  const mk = (w, h, draw) => { const cv = document.createElement('canvas'); cv.width = w; cv.height = h; const c = cv.getContext('2d', { willReadFrequently: true }); draw(c); return { cv, c }; };
+  const near = (hex, ref, tol) => { const a = hexToRgb(hex), b = hexToRgb(ref); return Math.max(...a.map((v, i) => Math.abs(v - b[i]))) <= tol; };
+  const { cv: cv2, c: c2 } = mk(400, 300, c => { c.fillStyle = '#1d2330'; c.fillRect(0, 0, 200, 300); c.fillStyle = '#e8d9b5'; c.fillRect(200, 0, 200, 300); });
+  await T('піпетка: піксель з canvas', () => {
+    eq(pixelHex(c2, 10, 10), '#1d2330'); eq(pixelHex(c2, 300, 100), '#e8d9b5');
+    eq(pctToPx({ w: 400, h: 300 }, { x: 100, y: 100 }), { x: 399, y: 299 }, 'межі');
+  });
+  await T('палітра зі згенерованого зображення (весь)', async () => {
+    ok(typeof ColorExtract !== 'undefined', 'ColorExtract не завантажено');
+    const id = c2.getImageData(0, 0, 400, 300);
+    const pal = await extractAsync(id, {});
+    ok(pal.some(p => near(p.hex, '#1d2330', 8)), 'немає темного: ' + JSON.stringify(pal));
+    ok(pal.some(p => near(p.hex, '#e8d9b5', 8)), 'немає світлого: ' + JSON.stringify(pal));
+    return `${pal.length} кольорів; воркер створено: ${worker ? 'так' : 'ні'}`;
+  });
+  await T('палітра: rect у відсотках і sync-запасний шлях', async () => {
+    const id = c2.getImageData(0, 0, 400, 300);
+    const left = extractSync(id, { rect: { x: 0, y: 0, w: 40, h: 100 } });
+    ok(left.length && near(left[0].hex, '#1d2330', 8), 'ліва частина: ' + JSON.stringify(left));
+    ok(!left.some(p => near(p.hex, '#e8d9b5', 8) && p.share > 0.05), 'світлий не має бути в лівому rect');
+    const right = await extractAsync(id, { rect: { x: 60, y: 0, w: 40, h: 100 } });
+    ok(right.length && near(right[0].hex, '#e8d9b5', 8), 'права частина: ' + JSON.stringify(right));
+  });
+  await T('мініатюра зменшується', async () => {
+    const { cv } = mk(1600, 900, c => { c.fillStyle = '#3b6fe0'; c.fillRect(0, 0, 1600, 900); });
+    const blob = await new Promise(r => cv.toBlob(r, 'image/png'));
+    const url = await makeThumb(new File([blob], 't.png', { type: 'image/png' }));
+    const im = await createImageBitmap(await (await fetch(url)).blob()); URL.revokeObjectURL(url);
+    ok(im.width <= THUMB_W && im.width >= 100, 'ширина ' + im.width);
+    return `${im.width}x${im.height}`;
+  });
+  await T('сканування: «Оновити» не видаляє додані файли (логіка)', () => {
+    const saveFiles = S.files; S.files = new Map();
+    try {
+      const f1 = new File(['a'], 'a.png', { lastModified: 1 }), f2 = new File(['bb'], 'b.png', { lastModified: 2 });
+      S.files.set(fileKey(f1), mkEntry(fileKey(f1), f1, 'folder')); S.files.set(fileKey(f2), mkEntry(fileKey(f2), f2, 'added'));
+      const found = new Map();   // у папці файлу a більше немає
+      for (const [k, e] of [...S.files]) if (e.src === 'folder' && !found.has(k)) dropEntry(k);
+      eq([...S.files.values()].map(e => e.name), ['b.png'], 'added лишився, folder зник');
+    } finally { S.files = saveFiles; }
+  });
+  await T('undo видалення виділення', () => {
+    const saveCur = S.cur, saveRefs = store.refs;
+    store.refs = {}; const r = newRef('u|1|1', 'u.png'); store.refs[r.id] = r; S.cur = r.id;
+    r.highlights = [0, 1, 2].map(i => ({ id: 'h' + i, rect: { x: 1, y: 1, w: 5, h: 5 }, title: 't' + i, note: '', why: '', category: 'color', verdict: 'take' }));
+    try { deleteHl('h1'); eq(r.highlights.map(h => h.id), ['h0', 'h2']); doUndo(); eq(r.highlights.map(h => h.id), ['h0', 'h1', 'h2'], 'відновлено на місце'); }
+    finally { store.refs = saveRefs; S.cur = saveCur; S.sel = null; S.undo = []; }
+  });
+
+  out.push(`INFO  воркер: відповідей ${workerReplies}, запасний шлях ${workerFallbacks}`);
+  show((failed ? 'SELFTEST FAIL' : 'SELFTEST PASS') + ` (${out.length} перевірок, помилок: ${failed})`);
+}
+
 // ---------- init ----------
 async function init() {
   wireEvents();
+  if (SELFTEST) { renderAll(); await runSelftest(); return; }
+  if (DEMO) { await setupDemo(); return; }
   if (S.supported) {
     try { S.handle = (await idbGet(IDB_KEY)) || null; } catch (e) { S.handle = null; }
     if (S.handle) {

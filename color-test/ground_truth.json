@@ -1,0 +1,603 @@
+{
+  "ref_01": {
+    "status": "draft",
+    "roles": {
+      "background": [
+        {
+          "hex": "#24271f",
+          "at": [
+            1.5,
+            2
+          ],
+          "mode": "median"
+        }
+      ],
+      "surface": [
+        {
+          "hex": "#fffff2",
+          "at": [
+            26,
+            7
+          ],
+          "mode": "median"
+        },
+        {
+          "hex": "#fcfee2",
+          "at": [
+            87,
+            70
+          ],
+          "mode": "median"
+        }
+      ],
+      "accent": [
+        {
+          "hex": "#d8ed2f",
+          "at": [
+            42.5,
+            89.8
+          ],
+          "mode": "median"
+        }
+      ]
+    }
+  },
+  "ref_02": {
+    "status": "draft",
+    "roles": {
+      "background": [
+        {
+          "hex": "#172820",
+          "at": [
+            3,
+            30
+          ],
+          "mode": "median"
+        }
+      ],
+      "surface": [
+        {
+          "hex": "#27362e",
+          "at": [
+            44,
+            60
+          ],
+          "mode": "median"
+        }
+      ],
+      "accent": [
+        {
+          "hex": "#dee636",
+          "at": [
+            84,
+            24
+          ],
+          "mode": "median"
+        }
+      ]
+    }
+  },
+  "ref_03": {
+    "status": "draft",
+    "roles": {
+      "background": [
+        {
+          "hex": "#ced8f1",
+          "at": [
+            27.5,
+            50
+          ],
+          "mode": "median"
+        }
+      ],
+      "surface": [
+        {
+          "hex": "#e1e3e9",
+          "at": [
+            46,
+            63
+          ],
+          "mode": "median"
+        }
+      ],
+      "accent": [
+        {
+          "hex": "#7e81ff",
+          "at": [
+            34.5,
+            61.5
+          ],
+          "mode": "median"
+        }
+      ],
+      "textPrimary": [
+        {
+          "hex": "#02030c",
+          "at": [
+            37.3,
+            24
+          ],
+          "mode": "dark"
+        }
+      ]
+    }
+  },
+  "ref_04": {
+    "status": "draft",
+    "roles": {
+      "background": [
+        {
+          "hex": "#dadad8",
+          "at": [
+            60,
+            10
+          ],
+          "mode": "median"
+        }
+      ],
+      "surface": [
+        {
+          "hex": "#faf8f2",
+          "at": [
+            22.5,
+            53
+          ],
+          "mode": "median"
+        }
+      ],
+      "accent": [
+        {
+          "hex": "#e68907",
+          "at": [
+            94,
+            71
+          ],
+          "mode": "median"
+        },
+        {
+          "hex": "#d07d07",
+          "at": [
+            50,
+            2
+          ],
+          "mode": "median"
+        }
+      ]
+    }
+  },
+  "ref_05": {
+    "status": "draft",
+    "roles": {
+      "background": [
+        {
+          "hex": "#e7e4dc",
+          "at": [
+            3,
+            8
+          ],
+          "mode": "median"
+        }
+      ],
+      "surface": [
+        {
+          "hex": "#efede9",
+          "at": [
+            86.9,
+            32.4
+          ],
+          "mode": "median"
+        }
+      ],
+      "accent": [
+        {
+          "hex": "#c44620",
+          "at": [
+            58.5,
+            48.1
+          ],
+          "mode": "median"
+        }
+      ],
+      "textPrimary": [
+        {
+          "hex": "#100e0a",
+          "at": [
+            13,
+            33
+          ],
+          "mode": "dark"
+        }
+      ]
+    }
+  },
+  "ref_06": {
+    "status": "draft",
+    "roles": {
+      "background": [
+        {
+          "hex": "#e6e3db",
+          "at": [
+            3,
+            5
+          ],
+          "mode": "median"
+        }
+      ],
+      "surface": [
+        {
+          "hex": "#efede9",
+          "at": [
+            78.6,
+            60
+          ],
+          "mode": "median"
+        },
+        {
+          "hex": "#181614",
+          "at": [
+            13.6,
+            57
+          ],
+          "mode": "median"
+        }
+      ],
+      "accent": [
+        {
+          "hex": "#c4471f",
+          "at": [
+            88.6,
+            29
+          ],
+          "mode": "median"
+        }
+      ],
+      "textPrimary": [
+        {
+          "hex": "#151410",
+          "at": [
+            15.5,
+            27.3
+          ],
+          "mode": "dark"
+        }
+      ]
+    }
+  },
+  "ref_07": {
+    "status": "draft",
+    "roles": {
+      "background": [
+        {
+          "hex": "#e8eced",
+          "at": [
+            74.5,
+            33
+          ],
+          "mode": "median"
+        }
+      ],
+      "surface": [
+        {
+          "hex": "#ffffff",
+          "at": [
+            60,
+            40
+          ],
+          "mode": "median"
+        }
+      ],
+      "accent": [
+        {
+          "hex": "#dd4b04",
+          "at": [
+            3,
+            45
+          ],
+          "mode": "median"
+        },
+        {
+          "hex": "#864bfc",
+          "at": [
+            75,
+            87
+          ],
+          "mode": "median"
+        },
+        {
+          "hex": "#06c364",
+          "at": [
+            54.5,
+            12.5
+          ],
+          "mode": "median"
+        }
+      ]
+    }
+  },
+  "ref_08": {
+    "status": "draft",
+    "roles": {
+      "background": [
+        {
+          "hex": "#7fb3cf",
+          "at": [
+            10,
+            8
+          ],
+          "mode": "median"
+        },
+        {
+          "hex": "#faf2e4",
+          "at": [
+            50,
+            97
+          ],
+          "mode": "median"
+        }
+      ],
+      "surface": [
+        {
+          "hex": "#ffffff",
+          "at": [
+            25,
+            72.7
+          ],
+          "mode": "median"
+        }
+      ],
+      "accent": [
+        {
+          "hex": "#fb7317",
+          "at": [
+            79.4,
+            44.2
+          ],
+          "mode": "median"
+        },
+        {
+          "hex": "#15d36d",
+          "at": [
+            21.4,
+            56.7
+          ],
+          "mode": "median"
+        },
+        {
+          "hex": "#b040f5",
+          "at": [
+            50,
+            21.5
+          ],
+          "mode": "median"
+        }
+      ],
+      "textPrimary": [
+        {
+          "hex": "#0c0e0e",
+          "at": [
+            73,
+            54.8
+          ],
+          "mode": "dark"
+        }
+      ]
+    }
+  },
+  "ref_09": {
+    "status": "draft",
+    "roles": {
+      "background": [
+        {
+          "hex": "#e2e8eb",
+          "at": [
+            5,
+            10
+          ],
+          "mode": "median"
+        }
+      ],
+      "surface": [
+        {
+          "hex": "#f0f4f7",
+          "at": [
+            70,
+            22
+          ],
+          "mode": "median"
+        }
+      ],
+      "accent": [
+        {
+          "hex": "#fd621b",
+          "at": [
+            31,
+            86
+          ],
+          "mode": "median"
+        }
+      ]
+    }
+  },
+  "ref_10": {
+    "status": "draft",
+    "roles": {
+      "background": [
+        {
+          "hex": "#bbf247",
+          "at": [
+            2,
+            50
+          ],
+          "mode": "median"
+        },
+        {
+          "hex": "#ffffff",
+          "at": [
+            88,
+            40
+          ],
+          "mode": "median"
+        }
+      ],
+      "surface": [
+        {
+          "hex": "#f9feec",
+          "at": [
+            71,
+            76
+          ],
+          "mode": "median"
+        },
+        {
+          "hex": "#ffffff",
+          "at": [
+            88,
+            40
+          ],
+          "mode": "median"
+        }
+      ],
+      "accent": [
+        {
+          "hex": "#bcf349",
+          "at": [
+            60,
+            47.7
+          ],
+          "mode": "median"
+        }
+      ]
+    }
+  },
+  "ref_11": {
+    "status": "draft",
+    "roles": {
+      "background": [
+        {
+          "hex": "#1b2225",
+          "at": [
+            72,
+            28
+          ],
+          "mode": "median"
+        },
+        {
+          "hex": "#bbf247",
+          "at": [
+            2,
+            12
+          ],
+          "mode": "median"
+        }
+      ],
+      "surface": [
+        {
+          "hex": "#384147",
+          "at": [
+            50,
+            73
+          ],
+          "mode": "median"
+        }
+      ],
+      "accent": [
+        {
+          "hex": "#bbee47",
+          "at": [
+            45,
+            91
+          ],
+          "mode": "median"
+        }
+      ],
+      "textPrimary": [
+        {
+          "hex": "#ffffff",
+          "at": [
+            67,
+            43.6
+          ],
+          "mode": "light"
+        }
+      ]
+    }
+  },
+  "ref_12": {
+    "status": "draft",
+    "roles": {
+      "background": [
+        {
+          "hex": "#192225",
+          "at": [
+            50,
+            60
+          ],
+          "mode": "median"
+        },
+        {
+          "hex": "#bbf247",
+          "at": [
+            50,
+            5
+          ],
+          "mode": "median"
+        }
+      ],
+      "surface": [
+        {
+          "hex": "#384147",
+          "at": [
+            15,
+            74
+          ],
+          "mode": "median"
+        }
+      ],
+      "accent": [
+        {
+          "hex": "#b9ef46",
+          "at": [
+            20.5,
+            45
+          ],
+          "mode": "median"
+        }
+      ]
+    }
+  },
+  "ref_13": {
+    "status": "draft",
+    "roles": {
+      "background": [
+        {
+          "hex": "#f6f5ee",
+          "at": [
+            30,
+            54.3
+          ],
+          "mode": "median"
+        }
+      ],
+      "surface": [
+        {
+          "hex": "#112f1e",
+          "at": [
+            21.5,
+            62.7
+          ],
+          "mode": "median"
+        }
+      ],
+      "accent": [
+        {
+          "hex": "#f2ee6e",
+          "at": [
+            45,
+            34.5
+          ],
+          "mode": "median"
+        }
+      ]
+    }
+  }
+}

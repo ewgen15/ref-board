@@ -1,0 +1,396 @@
+{
+  "ref_01": {
+    "status": "draft",
+    "gradient_background": false,
+    "regions": [
+      {
+        "rect": {
+          "x": 35.6,
+          "y": 3.3,
+          "w": 35.5,
+          "h": 29.6
+        },
+        "type": "unknown",
+        "ends": [
+          "#1b1d01",
+          "#1a1c00"
+        ],
+        "angle": null,
+        "is_background": false,
+        "note": "плитка: темна зелена з потоками"
+      },
+      {
+        "rect": {
+          "x": 35.6,
+          "y": 35.1,
+          "w": 35.5,
+          "h": 28.4
+        },
+        "type": "linear",
+        "ends": [
+          "#eafa70",
+          "#e8fa5b"
+        ],
+        "angle": 90,
+        "is_background": false,
+        "note": "плитка: від світло-лаймового до лайма"
+      },
+      {
+        "rect": {
+          "x": 35.6,
+          "y": 66.7,
+          "w": 35.5,
+          "h": 29.6
+        },
+        "type": "unknown",
+        "ends": [
+          "#33351d",
+          "#202403"
+        ],
+        "angle": null,
+        "is_background": false,
+        "note": "плитка: темна з лаймовими потоками"
+      },
+      {
+        "rect": {
+          "x": 2.4,
+          "y": 48.9,
+          "w": 31.8,
+          "h": 47.1
+        },
+        "type": "glow",
+        "ends": [
+          "#1f1f1f",
+          "#333517"
+        ],
+        "angle": null,
+        "is_background": false,
+        "note": "плитка з глобусом: лаймове світіння знизу"
+      },
+      {
+        "rect": {
+          "x": 72.8,
+          "y": 66.7,
+          "w": 24.4,
+          "h": 29.6
+        },
+        "type": "linear",
+        "ends": [
+          "#fcfee2",
+          "#f8fece"
+        ],
+        "angle": 90,
+        "is_background": false,
+        "note": "плитка з м'ятним/світлим градієнтом"
+      },
+      {
+        "rect": {
+          "x": 72.5,
+          "y": 3.3,
+          "w": 25,
+          "h": 61
+        },
+        "type": "unknown",
+        "ends": [
+          "#191c03",
+          "#212501"
+        ],
+        "angle": null,
+        "is_background": false,
+        "note": "правий верхній: темний з потоками"
+      }
+    ],
+    "not_gradient": []
+  },
+  "ref_02": {
+    "status": "draft",
+    "gradient_background": true,
+    "regions": [
+      {
+        "rect": {
+          "x": 0,
+          "y": 6,
+          "w": 44,
+          "h": 50
+        },
+        "type": "glow",
+        "ends": [
+          "#086762",
+          "#1a2c20"
+        ],
+        "angle": null,
+        "is_background": true,
+        "note": "бірюзове світіння ліворуч; центр світіння під плитками"
+      },
+      {
+        "rect": {
+          "x": 56,
+          "y": 0,
+          "w": 44,
+          "h": 38
+        },
+        "type": "glow",
+        "ends": [
+          "#04706d",
+          "#013231"
+        ],
+        "angle": null,
+        "is_background": true,
+        "note": "бірюзове світіння праворуч угорі"
+      }
+    ],
+    "not_gradient": []
+  },
+  "ref_03": {
+    "status": "draft",
+    "gradient_background": false,
+    "regions": [],
+    "not_gradient": [
+      {
+        "rect": {
+          "x": 0,
+          "y": 14,
+          "w": 24,
+          "h": 40
+        },
+        "note": "розмите фото/світіння зліва"
+      }
+    ]
+  },
+  "ref_04": {
+    "status": "draft",
+    "gradient_background": false,
+    "regions": [],
+    "not_gradient": [
+      {
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 12,
+          "h": 80
+        },
+        "note": "розмите помаранчеве світіння ліворуч (фото-тло)"
+      },
+      {
+        "rect": {
+          "x": 35,
+          "y": 17,
+          "w": 65,
+          "h": 42
+        },
+        "note": "3D-фото будинку (не градієнт)"
+      }
+    ]
+  },
+  "ref_05": {
+    "status": "draft",
+    "gradient_background": false,
+    "regions": [],
+    "not_gradient": []
+  },
+  "ref_06": {
+    "status": "draft",
+    "gradient_background": false,
+    "regions": [],
+    "not_gradient": []
+  },
+  "ref_07": {
+    "status": "draft",
+    "gradient_background": false,
+    "regions": [
+      {
+        "rect": {
+          "x": 51,
+          "y": 67,
+          "w": 14,
+          "h": 31
+        },
+        "type": "unknown",
+        "ends": [
+          "#078e0a",
+          "#069808"
+        ],
+        "angle": null,
+        "is_background": false,
+        "note": "плитка (зелена)"
+      },
+      {
+        "rect": {
+          "x": 66.5,
+          "y": 67,
+          "w": 14,
+          "h": 31
+        },
+        "type": "unknown",
+        "ends": [
+          "#874cfb",
+          "#a052fc"
+        ],
+        "angle": null,
+        "is_background": false,
+        "note": "плитка (фіолетова)"
+      },
+      {
+        "rect": {
+          "x": 81,
+          "y": 67,
+          "w": 16,
+          "h": 31
+        },
+        "type": "unknown",
+        "ends": [
+          "#f83b52",
+          "#f97356"
+        ],
+        "angle": null,
+        "is_background": false,
+        "note": "плитка (червоно-рожева)"
+      }
+    ],
+    "not_gradient": [
+      {
+        "rect": {
+          "x": 8,
+          "y": 38,
+          "w": 28,
+          "h": 60
+        },
+        "note": "фото руки з телефоном (розмите/темне)"
+      }
+    ]
+  },
+  "ref_08": {
+    "status": "draft",
+    "gradient_background": true,
+    "regions": [
+      {
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 100,
+          "h": 100
+        },
+        "type": "linear",
+        "ends": [
+          "#79b1cd",
+          "#fdf3e6"
+        ],
+        "angle": 90,
+        "is_background": true,
+        "note": "небо: синій угорі, персиковий внизу; фон видно зверху і знизу"
+      }
+    ],
+    "not_gradient": []
+  },
+  "ref_09": {
+    "status": "draft",
+    "gradient_background": false,
+    "regions": [
+      {
+        "rect": {
+          "x": 30,
+          "y": 79,
+          "w": 19,
+          "h": 8
+        },
+        "type": "linear",
+        "ends": [
+          "#fff1eb",
+          "#ffe9d3"
+        ],
+        "angle": 0,
+        "is_background": false,
+        "note": "персикова кнопка (оцінка: перевірити)"
+      },
+      {
+        "rect": {
+          "x": 45,
+          "y": 33,
+          "w": 17,
+          "h": 17
+        },
+        "type": "glow",
+        "ends": [
+          "#d6dee1",
+          "#eff1f3"
+        ],
+        "angle": null,
+        "is_background": false,
+        "note": "персикові кола радара (оцінка: перевірити)"
+      }
+    ],
+    "not_gradient": [
+      {
+        "rect": {
+          "x": 25,
+          "y": 28,
+          "w": 22,
+          "h": 22
+        },
+        "note": "фото будинку з сонячними панелями в картці"
+      }
+    ]
+  },
+  "ref_10": {
+    "status": "draft",
+    "gradient_background": false,
+    "regions": [],
+    "not_gradient": []
+  },
+  "ref_11": {
+    "status": "draft",
+    "gradient_background": false,
+    "regions": [],
+    "not_gradient": [
+      {
+        "rect": {
+          "x": 74,
+          "y": 58,
+          "w": 26,
+          "h": 42
+        },
+        "note": "фото велосипедиста у картці"
+      }
+    ]
+  },
+  "ref_12": {
+    "status": "draft",
+    "gradient_background": false,
+    "regions": [],
+    "not_gradient": []
+  },
+  "ref_13": {
+    "status": "draft",
+    "gradient_background": false,
+    "regions": [],
+    "not_gradient": [
+      {
+        "rect": {
+          "x": 5,
+          "y": 0,
+          "w": 44,
+          "h": 36
+        },
+        "note": "ілюстрація/фото неба і полів (вгорі зліва)"
+      },
+      {
+        "rect": {
+          "x": 51,
+          "y": 48,
+          "w": 48,
+          "h": 25
+        },
+        "note": "фото зеленого пейзажу"
+      },
+      {
+        "rect": {
+          "x": 51,
+          "y": 78,
+          "w": 44,
+          "h": 15
+        },
+        "note": "розмитий 3D-напис"
+      }
+    ]
+  }
+}
